@@ -9,18 +9,26 @@
         android:id="@+id/signupChooserFragment"
         android:name="com.shubham.foodiedonor.views.fragments.SignupChooserFragment"
         android:label="fragment_signup_chooser"
-        tools:layout="@layout/fragment_signup_chooser" >
+        tools:layout="@layout/fragment_signup_chooser">
         <action
             android:id="@+id/action_signupChooserFragment_to_donorSignupFragment"
-            app:destination="@id/donorSignupFragment" />
+            app:destination="@id/donorSignupFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/donorSignupFragment"
         android:name="com.shubham.foodiedonor.views.fragments.DonorSignupFragment"
         android:label="fragment_donor_signup"
-        tools:layout="@layout/fragment_donor_signup" >
+        tools:layout="@layout/fragment_donor_signup">
         <action
             android:id="@+id/action_donorSignupFragment_to_signupChooserFragment"
-            app:destination="@id/signupChooserFragment" />
+            app:destination="@id/signupChooserFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
 </navigation>

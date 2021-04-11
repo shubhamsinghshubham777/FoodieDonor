@@ -6,5 +6,7 @@ data class DonorModel(
     val mobile: String,
     val address: String,
     val photo: String,
-    val mobileVerified: Boolean
+    val mobileVerified: Boolean,
+    val latitude: Double,
+    val longitude: Double
 )

@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                                     startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                                 } else {
                                     binding.loadingAnimation.visibility = View.GONE
-                                    MotionToast.createColorToast(this@LoginActivity,"Profile Update Failed!",
+                                    MotionToast.createColorToast(this@LoginActivity,"Couldn't login. Check credentials!",
                                             MotionToast.TOAST_ERROR,
                                             MotionToast.GRAVITY_BOTTOM,
                                             MotionToast.SHORT_DURATION,

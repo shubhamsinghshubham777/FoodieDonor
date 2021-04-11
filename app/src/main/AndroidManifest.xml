@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodieDonor">
-        <activity android:name=".views.SignupActivity"></activity>
+        <activity android:name=".views.VerifyMobileActivity"></activity>
+        <activity android:name=".views.SignupActivity" />
         <activity android:name=".views.LoginActivity" />
         <activity android:name=".views.HomeActivity" />
         <activity android:name=".views.MainActivity">
@@ -33,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.schibstedspain.leku.LocationPickerActivity"
             android:label="@string/leku_title_activity_location_picker"
@@ -55,11 +55,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${apiKey}"/>
-
+            android:value="${apiKey}" />
     </application>
 
 </manifest>

@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-analytics:18.0.3'
+    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
 
     //Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

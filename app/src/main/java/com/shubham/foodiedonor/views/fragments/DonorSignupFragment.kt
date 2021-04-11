@@ -30,6 +30,7 @@ import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorSignupBinding
 import com.shubham.foodiedonor.models.DonorModel
 import com.shubham.foodiedonor.views.HomeActivity
+import com.shubham.foodiedonor.views.VerifyMobileActivity
 import www.sanju.motiontoast.MotionToast
 
 class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
@@ -44,6 +45,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
     private var isPasswordValid = false
     private var isRepeatPasswordValid = false
     private var isMobileValid = false
+    private var isMobileVerified = false
     private var isAddressValid = false
     private var isProfilePhotoValid = false
     private val validateTor = ValidateTor()
@@ -153,11 +155,31 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
                     isAddressValid = true
                 }
 
-            } else if(requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
+            }
+
+            if(requestCode == VERIFY_OTP_REQUEST_CODE) {
+
+            }
+
+            else if(requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
                 latitude = data.getDoubleExtra(LATITUDE, 0.0)
                 longitude = data.getDoubleExtra(LONGITUDE, 0.0)
                 address = data.getStringExtra(LOCATION_ADDRESS).toString()
 //                lekuPoi = data.getParcelableExtra<LekuPoi>(LEKU_POI)
+            }
+
+            if(data?.extras != null && data.getBooleanExtra("isMobileVerified", false)) {
+                isMobileVerified = true
+                binding.lottieMobileVerification.apply {
+                    setAnimation(R.raw.verified)
+                    speed = 0.5f
+                    playAnimation()
+                    binding.lottieMobileVerificationTv.text = "Mobile Verified!"
+                    isClickable = false
+                    isFocusable = false
+                    binding.donorMobileEt.isClickable = false
+                    binding.donorMobileEt.isFocusable = false
+                }
             }
         }
 
@@ -243,15 +265,25 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
                 binding.donorMobileLayout.error = getString(R.string.required_field)
                 isMobileValid = false
                 unlockSignupButton()
+                binding.lottieMobileVerification.isClickable = false
+                binding.lottieMobileVerification.isFocusable = false
             } else {
                 if(validateTorMobileNumber.validate(text.toString(), indianMobileNumberRegex.toString())) {
                     binding.donorMobileLayout.error = null
                     isMobileValid = true
+                    binding.lottieMobileVerification.isClickable = true
+                    binding.lottieMobileVerification.isFocusable = true
                     unlockSignupButton()
+                    binding.lottieMobileVerification.setOnClickListener {
+                        val intent = Intent(requireContext().applicationContext, VerifyMobileActivity::class.java)
+                        startActivityForResult(intent, VERIFY_OTP_REQUEST_CODE)
+                    }
                 } else {
                     binding.donorMobileLayout.error = getString(R.string.mobile_error)
                     isMobileValid = false
                     unlockSignupButton()
+                    binding.lottieMobileVerification.isClickable = false
+                    binding.lottieMobileVerification.isFocusable = false
                 }
             }
         }
@@ -291,7 +323,9 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
                                             mobile = binding.donorMobileEt.text.toString(),
                                             address = fullAddress,
                                             photo = base64Photo,
-                                            mobileVerified = mobileVerified
+                                            mobileVerified = mobileVerified,
+                                            latitude = latitude,
+                                            longitude = longitude
                                         )
                                     )
                                     .addOnCompleteListener { firestoreTask ->
@@ -339,6 +373,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
 
     companion object {
         const val MAP_BUTTON_REQUEST_CODE = 111
+        const val VERIFY_OTP_REQUEST_CODE = 112
     }
 
 }

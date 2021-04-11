@@ -21,8 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         if(Firebase.auth.currentUser != null) {
             startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         } else {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 }
