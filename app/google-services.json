@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "60582375613",
+    "project_id": "foodie-donor",
+    "storage_bucket": "foodie-donor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60582375613:android:cc4958648c9539c31c47d4",
+        "android_client_info": {
+          "package_name": "com.shubham.foodiedonor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60582375613-qemketp88iouhcg9e56kufjkude6p4av.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shubham.foodiedonor",
+            "certificate_hash": "d163dfc73c1bddd66adf50672ef517db5957bed1"
+          }
+        },
+        {
+          "client_id": "60582375613-dhlj7flh9hr8shmdetd02r040v6tb7bk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHLklonrfXR7yPmUswvQaXVY1mQ7nxpxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60582375613-dhlj7flh9hr8shmdetd02r040v6tb7bk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

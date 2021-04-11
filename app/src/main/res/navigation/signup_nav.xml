@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup_nav"
+    app:startDestination="@id/signupChooserFragment">
+
+    <fragment
+        android:id="@+id/signupChooserFragment"
+        android:name="com.shubham.foodiedonor.views.fragments.SignupChooserFragment"
+        android:label="fragment_signup_chooser"
+        tools:layout="@layout/fragment_signup_chooser" >
+        <action
+            android:id="@+id/action_signupChooserFragment_to_donorSignupFragment"
+            app:destination="@id/donorSignupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/donorSignupFragment"
+        android:name="com.shubham.foodiedonor.views.fragments.DonorSignupFragment"
+        android:label="fragment_donor_signup"
+        tools:layout="@layout/fragment_donor_signup" >
+        <action
+            android:id="@+id/action_donorSignupFragment_to_signupChooserFragment"
+            app:destination="@id/signupChooserFragment" />
+    </fragment>
+</navigation>
