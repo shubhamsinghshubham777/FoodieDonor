@@ -21,6 +21,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/otpLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -30,7 +31,6 @@
         android:textAlignment="center"
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/otpMobileTv">
@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alegreya_sc_black"
+            android:inputType="number"
             android:textAlignment="center"
             android:textSize="36sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +50,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/alegreya_sc_black"
         android:text="Please enter the OTP sent to "
@@ -58,13 +58,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView2" />
+        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView4" />
 
     <Button
         android:id="@+id/verifyOtpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:text="Verify OTP"
         app:layout_constraintEnd_toEndOf="@+id/otpLayout"
         app:layout_constraintStart_toStartOf="@+id/otpLayout"
@@ -82,5 +83,16 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/otpreceived" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView4"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView2"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

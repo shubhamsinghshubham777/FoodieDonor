@@ -276,6 +276,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
                     unlockSignupButton()
                     binding.lottieMobileVerification.setOnClickListener {
                         val intent = Intent(requireContext().applicationContext, VerifyMobileActivity::class.java)
+                        intent.putExtra("mobileNumber", binding.donorMobileEt.text.toString())
                         startActivityForResult(intent, VERIFY_OTP_REQUEST_CODE)
                     }
                 } else {
