@@ -95,6 +95,8 @@
                 android:layout_marginEnd="32dp"
                 android:hint="Password"
                 app:endIconMode="password_toggle"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +119,8 @@
                 android:layout_marginEnd="32dp"
                 android:hint="Repeat Password"
                 app:endIconMode="password_toggle"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/donorMobileLayout"
@@ -141,7 +146,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/donorRepeatPasswordLayout">
+                app:layout_constraintTop_toBottomOf="@id/donorRepeatPasswordLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/donorMobileEt"

@@ -61,7 +61,6 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
     private var fullAddress = ""
     private var timeZoneId = ""
     private var timeZoneDisplayName = ""
-    private var mobileVerified = false
 //    private var lekuPoi = LekuPoi.Companion.CREATOR.createFromParcel(null)
 
     override fun onCreateView(
@@ -97,10 +96,10 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
         binding.donorAddressIv.setOnClickListener {
             val locationPickerIntent = LocationPickerActivity.Builder()
-                .withLocation(41.4036299, 2.1743558)
+                .withLocation(28.665050640866188, 77.14356996310623)
                 .withGeolocApiKey(BuildConfig.apiKey)
                 .withSearchZone("en_ES")
-                .withSearchZone(SearchZoneRect(LatLng(26.525467, -18.910366), LatLng(43.906271, 5.394197)))
+                .withSearchZone(SearchZoneRect(LatLng(28.663692694207246, 77.14074199258673), LatLng(28.66842783939638, 77.13294212906699)))
                 .withDefaultLocaleSearchZone()
                 .shouldReturnOkOnBackPressed()
                 .withGooglePlacesApiKey(BuildConfig.apiKey)
@@ -231,7 +230,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
         binding.donorPasswordEt.doOnTextChanged { text, start, before, count ->
             if(validateTor.isEmpty(text.toString())) {
-                binding.donorPasswordLayout.error = getString(R.string.required_field)
+                binding.donorPasswordLayout.helperText = getString(R.string.required_field)
                 isPasswordValid = false
                 unlockSignupButton()
             } else {
@@ -240,11 +239,11 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                     && validateTor.hasAtleastOneDigit(text.toString())
                     && validateTor.hasAtleastOneSpecialCharacter(text.toString())
                 ) {
-                    binding.donorPasswordLayout.error = null
+                    binding.donorPasswordLayout.helperText = null
                     isPasswordValid = true
                     unlockSignupButton()
                 } else {
-                    binding.donorPasswordLayout.error = getString(R.string.password_error)
+                    binding.donorPasswordLayout.helperText = getString(R.string.password_error)
                     isPasswordValid = false
                     unlockSignupButton()
                 }
@@ -253,16 +252,16 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
         binding.donorRepeatPasswordEt.doOnTextChanged { text, start, before, count ->
             if(validateTor.isEmpty(text.toString())) {
-                binding.donorRepeatPasswordLayout.error = getString(R.string.required_field)
+                binding.donorRepeatPasswordLayout.helperText = getString(R.string.required_field)
                 isRepeatPasswordValid = false
                 unlockSignupButton()
             } else {
                 if(text.toString() == binding.donorPasswordEt.text.toString()) {
-                    binding.donorRepeatPasswordLayout.error = null
+                    binding.donorRepeatPasswordLayout.helperText = null
                     isRepeatPasswordValid = true
                     unlockSignupButton()
                 } else {
-                    binding.donorRepeatPasswordLayout.error = getString(R.string.repeat_password_error)
+                    binding.donorRepeatPasswordLayout.helperText = getString(R.string.repeat_password_error)
                     isRepeatPasswordValid = false
                     unlockSignupButton()
                 }
@@ -335,7 +334,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                             mobile = binding.donorMobileEt.text.toString(),
                                             address = fullAddress,
                                             photo = base64Photo,
-                                            mobileVerified = mobileVerified,
+                                            mobileVerified = isMobileVerified,
                                             latitude = latitude,
                                             longitude = longitude
                                         )
