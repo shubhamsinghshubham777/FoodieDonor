@@ -108,7 +108,16 @@ class VerifyMobileActivity : AppCompatActivity() {
     private fun otpConfirmed() {
         val intent = Intent()
         intent.putExtra("isMobileVerified", true)
-        setResult(RESULT_OK, intent)
+        setResult(RESULT_FIRST_USER, intent)
+        auth.signOut()
+//        onActivityResult(112, RESULT_OK, intent)
+        finish()
+    }
+
+    private fun otpNotConfirmed() {
+        val intent = Intent()
+        intent.putExtra("isMobileVerified", false)
+        setResult(RESULT_CANCELED, intent)
         auth.signOut()
 //        onActivityResult(112, RESULT_OK, intent)
         finish()
@@ -118,16 +127,31 @@ class VerifyMobileActivity : AppCompatActivity() {
         Firebase.auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val user = task.result?.user
-                    otpConfirmed()
-                    Log.d(TAG, "signInWithCredential:success")
-                    MotionToast.createColorToast(
-                        this, "OTP Verification Successful!",
-                        MotionToast.TOAST_SUCCESS,
-                        MotionToast.GRAVITY_BOTTOM,
-                        MotionToast.LONG_DURATION,
-                        ResourcesCompat.getFont(this, R.font.helvetica_regular)
-                    )
+                    val isNewUser = task.result.additionalUserInfo?.isNewUser
+                    Log.d(TAG, "Is this a new user?: $isNewUser")
+
+                    if(isNewUser == true) {
+                        otpConfirmed()
+                        Log.d(TAG, "signInWithCredential:success")
+                        MotionToast.createColorToast(
+                            this, "OTP Verification Successful!",
+                            MotionToast.TOAST_SUCCESS,
+                            MotionToast.GRAVITY_BOTTOM,
+                            MotionToast.LONG_DURATION,
+                            ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                        )
+                    } else if(isNewUser == false) {
+                        MotionToast.createColorToast(
+                            this, "This number already exists!",
+                            MotionToast.TOAST_WARNING,
+                            MotionToast.GRAVITY_BOTTOM,
+                            MotionToast.LONG_DURATION,
+                            ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                        )
+
+                        otpNotConfirmed()
+                    }
+
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {

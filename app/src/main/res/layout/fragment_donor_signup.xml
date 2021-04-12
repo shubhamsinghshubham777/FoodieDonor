@@ -237,11 +237,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:enabled="false"
                 android:text="Sign Up"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/elasticLayout3" />
+                app:layout_constraintTop_toBottomOf="@+id/donorSignupLoaderAnimationLottie" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieMobileVerification"
@@ -261,6 +262,20 @@
                 app:layout_constraintEnd_toEndOf="@+id/lottieMobileVerification"
                 app:layout_constraintStart_toStartOf="@+id/lottieMobileVerification"
                 app:layout_constraintTop_toBottomOf="@+id/lottieMobileVerification" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/donorSignupLoaderAnimationLottie"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/elasticLayout3"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_speed="0.75" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

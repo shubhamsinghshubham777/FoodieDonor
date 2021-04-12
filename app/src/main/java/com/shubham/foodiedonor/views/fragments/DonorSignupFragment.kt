@@ -33,7 +33,7 @@ import com.shubham.foodiedonor.views.HomeActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import www.sanju.motiontoast.MotionToast
 
-class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
+class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
 //    private var binding: FragmentDonorSignupBinding by viewBinding()
 
@@ -168,8 +168,15 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
 //                lekuPoi = data.getParcelableExtra<LekuPoi>(LEKU_POI)
             }
 
-            if(data?.extras != null && data.getBooleanExtra("isMobileVerified", false)) {
-                isMobileVerified = true
+
+        }
+
+        if(resultCode == Activity.RESULT_FIRST_USER) {
+
+            isMobileVerified = true
+
+            if(data?.extras != null) {
+                isMobileVerified = data.getBooleanExtra("isMobileVerified", false)
                 binding.lottieMobileVerification.apply {
                     setAnimation(R.raw.verified)
                     speed = 0.5f
@@ -179,8 +186,10 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
                     isFocusable = false
                     binding.donorMobileEt.isClickable = false
                     binding.donorMobileEt.isFocusable = false
+                    Log.d(TAG, "Result First User")
                 }
             }
+
         }
 
         if(resultCode == Activity.RESULT_CANCELED) {
@@ -308,6 +317,8 @@ class DonorSignupFragment : Fragment(R.layout.fragment_signup_chooser) {
             binding.donorSignupBtn.apply {
                 isEnabled = true
                 setOnClickListener {
+
+                    binding.donorSignupLoaderAnimationLottie.visibility = View.VISIBLE
                     //make call to firebase
 
                     Firebase.auth.createUserWithEmailAndPassword(binding.donorEmailEt.text.toString(), binding.donorPasswordEt.text.toString())
