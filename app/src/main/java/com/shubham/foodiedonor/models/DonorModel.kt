@@ -8,5 +8,6 @@ data class DonorModel(
     val photo: String,
     val mobileVerified: Boolean,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val type: String = "donor"
 )

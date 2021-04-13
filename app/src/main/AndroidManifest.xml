@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodieDonor">
-        <activity android:name=".views.VerifyMobileActivity"></activity>
+        <activity android:name=".views.receiver.ReceiverHomeActivity"></activity>
+        <activity android:name=".views.VerifyMobileActivity" />
         <activity android:name=".views.SignupActivity" />
         <activity android:name=".views.LoginActivity" />
         <activity android:name=".views.HomeActivity" />
