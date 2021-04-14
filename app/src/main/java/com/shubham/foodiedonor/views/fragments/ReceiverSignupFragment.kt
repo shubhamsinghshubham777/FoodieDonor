@@ -24,13 +24,10 @@ import com.schibstedspain.leku.*
 import com.schibstedspain.leku.locale.SearchZoneRect
 import com.shubham.foodiedonor.BuildConfig
 import com.shubham.foodiedonor.R
-import com.shubham.foodiedonor.databinding.FragmentDonorSignupBinding
 import com.shubham.foodiedonor.databinding.FragmentReceiverSignupBinding
-import com.shubham.foodiedonor.models.DonorModel
 import com.shubham.foodiedonor.models.ReceiverModel
-import com.shubham.foodiedonor.views.HomeActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
-import com.shubham.foodiedonor.views.receiver.ReceiverHomeActivity
+import com.shubham.foodiedonor.views.ReceiverHomeActivity
 import www.sanju.motiontoast.MotionToast
 
 

@@ -23,12 +23,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodieDonor">
-        <activity android:name=".views.receiver.ReceiverHomeActivity"></activity>
+        <activity android:name=".views.ReceiverHomeActivity"/>
         <activity android:name=".views.VerifyMobileActivity" />
         <activity android:name=".views.SignupActivity" />
-        <activity android:name=".views.LoginActivity" />
-        <activity android:name=".views.HomeActivity" />
-        <activity android:name=".views.MainActivity">
+        <activity android:name=".views.LoginActivity"/>
+        <activity android:name=".views.DonorHomeActivity"/>
+        <activity android:name=".views.MainActivity" android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

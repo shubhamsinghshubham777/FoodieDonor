@@ -14,12 +14,6 @@ import com.google.firebase.ktx.Firebase
 import com.raywenderlich.android.validatetor.ValidateTor
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityLoginBinding
-import com.shubham.foodiedonor.views.receiver.ReceiverHomeActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import www.sanju.motiontoast.MotionToast
 
 class LoginActivity : AppCompatActivity() {
@@ -107,12 +101,14 @@ class LoginActivity : AppCompatActivity() {
                                                             val type = document.getString("type")
                                                             Log.d(TAG, "onCreateType: $type")
                                                             if (type == "receiver") {
-                                                                startActivity(
-                                                                    Intent(
-                                                                        this@LoginActivity,
-                                                                        ReceiverHomeActivity::class.java
-                                                                    )
+
+                                                                val intent = Intent(
+                                                                    this@LoginActivity,
+                                                                    ReceiverHomeActivity::class.java
                                                                 )
+                                                                intent.flags =
+                                                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                                startActivity(intent)
                                                             }
                                                         }
                                                     }
@@ -123,12 +119,15 @@ class LoginActivity : AppCompatActivity() {
                                                 val type = document.getString("type")
                                                 Log.d(TAG, "onCreateType: $type")
                                                 if (type == "donor") {
-                                                    startActivity(
-                                                        Intent(
-                                                            this@LoginActivity,
-                                                            HomeActivity::class.java
-                                                        )
+
+                                                    val intent = Intent(
+                                                        this@LoginActivity,
+                                                        DonorHomeActivity::class.java
                                                     )
+                                                    intent.flags =
+                                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                    startActivity(intent)
+
                                                 }
                                             }
                                         }

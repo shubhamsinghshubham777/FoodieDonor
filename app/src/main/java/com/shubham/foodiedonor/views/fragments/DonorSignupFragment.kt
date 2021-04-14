@@ -3,15 +3,12 @@ package com.shubham.foodiedonor.views.fragments
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.location.Address
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.viewbinding.library.fragment.viewBinding
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -29,13 +26,11 @@ import com.shubham.foodiedonor.BuildConfig
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorSignupBinding
 import com.shubham.foodiedonor.models.DonorModel
-import com.shubham.foodiedonor.views.HomeActivity
+import com.shubham.foodiedonor.views.DonorHomeActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import www.sanju.motiontoast.MotionToast
 
 class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
-
-//    private var binding: FragmentDonorSignupBinding by viewBinding()
 
     private var _binding: FragmentDonorSignupBinding? = null
     private val binding get() = _binding!!
@@ -370,7 +365,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                             startActivity(
                                                 Intent(
                                                     requireActivity(),
-                                                    HomeActivity::class.java
+                                                    DonorHomeActivity::class.java
                                                 )
                                             )
                                         } else {

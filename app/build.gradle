@@ -95,4 +95,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.3'
 
+    //Smart Tab Layout
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
 }

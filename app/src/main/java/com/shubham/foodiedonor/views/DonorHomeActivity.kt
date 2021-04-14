@@ -7,11 +7,11 @@ import android.viewbinding.library.activity.viewBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.shubham.foodiedonor.R
-import com.shubham.foodiedonor.databinding.ActivityHomeBinding
+import com.shubham.foodiedonor.databinding.ActivityDonorHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class DonorHomeActivity : AppCompatActivity() {
 
-    private val binding: ActivityHomeBinding by viewBinding()
+    private val binding: ActivityDonorHomeBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

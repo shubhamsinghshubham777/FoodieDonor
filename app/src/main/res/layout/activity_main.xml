@@ -21,12 +21,33 @@
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
         android:text="Please wait while we load your app"
-        app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView3"
-        app:layout_constraintStart_toStartOf="@+id/lottieAnimationView3"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView3" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sc_black"
+        android:text="WELCOME"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="50sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/lottieAnimationView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

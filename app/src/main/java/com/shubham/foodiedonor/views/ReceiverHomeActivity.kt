@@ -1,4 +1,4 @@
-package com.shubham.foodiedonor.views.receiver
+package com.shubham.foodiedonor.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.viewbinding.library.activity.viewBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityReceiverHomeBinding
-import com.shubham.foodiedonor.views.LoginActivity
 
 class ReceiverHomeActivity : AppCompatActivity() {
 
