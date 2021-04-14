@@ -17,6 +17,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_signupChooserFragment_to_receiverSignupFragment"
+            app:destination="@id/receiverSignupFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/donorSignupFragment"
@@ -25,6 +32,19 @@
         tools:layout="@layout/fragment_donor_signup">
         <action
             android:id="@+id/action_donorSignupFragment_to_signupChooserFragment"
+            app:destination="@id/signupChooserFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/receiverSignupFragment"
+        android:name="com.shubham.foodiedonor.views.fragments.receiverSignupFragment"
+        android:label="fragment_receiver_signup"
+        tools:layout="@layout/fragment_receiver_signup">
+        <action
+            android:id="@+id/action_receiverSignupFragment_to_signupChooserFragment"
             app:destination="@id/signupChooserFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"

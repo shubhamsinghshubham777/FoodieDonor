@@ -36,13 +36,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.emailET.doOnTextChanged { text, start, before, count ->
-            if(validateTor.isEmpty(text.toString())) {
+            if (validateTor.isEmpty(text.toString())) {
                 binding.emailLayout.error = getString(R.string.required_field)
                 isEmailValid = false
                 unlockLoginButton()
             } else {
 
-                if(validateTor.isEmail(text.toString())) {
+                if (validateTor.isEmail(text.toString())) {
                     binding.emailLayout.error = null
                     isEmailValid = true
                     unlockLoginButton()
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.passwordET.doOnTextChanged { text, start, before, count ->
-            if(validateTor.isEmpty(text.toString())) {
+            if (validateTor.isEmpty(text.toString())) {
                 binding.passwordLayout.error = getString(R.string.required_field)
                 isPasswordValid = false
                 unlockLoginButton()
@@ -73,48 +73,84 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun unlockLoginButton() {
-        if(isEmailValid && isPasswordValid) {
+        if (isEmailValid && isPasswordValid) {
             binding.loginBtn.apply {
                 isEnabled = true
                 setOnClickListener {
 
                     binding.loadingAnimation.visibility = View.VISIBLE
 
-                    Firebase.auth.signInWithEmailAndPassword(binding.emailET.text.toString(), binding.passwordET.text.toString())
-                            .addOnCompleteListener {
-                                if(it.isSuccessful) {
+                    Firebase.auth.signInWithEmailAndPassword(
+                        binding.emailET.text.toString(),
+                        binding.passwordET.text.toString()
+                    )
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
 
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        val querySnapshot = Firebase.firestore.collection("donors")
-                                            .whereEqualTo("email", it.result.user?.email)
-                                            .get()
-                                            .await()
+                                val donorCollectionRef = Firebase.firestore.collection("users")
+                                    .document("allusers").collection("donors")
+                                    .whereEqualTo("email", Firebase.auth.currentUser?.email)
+                                donorCollectionRef.get()
+                                    .addOnCompleteListener { donorTask ->
+                                        if (donorTask.result.isEmpty) {
+                                            Log.d(TAG, "onCreate: Donor does not exist!")
+                                            val receiverCollectionRef =
+                                                Firebase.firestore.collection("users")
+                                                    .document("allusers").collection("receivers")
+                                            receiverCollectionRef.get()
+                                                .addOnCompleteListener { task ->
+                                                    if (task.result.isEmpty) {
+                                                        Log.d(
+                                                            TAG,
+                                                            "onCreate: Receiver does not exist!"
+                                                        )
+                                                    } else {
+                                                        for (document in task.result.documents) {
+                                                            val type = document.getString("type")
+                                                            Log.d(TAG, "onCreateType: $type")
+                                                            if (type == "receiver") {
+                                                                startActivity(
+                                                                    Intent(
+                                                                        this@LoginActivity,
+                                                                        ReceiverHomeActivity::class.java
+                                                                    )
+                                                                )
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                        } else {
 
-                                        for(document in querySnapshot.documents) {
-                                            val personType = document.getString("type")
-                                            personType1 = personType!!
-                                            Log.d(TAG, "Person Type: $personType1")
-
-                                            if(personType == "donor") {
-                                                binding.loadingAnimation.visibility = View.GONE
-                                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                                                finish()
-                                            } else {
-                                                startActivity(Intent(this@LoginActivity, ReceiverHomeActivity::class.java))
-                                                finish()
+                                            for (document in donorTask.result.documents) {
+                                                val type = document.getString("type")
+                                                Log.d(TAG, "onCreateType: $type")
+                                                if (type == "donor") {
+                                                    startActivity(
+                                                        Intent(
+                                                            this@LoginActivity,
+                                                            HomeActivity::class.java
+                                                        )
+                                                    )
+                                                }
                                             }
                                         }
-
                                     }
-                                } else {
-                                    binding.loadingAnimation.visibility = View.GONE
-                                    MotionToast.createColorToast(this@LoginActivity,"Couldn't login. Check credentials!",
-                                            MotionToast.TOAST_ERROR,
-                                            MotionToast.GRAVITY_BOTTOM,
-                                            MotionToast.SHORT_DURATION,
-                                            ResourcesCompat.getFont(this@LoginActivity,R.font.helvetica_regular))
-                                }
+
+                            } else {
+                                binding.loadingAnimation.visibility = View.GONE
+
+                                MotionToast.createColorToast(
+                                    this@LoginActivity, "Login failed! Check your credentials.",
+                                    MotionToast.TOAST_WARNING,
+                                    MotionToast.GRAVITY_BOTTOM,
+                                    MotionToast.LONG_DURATION,
+                                    ResourcesCompat.getFont(
+                                        this@LoginActivity,
+                                        R.font.helvetica_regular
+                                    )
+                                )
                             }
+                        }
                 }
             }
         } else {

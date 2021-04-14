@@ -21,6 +21,11 @@ class SignupChooserFragment : Fragment(R.layout.fragment_signup_chooser) {
             val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToDonorSignupFragment()
             findNavController().navigate(action)
         }
+
+        binding.receiverIv.setOnClickListener {
+            val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToReceiverSignupFragment()
+            findNavController().navigate(action)
+        }
     }
 
 }

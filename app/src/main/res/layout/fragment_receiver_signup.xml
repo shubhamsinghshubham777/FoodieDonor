@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.receiverSignupFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:text="Welcome Receiver!"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please fill up all the details to complete the signup"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverNameLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:hint="Organisation Name"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverEmailLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="Organisation Email"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverNameLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverEmailEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverPasswordLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="Password"
+                app:endIconMode="password_toggle"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverEmailLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverPasswordEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverRepeatPasswordLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:hint="Repeat Password"
+                app:endIconMode="password_toggle"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverPasswordLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverRepeatPasswordEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverMobileLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:hint="Contact Number"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toStartOf="@+id/guideline8"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/receiverRepeatPasswordLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverMobileEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
+            <ImageView
+                android:id="@+id/receiverAddressIv"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/leku_ic_poi"
+                app:layout_constraintEnd_toEndOf="@+id/receiverRepeatPasswordLayout"
+                app:layout_constraintTop_toTopOf="@+id/receiverAddressLayout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverAddressLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="Organisation Address"
+                app:layout_constraintEnd_toStartOf="@+id/receiverAddressIv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverMobileLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverAddressEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/receiverCinLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="Organisation CIN Number"
+                app:counterEnabled="true"
+                app:counterMaxLength="21"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverAddressLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiverCinEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="21" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Get Address"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/receiverAddressLayout"
+                app:layout_constraintEnd_toEndOf="@+id/receiverAddressIv"
+                app:layout_constraintStart_toStartOf="@+id/receiverAddressIv"
+                app:layout_constraintTop_toBottomOf="@+id/receiverAddressIv" />
+
+            <com.skydoves.elasticviews.ElasticLayout
+                android:id="@+id/elasticLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/receiverAddressLayout"
+                app:layout_constraintTop_toBottomOf="@+id/receiverCinLayout"
+                app:layout_duration="400"
+                app:layout_scale="0.75">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/receiverProfilePhoto"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:background="@drawable/ic_launcher_foreground"
+                    app:civ_border_color="@color/black"
+                    app:civ_border_width="2dp" />
+
+            </com.skydoves.elasticviews.ElasticLayout>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Select organisation logo"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/elasticLayout3"
+                app:layout_constraintEnd_toEndOf="@+id/textView9"
+                app:layout_constraintStart_toEndOf="@+id/elasticLayout3"
+                app:layout_constraintTop_toTopOf="@+id/elasticLayout3" />
+
+            <Button
+                android:id="@+id/receiverSignupBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:enabled="false"
+                android:text="Sign Up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverSignupLoaderAnimationLottie" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieMobileVerification"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="@+id/receiverRepeatPasswordLayout"
+                app:layout_constraintStart_toStartOf="@+id/receiverAddressIv"
+                app:layout_constraintTop_toTopOf="@+id/receiverMobileLayout"
+                app:lottie_rawRes="@raw/notverified" />
+
+            <TextView
+                android:id="@+id/lottieMobileVerificationTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to verify"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@+id/lottieMobileVerification"
+                app:layout_constraintStart_toStartOf="@+id/lottieMobileVerification"
+                app:layout_constraintTop_toBottomOf="@+id/lottieMobileVerification" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/receiverSignupLoaderAnimationLottie"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/elasticLayout3"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_speed="0.75" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

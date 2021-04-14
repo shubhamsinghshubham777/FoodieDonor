@@ -3,15 +3,12 @@ package com.shubham.foodiedonor.views.fragments
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.location.Address
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.viewbinding.library.fragment.viewBinding
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -28,16 +25,20 @@ import com.schibstedspain.leku.locale.SearchZoneRect
 import com.shubham.foodiedonor.BuildConfig
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorSignupBinding
+import com.shubham.foodiedonor.databinding.FragmentReceiverSignupBinding
 import com.shubham.foodiedonor.models.DonorModel
+import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.views.HomeActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
+import com.shubham.foodiedonor.views.receiver.ReceiverHomeActivity
 import www.sanju.motiontoast.MotionToast
 
-class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
-//    private var binding: FragmentDonorSignupBinding by viewBinding()
+class receiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
 
-    private var _binding: FragmentDonorSignupBinding? = null
+//    private var binding: FragmentReceiverSignupBinding by viewBinding()
+
+    private var _binding: FragmentReceiverSignupBinding? = null
     private val binding get() = _binding!!
 
     private var isNameValid = false
@@ -48,11 +49,12 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
     private var isMobileVerified = false
     private var isAddressValid = false
     private var isProfilePhotoValid = false
+    private var isCinValid = false
     private val validateTor = ValidateTor()
     private val validateTorMobileNumber = RegexMatcher()
     private val indianMobileNumberRegex = Regex("^[6-9]\\d{9}\$")
     private lateinit var base64Photo: String
-    private val TAG = "DonorSignupFragmentTAG"
+    private val TAG = "receiverSignupFragmentTAG"
     private var latitude = 0.0
     private var longitude = 0.0
     private var address = ""
@@ -68,7 +70,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDonorSignupBinding.inflate(inflater, container, false)
+        _binding = FragmentReceiverSignupBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -86,7 +88,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
         observeAllFields()
 
-        binding.donorProfilePhoto.setOnClickListener {
+        binding.receiverProfilePhoto.setOnClickListener {
             ImagePicker.with(this)
                 .cropSquare()
                 .compress(1024)
@@ -94,7 +96,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                 .start()
         }
 
-        binding.donorAddressIv.setOnClickListener {
+        binding.receiverAddressIv.setOnClickListener {
             val locationPickerIntent = LocationPickerActivity.Builder()
                 .withLocation(28.665050640866188, 77.14356996310623)
                 .withGeolocApiKey(BuildConfig.apiKey)
@@ -127,8 +129,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
         if (resultCode == Activity.RESULT_OK) {
             val fileUri = data?.data
-            binding.donorProfilePhoto.setImageURI(fileUri)
-            isProfilePhotoValid = true
+            binding.receiverProfilePhoto.setImageURI(fileUri)
 
             val inputStream = fileUri?.let { context?.contentResolver?.openInputStream(it) }
             val bitmap = BitmapFactory.decodeStream(inputStream)
@@ -136,7 +137,8 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                 if (it != null) {
                     base64Photo = it
                     isProfilePhotoValid = true
-                    Log.d(TAG, "base64photo is: $base64Photo")
+                    unlockSignupButton()
+                    Log.d(TAG, "base64photo is: $base64Photo $isProfilePhotoValid")
                 }
             }
 
@@ -153,9 +155,9 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                 timeZoneId = data.getStringExtra(TIME_ZONE_ID).toString()
                 timeZoneDisplayName = data.getStringExtra(TIME_ZONE_DISPLAY_NAME).toString()
 
-                binding.donorAddressEt.setText(fullAddress)
-                if (!validateTor.isEmpty(binding.donorAddressEt.text.toString())) {
-                    binding.donorAddressLayout.error = null
+                binding.receiverAddressEt.setText(fullAddress)
+                if (!validateTor.isEmpty(binding.receiverAddressEt.text.toString())) {
+                    binding.receiverAddressLayout.error = null
                     isAddressValid = true
                 }
 
@@ -186,8 +188,8 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                     binding.lottieMobileVerificationTv.text = "Mobile Verified!"
                     isClickable = false
                     isFocusable = false
-                    binding.donorMobileEt.isClickable = false
-                    binding.donorMobileEt.isFocusable = false
+                    binding.receiverMobileEt.isClickable = false
+                    binding.receiverMobileEt.isFocusable = false
                     Log.d(TAG, "Result First User")
                 }
             }
@@ -201,39 +203,39 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
     }
 
     private fun observeAllFields() {
-        binding.donorNameEt.doOnTextChanged { text, start, before, count ->
+        binding.receiverNameEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
-                binding.donorNameLayout.error = getString(R.string.required_field)
+                binding.receiverNameLayout.error = getString(R.string.required_field)
                 isNameValid = false
                 unlockSignupButton()
             } else {
-                binding.donorNameLayout.error = null
+                binding.receiverNameLayout.error = null
                 isNameValid = true
                 unlockSignupButton()
             }
         }
 
-        binding.donorEmailEt.doOnTextChanged { text, start, before, count ->
+        binding.receiverEmailEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
-                binding.donorEmailLayout.error = getString(R.string.required_field)
+                binding.receiverEmailLayout.error = getString(R.string.required_field)
                 isEmailValid = false
                 unlockSignupButton()
             } else {
                 if (validateTor.isEmail(text.toString())) {
-                    binding.donorEmailLayout.error = null
+                    binding.receiverEmailLayout.error = null
                     isEmailValid = true
                     unlockSignupButton()
                 } else {
-                    binding.donorEmailLayout.error = getString(R.string.email_error)
+                    binding.receiverEmailLayout.error = getString(R.string.email_error)
                     isEmailValid = false
                     unlockSignupButton()
                 }
             }
         }
 
-        binding.donorPasswordEt.doOnTextChanged { text, start, before, count ->
+        binding.receiverPasswordEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
-                binding.donorPasswordLayout.helperText = getString(R.string.required_field)
+                binding.receiverPasswordLayout.helperText = getString(R.string.required_field)
                 isPasswordValid = false
                 unlockSignupButton()
             } else {
@@ -242,29 +244,29 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                     && validateTor.hasAtleastOneDigit(text.toString())
                     && validateTor.hasAtleastOneSpecialCharacter(text.toString())
                 ) {
-                    binding.donorPasswordLayout.helperText = null
+                    binding.receiverPasswordLayout.helperText = null
                     isPasswordValid = true
                     unlockSignupButton()
                 } else {
-                    binding.donorPasswordLayout.helperText = getString(R.string.password_error)
+                    binding.receiverPasswordLayout.helperText = getString(R.string.password_error)
                     isPasswordValid = false
                     unlockSignupButton()
                 }
             }
         }
 
-        binding.donorRepeatPasswordEt.doOnTextChanged { text, start, before, count ->
+        binding.receiverRepeatPasswordEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
-                binding.donorRepeatPasswordLayout.helperText = getString(R.string.required_field)
+                binding.receiverRepeatPasswordLayout.helperText = getString(R.string.required_field)
                 isRepeatPasswordValid = false
                 unlockSignupButton()
             } else {
-                if (text.toString() == binding.donorPasswordEt.text.toString()) {
-                    binding.donorRepeatPasswordLayout.helperText = null
+                if (text.toString() == binding.receiverPasswordEt.text.toString()) {
+                    binding.receiverRepeatPasswordLayout.helperText = null
                     isRepeatPasswordValid = true
                     unlockSignupButton()
                 } else {
-                    binding.donorRepeatPasswordLayout.helperText =
+                    binding.receiverRepeatPasswordLayout.helperText =
                         getString(R.string.repeat_password_error)
                     isRepeatPasswordValid = false
                     unlockSignupButton()
@@ -272,9 +274,9 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
             }
         }
 
-        binding.donorMobileEt.doOnTextChanged { text, start, before, count ->
+        binding.receiverMobileEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
-                binding.donorMobileLayout.error = getString(R.string.required_field)
+                binding.receiverMobileLayout.error = getString(R.string.required_field)
                 isMobileValid = false
                 unlockSignupButton()
                 binding.lottieMobileVerification.isClickable = false
@@ -285,7 +287,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                         indianMobileNumberRegex.toString()
                     )
                 ) {
-                    binding.donorMobileLayout.error = null
+                    binding.receiverMobileLayout.error = null
                     isMobileValid = true
                     binding.lottieMobileVerification.isClickable = true
                     binding.lottieMobileVerification.isFocusable = true
@@ -295,11 +297,11 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                             requireContext().applicationContext,
                             VerifyMobileActivity::class.java
                         )
-                        intent.putExtra("mobileNumber", binding.donorMobileEt.text.toString())
+                        intent.putExtra("mobileNumber", binding.receiverMobileEt.text.toString())
                         startActivityForResult(intent, VERIFY_OTP_REQUEST_CODE)
                     }
                 } else {
-                    binding.donorMobileLayout.error = getString(R.string.mobile_error)
+                    binding.receiverMobileLayout.error = getString(R.string.mobile_error)
                     isMobileValid = false
                     unlockSignupButton()
                     binding.lottieMobileVerification.isClickable = false
@@ -308,50 +310,72 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
             }
         }
 
-        binding.donorAddressEt.doOnTextChanged { text, start, before, count ->
+        binding.receiverAddressEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
-                binding.donorAddressLayout.error = getString(R.string.required_field)
+                binding.receiverAddressLayout.error = getString(R.string.required_field)
                 isAddressValid = false
                 unlockSignupButton()
             } else {
-                binding.donorAddressLayout.error = null
+                binding.receiverAddressLayout.error = null
                 isAddressValid = true
                 unlockSignupButton()
+            }
+        }
+
+        binding.receiverCinEt.doOnTextChanged { text, start, before, count ->
+            if (validateTor.isEmpty(text.toString())) {
+                binding.receiverCinLayout.error = getString(R.string.required_field)
+                isCinValid = false
+                unlockSignupButton()
+            } else {
+
+                if (text.toString().length == 21) {
+                    binding.receiverCinLayout.error = null
+                    isCinValid = true
+                    unlockSignupButton()
+                } else {
+                    binding.receiverCinLayout.error = getString(R.string.cin_error)
+                    isCinValid = false
+                    unlockSignupButton()
+                }
+
             }
         }
 
     }
 
     private fun unlockSignupButton() {
-        if (isNameValid && isEmailValid && isPasswordValid && isRepeatPasswordValid && isMobileValid && isAddressValid && isProfilePhotoValid) {
-            binding.donorSignupBtn.apply {
+        Log.d(TAG, "unlockSignupButton: $isNameValid && $isEmailValid && $isPasswordValid && $isRepeatPasswordValid && $isMobileValid && $isAddressValid && $isProfilePhotoValid && $isCinValid")
+        if (isNameValid && isEmailValid && isPasswordValid && isRepeatPasswordValid && isMobileValid && isAddressValid && isProfilePhotoValid && isCinValid) {
+            binding.receiverSignupBtn.apply {
                 isEnabled = true
                 setOnClickListener {
 
-                    binding.donorSignupLoaderAnimationLottie.visibility = View.VISIBLE
+                    binding.receiverSignupLoaderAnimationLottie.visibility = View.VISIBLE
                     //make call to firebase
 
                     Firebase.auth.createUserWithEmailAndPassword(
-                        binding.donorEmailEt.text.toString(),
-                        binding.donorPasswordEt.text.toString()
+                        binding.receiverEmailEt.text.toString(),
+                        binding.receiverPasswordEt.text.toString()
                     )
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 //save data to firestore
 
                                 val db = Firebase.firestore
-                                db.collection("users").document("allusers").collection("donors")
-                                    .document(binding.donorMobileEt.text.toString())
+                                db.collection("users").document("allusers").collection("receivers")
+                                    .document(binding.receiverMobileEt.text.toString())
                                     .set(
-                                        DonorModel(
-                                            name = binding.donorNameEt.text.toString(),
-                                            email = binding.donorEmailEt.text.toString(),
-                                            mobile = binding.donorMobileEt.text.toString(),
+                                        ReceiverModel(
+                                            name = binding.receiverNameEt.text.toString(),
+                                            email = binding.receiverEmailEt.text.toString(),
+                                            mobile = binding.receiverMobileEt.text.toString(),
                                             address = fullAddress,
                                             photo = base64Photo,
                                             mobileVerified = isMobileVerified,
                                             latitude = latitude,
-                                            longitude = longitude
+                                            longitude = longitude,
+                                            cinNumber = binding.receiverCinEt.text.toString()
                                         )
                                     )
                                     .addOnCompleteListener { firestoreTask ->
@@ -370,7 +394,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                             startActivity(
                                                 Intent(
                                                     requireActivity(),
-                                                    HomeActivity::class.java
+                                                    ReceiverHomeActivity::class.java
                                                 )
                                             )
                                         } else {
@@ -399,7 +423,22 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                             R.font.helvetica_regular
                                         )
                                     )
+                                } else if(it.exception?.localizedMessage == "The email address is badly formatted.") {
+                                    binding.receiverSignupLoaderAnimationLottie.visibility = View.GONE
+                                    MotionToast.createColorToast(
+                                        requireActivity(),
+                                        it.exception?.localizedMessage!!,
+                                        MotionToast.TOAST_ERROR,
+                                        MotionToast.GRAVITY_BOTTOM,
+                                        MotionToast.LONG_DURATION,
+                                        ResourcesCompat.getFont(
+                                            requireActivity(),
+                                            R.font.helvetica_regular
+                                        )
+                                    )
                                 } else {
+                                    Log.d(TAG, "unlockSignupButton: ${it.exception?.localizedMessage}")
+                                    binding.receiverSignupLoaderAnimationLottie.visibility = View.GONE
                                     MotionToast.createColorToast(
                                         requireActivity(),
                                         "Sign Up Failed! Please try again later.",
@@ -417,7 +456,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                 }
             }
         } else {
-            binding.donorSignupBtn.apply {
+            binding.receiverSignupBtn.apply {
                 isEnabled = false
             }
         }
