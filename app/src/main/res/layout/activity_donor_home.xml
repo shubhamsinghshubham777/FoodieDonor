@@ -38,16 +38,16 @@
             android:id="@+id/donorHomePageSmartTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:tabGravity="fill"
-            app:tabIconTint="@color/white"
-            app:tabIndicatorAnimationDuration="400"
+            app:tabIconTint="@color/black"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorColor="@color/red"
             app:tabInlineLabel="true"
             app:tabMode="fixed"
             app:tabRippleColor="@color/white"
+            app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
