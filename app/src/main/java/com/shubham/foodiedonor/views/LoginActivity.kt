@@ -87,16 +87,14 @@ class LoginActivity : AppCompatActivity() {
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
 
-                                val donorCollectionRef = Firebase.firestore.collection("users")
-                                    .document("allusers").collection("donors")
+                                val donorCollectionRef = Firebase.firestore.collection("donors")
                                     .whereEqualTo("email", Firebase.auth.currentUser?.email)
                                 donorCollectionRef.get()
                                     .addOnCompleteListener { donorTask ->
                                         if (donorTask.result.isEmpty) {
                                             Log.d(TAG, "onCreate: Donor does not exist!")
                                             val receiverCollectionRef =
-                                                Firebase.firestore.collection("users")
-                                                    .document("allusers").collection("receivers")
+                                                Firebase.firestore.collection("receivers")
                                             receiverCollectionRef.get()
                                                 .addOnCompleteListener { task ->
                                                     if (task.result.isEmpty) {

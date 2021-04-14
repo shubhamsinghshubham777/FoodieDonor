@@ -340,7 +340,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                 //save data to firestore
 
                                 val db = Firebase.firestore
-                                db.collection("users").document("allusers").collection("donors")
+                                db.collection("donors")
                                     .document(binding.donorMobileEt.text.toString())
                                     .set(
                                         DonorModel(

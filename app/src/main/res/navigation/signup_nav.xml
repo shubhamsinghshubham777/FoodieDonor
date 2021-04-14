@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/receiverSignupFragment"
-        android:name="com.shubham.foodiedonor.views.fragments.receiverSignupFragment"
+        android:name="com.shubham.foodiedonor.views.fragments.ReceiverSignupFragment"
         android:label="fragment_receiver_signup"
         tools:layout="@layout/fragment_receiver_signup">
         <action

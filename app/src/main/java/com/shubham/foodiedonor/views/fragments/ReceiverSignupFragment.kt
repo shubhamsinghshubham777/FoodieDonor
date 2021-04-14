@@ -34,7 +34,7 @@ import com.shubham.foodiedonor.views.receiver.ReceiverHomeActivity
 import www.sanju.motiontoast.MotionToast
 
 
-class receiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
+class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
 
 //    private var binding: FragmentReceiverSignupBinding by viewBinding()
 
@@ -363,7 +363,7 @@ class receiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                 //save data to firestore
 
                                 val db = Firebase.firestore
-                                db.collection("users").document("allusers").collection("receivers")
+                                db.collection("receivers")
                                     .document(binding.receiverMobileEt.text.toString())
                                     .set(
                                         ReceiverModel(
@@ -413,6 +413,7 @@ class receiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
 
                             } else {
                                 if (it.exception is FirebaseAuthUserCollisionException) {
+                                    binding.receiverSignupLoaderAnimationLottie.visibility = View.GONE
                                     MotionToast.createColorToast(
                                         requireActivity(), "Email already exists!",
                                         MotionToast.TOAST_WARNING,
