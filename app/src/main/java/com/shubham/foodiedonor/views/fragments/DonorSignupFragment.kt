@@ -128,7 +128,6 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
         if (resultCode == Activity.RESULT_OK) {
             val fileUri = data?.data
             binding.donorProfilePhoto.setImageURI(fileUri)
-            isProfilePhotoValid = true
 
             val inputStream = fileUri?.let { context?.contentResolver?.openInputStream(it) }
             val bitmap = BitmapFactory.decodeStream(inputStream)
@@ -136,6 +135,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                 if (it != null) {
                     base64Photo = it
                     isProfilePhotoValid = true
+                    unlockSignupButton()
                     Log.d(TAG, "base64photo is: $base64Photo")
                 }
             }
