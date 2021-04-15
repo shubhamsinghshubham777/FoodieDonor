@@ -23,12 +23,6 @@ class DonorHomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupViewPager()
-
-        binding.donorHomeSignoutBtn.setOnClickListener {
-            Firebase.auth.signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
     }
 
     private fun setupViewPager() {
@@ -36,7 +30,10 @@ class DonorHomeActivity : AppCompatActivity() {
         adapter.addFragment(DonorHomePageFragment(), "Home")
         adapter.addFragment(DonorNearbyReceiversFragment(), "Nearby Receivers")
         adapter.addFragment( DonorMyProfileFragment(), "Profile")
-        binding.donorHomePageViewPager.adapter = adapter
+        binding.donorHomePageViewPager.apply {
+            this.adapter = adapter
+            offscreenPageLimit = 3
+        }
         binding.donorHomePageSmartTabLayout.apply {
             setupWithViewPager(binding.donorHomePageViewPager)
             getTabAt(0)!!.setIcon(R.drawable.ic_home).text = "Home"
