@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.viewbinding.library.activity.viewBinding
 import androidx.core.view.get
+import androidx.viewpager.widget.ViewPager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.shubham.foodiedonor.R
@@ -13,6 +14,7 @@ import com.shubham.foodiedonor.views.fragments.donorHome.DonorHomePageFragment
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorMyProfileFragment
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorNearbyReceiversFragment
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorViewPagerAdapter
+import com.tuonbondol.keyboardutil.hideSoftKeyboard
 
 class DonorHomeActivity : AppCompatActivity() {
 
@@ -33,6 +35,24 @@ class DonorHomeActivity : AppCompatActivity() {
         binding.donorHomePageViewPager.apply {
             this.adapter = adapter
             offscreenPageLimit = 3
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    hideSoftKeyboard()
+                }
+
+                override fun onPageSelected(position: Int) {
+                    hideSoftKeyboard()
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    hideSoftKeyboard()
+                }
+
+            })
         }
         binding.donorHomePageSmartTabLayout.apply {
             setupWithViewPager(binding.donorHomePageViewPager)

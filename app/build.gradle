@@ -123,4 +123,17 @@ dependencies {
     //Shaped image view
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
 
+    //Keyboard show/hide library
+    implementation 'com.github.BondolTuon:KeyboardUtil:1.0.0'
+
+    //Spring animation library
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-dynamic-animation:25.3.0'
+
+    //Auto sms catch library
+    implementation 'com.github.stfalcon-studio:SmsVerifyCatcher:0.3.3'
+
+    //KPermissions Library
+    implementation 'com.github.fondesa:kpermissions:3.2.1'
+
 }

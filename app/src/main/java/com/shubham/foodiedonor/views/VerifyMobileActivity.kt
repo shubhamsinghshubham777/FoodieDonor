@@ -1,20 +1,29 @@
 package com.shubham.foodiedonor.views
 
+import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.viewbinding.library.activity.viewBinding
+import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
+import com.fondesa.kpermissions.allGranted
+import com.fondesa.kpermissions.extension.permissionsBuilder
+import com.fondesa.kpermissions.extension.send
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.raywenderlich.android.validatetor.ValidateTor
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityVerifyMobileBinding
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
+import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
 import java.util.concurrent.TimeUnit
 
@@ -26,12 +35,23 @@ class VerifyMobileActivity : AppCompatActivity() {
     private val TAG = "VerifyMobileActivityTAG"
     private lateinit var verificationId1: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+    private lateinit var smsVerifyCatcher: SmsVerifyCatcher
+    private var mobileNumber: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val mobileNumber = "+91" + intent.getStringExtra("mobileNumber")
+        smsVerifyCatcher = SmsVerifyCatcher(this, OnSmsCatchListener {
+            binding.otpEt.setText(it.toString())
+            binding.lottieAnimationView4.visibility = View.VISIBLE
+            val code = binding.otpEt.text.toString()
+            val credential = PhoneAuthProvider.getCredential(verificationId1, code)
+            signInWithPhoneAuthCredential(credential)
+            binding.verifyOtpBtn.isEnabled = false
+        })
+
+        mobileNumber = "+91" + intent.getStringExtra("mobileNumber")
         binding.otpMobileTv.text = "Please enter the OTP sent to $mobileNumber"
 
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -65,6 +85,7 @@ class VerifyMobileActivity : AppCompatActivity() {
                     isEnabled = true
 
                     setOnClickListener {
+                        hideSoftKeyboard()
                         binding.lottieAnimationView4.visibility = View.VISIBLE
                         val code = binding.otpEt.text.toString()
                         val credential = PhoneAuthProvider.getCredential(verificationId1, code)
@@ -93,23 +114,85 @@ class VerifyMobileActivity : AppCompatActivity() {
 
         }
 
-        auth = Firebase.auth
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(mobileNumber)
-            .setTimeout(120L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(callbacks)
-            .build()
+        watchOtpEt()
 
-        PhoneAuthProvider.verifyPhoneNumber(options)
+        permissionsBuilder(Manifest.permission.READ_SMS).build().send() { result ->
+            if(result.allGranted()) {
+                auth = Firebase.auth
+                val options = PhoneAuthOptions.newBuilder(auth)
+                    .setPhoneNumber(mobileNumber)
+                    .setTimeout(120L, TimeUnit.SECONDS)
+                    .setActivity(this)
+                    .setCallbacks(callbacks)
+                    .build()
 
+                PhoneAuthProvider.verifyPhoneNumber(options)
+            } else {
+                MotionToast.createColorToast(
+                    this, "Please accept the permissions to continue!",
+                    MotionToast.TOAST_WARNING,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(
+                        this,
+                        R.font.helvetica_regular
+                    )
+                )
+            }
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        smsVerifyCatcher.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        smsVerifyCatcher.onStop()
+    }
+
+
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        auth = Firebase.auth
+//        val options = PhoneAuthOptions.newBuilder(auth)
+//            .setPhoneNumber(mobileNumber)
+//            .setTimeout(120L, TimeUnit.SECONDS)
+//            .setActivity(this)
+//            .setCallbacks(callbacks)
+//            .build()
+//
+//        PhoneAuthProvider.verifyPhoneNumber(options)
+//
+//    }
+
+    private fun watchOtpEt() {
+        val validateTor = ValidateTor()
+
+        binding.otpEt.doOnTextChanged { text, start, before, count ->
+            if(text.toString().length == 6) {
+                binding.verifyOtpBtn.isEnabled = true
+            } else {
+                binding.verifyOtpBtn.isEnabled = false
+            }
+        }
     }
 
     private fun otpConfirmed() {
         val intent = Intent()
         intent.putExtra("isMobileVerified", true)
         setResult(RESULT_FIRST_USER, intent)
-        auth.signOut()
+        if(intent.getStringExtra("instruction") != "doNotSignout") {
+            auth.signOut()
+        }
 //        onActivityResult(112, RESULT_OK, intent)
         finish()
     }
@@ -118,7 +201,9 @@ class VerifyMobileActivity : AppCompatActivity() {
         val intent = Intent()
         intent.putExtra("isMobileVerified", false)
         setResult(RESULT_CANCELED, intent)
-        auth.signOut()
+        if(intent.getStringExtra("instruction") != "doNotSignout") {
+            auth.signOut()
+        }
 //        onActivityResult(112, RESULT_OK, intent)
         finish()
     }

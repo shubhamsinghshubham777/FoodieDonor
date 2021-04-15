@@ -14,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 import com.raywenderlich.android.validatetor.ValidateTor
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityLoginBinding
+import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
 
 class LoginActivity : AppCompatActivity() {
@@ -71,6 +72,8 @@ class LoginActivity : AppCompatActivity() {
             binding.loginBtn.apply {
                 isEnabled = true
                 setOnClickListener {
+
+                    hideSoftKeyboard()
 
                     binding.loadingAnimation.visibility = View.VISIBLE
 

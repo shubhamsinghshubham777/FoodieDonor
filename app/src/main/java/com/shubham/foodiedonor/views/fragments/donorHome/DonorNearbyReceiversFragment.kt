@@ -30,17 +30,6 @@ class DonorNearbyReceiversFragment : Fragment(R.layout.fragment_donor_nearby_rec
 
             parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
 
-            MotionToast.createColorToast(
-                requireActivity(), "Page refreshed!.",
-                MotionToast.TOAST_SUCCESS,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(
-                    requireActivity(),
-                    R.font.helvetica_regular
-                )
-            )
-
             binding.donorNearbyReceiversSwipeRefreshLayout.isRefreshing = false
         }
     }
