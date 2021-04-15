@@ -120,4 +120,7 @@ dependencies {
     //Swipe Refresh Layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    //Shaped image view
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
+
 }

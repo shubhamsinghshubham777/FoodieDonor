@@ -28,7 +28,7 @@ class DonorHomeActivity : AppCompatActivity() {
     private fun setupViewPager() {
         val adapter = DonorViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(DonorHomePageFragment(), "Home")
-        adapter.addFragment(DonorNearbyReceiversFragment(), "Nearby Receivers")
+        adapter.addFragment(DonorNearbyReceiversFragment(), "Donate")
         adapter.addFragment( DonorMyProfileFragment(), "Profile")
         binding.donorHomePageViewPager.apply {
             this.adapter = adapter

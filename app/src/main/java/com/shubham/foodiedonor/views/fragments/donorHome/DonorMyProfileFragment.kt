@@ -42,10 +42,21 @@ class DonorMyProfileFragment : Fragment(R.layout.fragment_donor_my_profile) {
 
                     val donor = document.toObject(ReceiverModel::class.java)
 
+
+
                     val base64Photo = donor?.photo
                     Base64Image.decode(base64Photo) { bitmap ->
                         bitmap?.let { receivedPhoto ->
-                            binding.donorLoggedInProfilePhoto.setImageBitmap(receivedPhoto)
+
+                            binding.apply {
+                                donorLoggedInProfilePhoto.setImageBitmap(receivedPhoto)
+                                donorMyProfileImageViewLoader.visibility = View.GONE
+                                donorMyProfileNameTv.apply {
+                                    text = donor?.name
+                                    visibility = View.VISIBLE
+                                }
+                            }
+
                         }
                     }
                 }
@@ -70,6 +81,9 @@ class DonorMyProfileFragment : Fragment(R.layout.fragment_donor_my_profile) {
         }
 
         binding.donorMyProfileSwipeRefreshLayout.setOnRefreshListener {
+
+            parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
+
             MotionToast.createColorToast(
                 requireActivity(), "Page refreshed!.",
                 MotionToast.TOAST_SUCCESS,

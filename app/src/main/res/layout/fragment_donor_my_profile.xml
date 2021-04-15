@@ -27,17 +27,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
                     android:id="@+id/donorLoggedInProfilePhoto"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    app:civ_border_color="@color/black"
-                    app:civ_border_width="2dp"
-                    app:layout_constraintCircleRadius="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:siShape="@drawable/donor_profile_imageview_background" />
+
+                <TextView
+                    android:id="@+id/donorMyProfileNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:elevation="16dp"
+                    android:fontFamily="@font/alegreya_sans_sc_medium"
+                    android:outlineProvider="bounds"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/donorLoggedInProfilePhoto"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Shubham Singh" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/donorMyProfileImageViewLoader"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/donorLoggedInProfilePhoto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/donorLoggedInProfilePhoto"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading" />
 
                 <Button
                     android:id="@+id/donorProfileBtnSignout"
@@ -49,6 +77,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/donorLoggedInProfilePhoto" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/primaryColor"
+                    android:clickable="true"
+                    android:elevation="20dp"
+                    android:focusable="true"
+                    android:src="@drawable/ic_camera"
+                    android:translationZ="100dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/donorLoggedInProfilePhoto"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/donorLoggedInProfilePhoto" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

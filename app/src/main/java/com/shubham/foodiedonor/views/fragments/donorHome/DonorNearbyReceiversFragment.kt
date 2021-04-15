@@ -27,6 +27,9 @@ class DonorNearbyReceiversFragment : Fragment(R.layout.fragment_donor_nearby_rec
         super.onViewCreated(view, savedInstanceState)
 
         binding.donorNearbyReceiversSwipeRefreshLayout.setOnRefreshListener {
+
+            parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
+
             MotionToast.createColorToast(
                 requireActivity(), "Page refreshed!.",
                 MotionToast.TOAST_SUCCESS,

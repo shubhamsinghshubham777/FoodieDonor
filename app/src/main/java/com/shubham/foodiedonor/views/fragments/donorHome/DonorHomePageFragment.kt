@@ -27,6 +27,9 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.donorHomePageSwipeRefreshLayout.setOnRefreshListener {
+
+            parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
+
             MotionToast.createColorToast(
                 requireActivity(), "Page refreshed!.",
                 MotionToast.TOAST_SUCCESS,
