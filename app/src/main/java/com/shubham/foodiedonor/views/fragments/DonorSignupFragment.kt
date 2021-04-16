@@ -394,6 +394,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                             R.font.helvetica_regular
                                         )
                                     )
+                                    binding.donorSignupLoaderAnimationLottie.visibility = View.GONE
                                 } else {
                                     MotionToast.createColorToast(
                                         requireActivity(),

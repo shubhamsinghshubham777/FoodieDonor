@@ -154,14 +154,14 @@ class VerifyMobileActivity : AppCompatActivity() {
     }
 
 
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
 //        auth = Firebase.auth
 //        val options = PhoneAuthOptions.newBuilder(auth)
 //            .setPhoneNumber(mobileNumber)
@@ -171,8 +171,8 @@ class VerifyMobileActivity : AppCompatActivity() {
 //            .build()
 //
 //        PhoneAuthProvider.verifyPhoneNumber(options)
-//
-//    }
+
+    }
 
     private fun watchOtpEt() {
         val validateTor = ValidateTor()
