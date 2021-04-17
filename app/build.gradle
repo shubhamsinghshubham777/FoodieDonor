@@ -140,4 +140,7 @@ dependencies {
     //Tuann Custom Expanded Floating Action Button
     implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
 
+    //Animated rating bar
+    implementation 'com.github.FlyingPumba:SimpleRatingBar:v0.1.5'
+
 }

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".views.fragments.donorHome.DonorHomeClickDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/appBarLayout"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.MaterialComponents.Light">
 
@@ -19,11 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/primaryColor"
             app:collapsedTitleTextAppearance="@style/TextAppearance.Collapsed"
-            app:expandedTitleTextAppearance="@style/TextAppearance.Expanded"
+            app:contentScrim="@color/primaryColor"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleMarginStart="15dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Expanded"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
@@ -32,21 +32,21 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/splash_image"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax"
+                tools:src="@drawable/splash_image" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@drawable/title_background"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="bottom"
+                android:background="@drawable/title_background" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
+                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -68,13 +68,150 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="TextView"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:text="Email:"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dhcdRating" />
+
+            <TextView
+                android:id="@+id/dhcdEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/alegreya_sans_sc_medium"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/textView16"
+                app:layout_constraintTop_toBottomOf="@+id/textView16"
+                tools:text="shubhfoundation@gmail.com" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:text="Contact number:"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/dhcdEmail"
+                app:layout_constraintTop_toBottomOf="@+id/dhcdEmail" />
+
+            <TextView
+                android:id="@+id/dhcdMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/textView18"
+                app:layout_constraintTop_toBottomOf="@+id/textView18"
+                tools:text="+919910292590" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:text="Address:"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/dhcdMobile"
+                app:layout_constraintTop_toBottomOf="@+id/dhcdMobile" />
+
+            <TextView
+                android:id="@+id/dhcdAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/textView20"
+                app:layout_constraintTop_toBottomOf="@+id/textView20"
+                tools:text="B-8, Second Floor, Moti Nagar, New Delhi-15" />
+
+            <fragment
+                android:id="@+id/mapView"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/dhcdAddress"
+                app:layout_constraintStart_toStartOf="@+id/dhcdAddress"
+                app:layout_constraintTop_toBottomOf="@+id/dhcdAddress" />
+
+            <Button
+                android:id="@+id/dhcdMailBtn"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ripple_effect"
+                android:drawableTop="@drawable/ic_mail"
+                app:layout_constraintBottom_toTopOf="@+id/dhcdEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to send a mail"
+                app:layout_constraintBottom_toBottomOf="@+id/dhcdEmail"
+                app:layout_constraintEnd_toEndOf="@+id/dhcdMailBtn"
+                app:layout_constraintStart_toStartOf="@+id/dhcdMailBtn"
+                app:layout_constraintTop_toBottomOf="@+id/dhcdMailBtn" />
+
+            <Button
+                android:id="@+id/dhcdPhoneBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/ripple_effect"
+                android:drawableTop="@drawable/ic_phone"
+                android:linksClickable="false"
+                app:layout_constraintBottom_toTopOf="@+id/dhcdMobile"
+                app:layout_constraintEnd_toEndOf="@+id/dhcdMailBtn"
+                app:layout_constraintStart_toStartOf="@+id/dhcdMailBtn"
+                app:layout_constraintTop_toTopOf="@+id/textView18" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to call"
+                app:layout_constraintBottom_toBottomOf="@+id/dhcdMobile"
+                app:layout_constraintEnd_toEndOf="@+id/dhcdPhoneBtn"
+                app:layout_constraintStart_toStartOf="@+id/dhcdPhoneBtn"
+                app:layout_constraintTop_toBottomOf="@+id/dhcdPhoneBtn" />
+
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                android:id="@+id/dhcdRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:clickable="false"
+                app:srb_fillColor="@color/primaryColor"
+                android:focusable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24"
+                app:srb_numberOfStars="5"
+                app:srb_starSize="32dp" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:text="Rating:"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -83,16 +220,15 @@
         android:id="@+id/donorMasterClickBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@drawable/ripple_effect"
-        app:cornerRadius="24dp"
-        android:fontFamily="@font/alegreya_sans_sc_medium"
-        android:drawableLeft="@drawable/ic_heart"
-        tools:text = "Donate to Shubham!"
         android:layout_gravity="bottom|right"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        />
+        android:background="@drawable/ripple_effect"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_heart"
+        android:focusable="true"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        app:cornerRadius="24dp"
+        tools:text="Donate to Shubham!" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

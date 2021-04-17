@@ -1,5 +1,6 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.util.Pair
@@ -24,12 +25,13 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
         return DonorHomePageListVH(DonorHomepageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: DonorHomePageListVH, position: Int, model: ReceiverModel) {
 
         holder.binding.apply {
             dhiOrgName.text = model.name
             dhiAddress.text = model.address
-            dhiMobile.text = model.mobile
+            dhiMobile.text = "+91${model.mobile}"
             dhiRating.text = model.rating.toString()
 
             Base64Image.decode(model.photo) { bitmap ->
