@@ -11,6 +11,7 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:navigationBarColor">@color/primaryColorDark</item>
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">true</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">

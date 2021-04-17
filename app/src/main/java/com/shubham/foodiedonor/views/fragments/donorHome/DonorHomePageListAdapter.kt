@@ -1,8 +1,13 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
+import android.app.Activity
+import android.content.Intent
+import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -34,10 +39,18 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
             }
         }
 
+        holder.binding.root.setOnClickListener {
+            snapshots.getSnapshot(position)
+            val intent = Intent(holder.binding.root.context, DonorHomeClickDetailActivity::class.java)
+            val imageViewPair = androidx.core.util.Pair.create<View, String>(holder.binding.dhiPhoto, "customTN")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(holder.binding.root.context as Activity, imageViewPair)
+            intent.putExtra("receiver", model)
+            holder.binding.root.context.startActivity(intent, options.toBundle())
+        }
+
     }
 
     class DonorHomePageListVH(val binding: DonorHomepageItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
     }
 
 }

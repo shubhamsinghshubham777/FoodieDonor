@@ -1,5 +1,7 @@
 package com.shubham.foodiedonor.models
 
+import java.io.Serializable
+
 data class ReceiverModel(
     val name: String ="",
     val email: String ="",
@@ -12,4 +14,4 @@ data class ReceiverModel(
     val cinNumber: String ="",
     val type: String = "receiver",
     val rating: Double = 0.0
-)
+): Serializable {}
