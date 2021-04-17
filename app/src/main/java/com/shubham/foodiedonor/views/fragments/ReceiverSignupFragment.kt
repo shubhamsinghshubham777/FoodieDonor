@@ -372,7 +372,8 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                             mobileVerified = isMobileVerified,
                                             latitude = latitude,
                                             longitude = longitude,
-                                            cinNumber = binding.receiverCinEt.text.toString()
+                                            cinNumber = binding.receiverCinEt.text.toString(),
+                                            rating = 0.0
                                         )
                                     )
                                     .addOnCompleteListener { firestoreTask ->

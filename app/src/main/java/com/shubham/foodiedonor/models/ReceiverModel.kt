@@ -10,5 +10,6 @@ data class ReceiverModel(
     val latitude: Double =0.0,
     val longitude: Double =0.0,
     val cinNumber: String ="",
-    val type: String = "receiver"
+    val type: String = "receiver",
+    val rating: Double = 0.0
 )

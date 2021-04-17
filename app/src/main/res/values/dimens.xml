@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="page_header">50sp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
 
 </resources>

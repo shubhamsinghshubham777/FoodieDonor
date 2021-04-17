@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/white"
+        android:elevation="@dimen/default_elevation"
+        app:cardCornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primaryColor">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/dhiPhoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:elevation="@dimen/default_elevation"
+                android:scaleType="centerCrop"
+                app:civ_border_color="@color/white"
+                app:civ_border_overlay="true"
+                app:civ_border_width="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/dhiOrgName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="16dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:textAlignment="center"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@+id/dhiAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dhiPhoto"
+                app:layout_constraintTop_toTopOf="@+id/dhiPhoto"
+                tools:text=" Shubh Foundation 1123123123123123123123123123123" />
+
+            <TextView
+                android:id="@+id/dhiAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
+                android:maxLines="2"
+                android:text="TextView"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/dhiPhoto"
+                app:layout_constraintEnd_toEndOf="@+id/dhiOrgName"
+                app:layout_constraintStart_toStartOf="@+id/dhiOrgName"
+                app:layout_constraintTop_toTopOf="@+id/dhiPhoto"
+                tools:text="B-8, Second Floor, Moti Nagar, New Delhi-15" />
+
+            <TextView
+                android:id="@+id/dhiMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
+                android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="@+id/dhiPhoto"
+                app:layout_constraintStart_toStartOf="@+id/dhiAddress"
+                app:layout_constraintTop_toBottomOf="@+id/dhiAddress"
+                tools:text="9910292590" />
+
+            <TextView
+                android:id="@+id/dhiRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/alegreya_sans_sc_medium"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/dhiMobile"
+                app:layout_constraintEnd_toEndOf="@+id/dhiAddress"
+                app:layout_constraintTop_toTopOf="@+id/dhiMobile"
+                tools:text="4.5" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:elevation="@dimen/default_elevation"
+                app:layout_constraintBottom_toBottomOf="@+id/dhiRating"
+                app:layout_constraintEnd_toStartOf="@+id/dhiRating"
+                app:layout_constraintTop_toTopOf="@+id/dhiRating"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
