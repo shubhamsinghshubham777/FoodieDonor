@@ -42,10 +42,10 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
         holder.binding.root.setOnClickListener {
             snapshots.getSnapshot(position)
             val intent = Intent(holder.binding.root.context, DonorHomeClickDetailActivity::class.java)
-            val imageViewPair = androidx.core.util.Pair.create<View, String>(holder.binding.dhiPhoto, "customTN")
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(holder.binding.root.context as Activity, imageViewPair)
+//            val imageViewPair = androidx.core.util.Pair.create<View, String>(holder.binding.dhiPhoto, "customTN")
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(holder.binding.root.context as Activity, imageViewPair)
             intent.putExtra("receiver", model)
-            holder.binding.root.context.startActivity(intent, options.toBundle())
+            holder.binding.root.context.startActivity(intent)
         }
 
     }

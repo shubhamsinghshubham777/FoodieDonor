@@ -11,11 +11,21 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:navigationBarColor">@color/primaryColorDark</item>
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">true</item>
-        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_image</item>
         <item name="android:statusBarColor">#65000000</item>
+    </style>
+
+    <style name="TextAppearance.Collapsed"
+        parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/alegreya_sc_black</item>
+    </style>
+
+    <style name="TextAppearance.Expanded"
+        parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/alegreya_sc_black</item>
+        <item name="android:textSize">30sp</item>
     </style>
 </resources>

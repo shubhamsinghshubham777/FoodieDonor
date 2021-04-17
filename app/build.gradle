@@ -137,4 +137,7 @@ dependencies {
     //KPermissions Library
     implementation 'com.github.fondesa:kpermissions:3.2.1'
 
+    //Tuann Custom Expanded Floating Action Button
+    implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
+
 }
