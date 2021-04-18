@@ -51,7 +51,7 @@ class DonorHomeActivity : AppCompatActivity() {
         binding.donorHomePageSmartTabLayout.apply {
             setupWithViewPager(binding.donorHomePageViewPager)
             getTabAt(0)!!.setIcon(R.drawable.ic_home).text = "Home"
-            getTabAt(1)!!.setIcon(R.drawable.ic_maps).text = "Donations"
+            getTabAt(1)!!.setIcon(R.drawable.ic_heart_filled).text = "Donations"
         }
     }
 }
