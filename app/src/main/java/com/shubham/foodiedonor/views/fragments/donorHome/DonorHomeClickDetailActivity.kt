@@ -105,6 +105,11 @@ class DonorHomeClickDetailActivity : AppCompatActivity() {
                 rating = receiver?.rating!!.toFloat()
                 isIndicator = true
             }
+            donorMasterClickBtn.setOnClickListener {
+                val intent = Intent(this@DonorHomeClickDetailActivity, DonorDonateActivity::class.java)
+                intent.putExtra("receiverInfo", receiver)
+                startActivity(intent)
+            }
         }
 
         setupGoogleMap(receiver!!.latitude, receiver.longitude)
