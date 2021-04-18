@@ -25,6 +25,7 @@ import com.shubham.foodiedonor.databinding.ActivityDonorDonateBinding
 import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
 import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
+import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
 
@@ -79,17 +80,7 @@ class DonorDonateActivity : AppCompatActivity() {
         }
 
         spFoodItems = binding.spFoodItems
-        val customList = ArrayList<String>()
-        customList.add("Test1")
-        customList.add("Test2")
-        customList.add("Test3")
-        customList.add("Test4")
-        customList.add("Test5")
-        customList.add("Test6")
-        customList.add("Test7")
-        customList.add("Test8")
-        customList.add("Test9")
-        customList.add("Test10")
+        val customList = globalFoodListItemNonBreads
         (spFoodItems as SmartMaterialSpinner<*>).item = customList
         (spFoodItems as SmartMaterialSpinner<*>).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

@@ -6,11 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.viewbinding.library.activity.viewBinding
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityMainBinding
+import com.shubham.foodiedonor.utils.Constants.globalFoodDocumentRef
+import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import www.sanju.motiontoast.MotionToast
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        saveFoodItemsToGlobalConstant()
 
 
 
@@ -81,6 +91,19 @@ class MainActivity : AppCompatActivity() {
             finish()
             return
         }
+
+    }
+
+    private fun saveFoodItemsToGlobalConstant() {
+
+        globalFoodDocumentRef.get().addOnSuccessListener {
+            globalFoodListItemNonBreads = it.get("non-breads") as ArrayList<String>
+            Log.d(TAG, "saveFoodItemsToGlobalConstant: $globalFoodListItemNonBreads")
+        }
+            .addOnFailureListener {
+                    MotionToast.createColorToast(this, "Some internal issue! Please contact your administrator", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this,R.font.alegreya_sans_sc_medium))
+                Log.d(TAG, "onErrorResponse: ${it.message}")
+            }
 
     }
 
