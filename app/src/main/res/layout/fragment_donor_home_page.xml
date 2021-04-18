@@ -13,7 +13,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
 
             <TextView
@@ -22,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alegreya_sans_sc_medium"
                 android:text="These are your nearby receivers..."
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/donorHomePageName"
                 app:layout_constraintTop_toBottomOf="@+id/donorHomePageName" />
 
@@ -29,6 +31,7 @@
                 android:id="@+id/donorHomePageRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@color/white"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -38,13 +41,16 @@
 
             <TextView
                 android:id="@+id/donorHomePageName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/alegreya_sc_black"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/lottieAnimationView5"
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/lottieAnimationView5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/lottieAnimationView5"
                 tools:text="Welcome Shubham!" />

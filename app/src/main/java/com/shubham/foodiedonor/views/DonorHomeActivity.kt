@@ -7,7 +7,7 @@ import androidx.viewpager.widget.ViewPager
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorHomeBinding
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorHomePageFragment
-import com.shubham.foodiedonor.views.fragments.donorHome.DonorNearbyReceiversFragment
+import com.shubham.foodiedonor.views.fragments.donorHome.DonorDonationsFragment
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorViewPagerAdapter
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 
@@ -25,7 +25,7 @@ class DonorHomeActivity : AppCompatActivity() {
     private fun setupViewPager() {
         val adapter = DonorViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(DonorHomePageFragment(), "Home")
-        adapter.addFragment(DonorNearbyReceiversFragment(), "Donations")
+        adapter.addFragment(DonorDonationsFragment(), "Donations")
         binding.donorHomePageViewPager.apply {
             this.adapter = adapter
             offscreenPageLimit = 2

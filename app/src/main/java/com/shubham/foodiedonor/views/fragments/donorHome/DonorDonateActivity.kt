@@ -37,6 +37,7 @@ import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
 import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
 import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
+import com.shubham.foodiedonor.utils.Constants.globalReceiverCollectionRef
 import com.shubham.foodiedonor.views.DonorHomeActivity
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
@@ -44,6 +45,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Singleton
+import kotlin.collections.HashMap
 
 class DonorDonateActivity : AppCompatActivity() {
 
@@ -59,6 +61,9 @@ class DonorDonateActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupAllFields()
         setupRecyclerView()
+
+        //Clearing the list because by default the list was initialized by a blank value
+        globalDonationList = ""
 
     }
 
@@ -88,7 +93,7 @@ class DonorDonateActivity : AppCompatActivity() {
             btnAddItem.setOnClickListener {
                 hideSoftKeyboard()
 
-                donateItemsList.add(DonateItemModel(currentFoodItem, donorDonateAmount.editText?.text.toString().toInt()))
+                donateItemsList.add(DonateItemModel(currentFoodItem, donorDonateAmount.editText?.text.toString().toFloat()))
 
                 Log.d(TAG, "Size of list is: ${donateItemsList.size}")
 
@@ -122,9 +127,8 @@ class DonorDonateActivity : AppCompatActivity() {
                     val sb = StringBuilder()
 
                     for(myString in donateItemsList) {
-                        sb.append("$myString, \n")
+                        sb.append(myString.itemName+ " - " + myString.itemAmount + "kg, ")
                     }
-
                     globalDonationList = sb.toString()
                 } catch (e: Exception) {
                     Log.d(TAG, "setupAllFields: ${e.localizedMessage}")
@@ -137,33 +141,43 @@ class DonorDonateActivity : AppCompatActivity() {
                         .set(
                         DonorDonationModel(to = receiver.name, allItems = globalDonationList)
                     ).addOnSuccessListener {
-                        binding.donationCheckAnimation.apply {
-                            visibility = View.VISIBLE
-                            binding.donationFailedAnimation.visibility = View.GONE
-                            playAnimation()
-                            addAnimatorListener(object : Animator.AnimatorListener{
-                                override fun onAnimationStart(animation: Animator?) {
+
+                            globalReceiverCollectionRef.document(receiver.mobile).collection("donationsReceived").document(sdf.format(date))
+                                .set(
+                                    DonorDonationModel(to = receiver.name, allItems = globalDonationList)
+                                ).addOnSuccessListener {
+
+                                    binding.donationCheckAnimation.apply {
+                                        visibility = View.VISIBLE
+                                        binding.donationFailedAnimation.visibility = View.GONE
+                                        playAnimation()
+                                        addAnimatorListener(object : Animator.AnimatorListener{
+                                            override fun onAnimationStart(animation: Animator?) {
+
+                                            }
+
+                                            override fun onAnimationEnd(animation: Animator?) {
+                                                MotionToast.createColorToast(this@DonorDonateActivity, "Request Successful!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
+                                                donateItemsList.clear()
+                                                globalDonationList = ""
+                                                val intent = Intent(this@DonorDonateActivity, DonorHomeActivity::class.java)
+                                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                startActivity(intent)
+                                                finish()
+                                            }
+
+                                            override fun onAnimationCancel(animation: Animator?) {
+                                            }
+
+                                            override fun onAnimationRepeat(animation: Animator?) {
+                                            }
+
+                                        })
+                                    }
+
+                                }.addOnFailureListener {
 
                                 }
-
-                                override fun onAnimationEnd(animation: Animator?) {
-                                    MotionToast.createColorToast(this@DonorDonateActivity, "Request Successful!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
-                                    donateItemsList.clear()
-                                    globalDonationList = ""
-                                    val intent = Intent(this@DonorDonateActivity, DonorHomeActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                    startActivity(intent)
-                                    finish()
-                                }
-
-                                override fun onAnimationCancel(animation: Animator?) {
-                                }
-
-                                override fun onAnimationRepeat(animation: Animator?) {
-                                }
-
-                            })
-                        }
                         }
                         .addOnFailureListener {
                             binding.donationFailedAnimation.apply {

@@ -87,6 +87,18 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.6" />
 
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/alegreya_sans_sc_medium"
+            android:text="kg"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ddiAmount"
+            app:layout_constraintStart_toEndOf="@+id/ddiAmount" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
