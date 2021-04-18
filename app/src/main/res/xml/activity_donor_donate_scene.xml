@@ -7,8 +7,7 @@
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
         motion:duration="400">
-       <KeyFrameSet>
-       </KeyFrameSet>
+       <KeyFrameSet></KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -40,4 +39,7 @@
             motion:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
     </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start2"
+        motion:constraintSetEnd="@+id/end2" />
 </MotionScene>

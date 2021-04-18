@@ -8,6 +8,44 @@
     app:layoutDescription="@xml/activity_donor_donate_scene"
     tools:context=".views.fragments.donorHome.DonorDonateActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/donationCheckAnimation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/donation_check" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/donationFailedAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/donation_failed" />
+
+    <ImageView
+        android:id="@+id/transparentImageViewBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="#34000000"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/donateDonorPhoto"
         android:layout_width="50dp"
@@ -117,14 +155,14 @@
         app:smsp_enableSearchHeader="true"
         app:smsp_floatingLabelColor="@color/black"
         app:smsp_floatingLabelSize="16sp"
-        app:smsp_isReSelectable="false"
-        app:smsp_typeface="alegreya_sans_sc_medium.ttf"
         app:smsp_floatingLabelText="Food Items"
         app:smsp_hint="Select one of the options"
+        app:smsp_isReSelectable="false"
         app:smsp_isSearchable="true"
         app:smsp_itemColor="@color/black"
         app:smsp_itemListColor="@color/black"
-        app:smsp_searchHeaderBackgroundColor="@color/primaryColorDark" />
+        app:smsp_searchHeaderBackgroundColor="@color/primaryColorDark"
+        app:smsp_typeface="alegreya_sans_sc_medium.ttf" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/donorDonateAmount"
@@ -167,10 +205,23 @@
         android:layout_height="0dp"
         android:layout_margin="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/donorDonateSubmitBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddItem" />
+
+    <Button
+        android:id="@+id/donorDonateSubmitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Donate"
+        app:icon="@drawable/ic_heart_filled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

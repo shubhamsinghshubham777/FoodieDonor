@@ -1,7 +1,9 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
+import android.animation.Animator
 import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,15 +23,21 @@ import androidx.transition.Slide
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+import com.google.firebase.Timestamp
 import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorDonateBinding
 import com.shubham.foodiedonor.models.DonateItemModel
+import com.shubham.foodiedonor.models.DonorDonationModel
 import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.utils.Constants.donateItemsList
+import com.shubham.foodiedonor.utils.Constants.globalDonationList
+import com.shubham.foodiedonor.utils.Constants.globalDonorCollectionRef
+import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
 import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
 import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
+import com.shubham.foodiedonor.views.DonorHomeActivity
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
 import javax.inject.Singleton
@@ -58,6 +66,9 @@ class DonorDonateActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupAllFields() {
         val receiver = intent.getSerializableExtra("receiverInfo") as? ReceiverModel
+
+        binding.donationCheckAnimation.bringToFront()
+        binding.donationFailedAnimation.bringToFront()
 
         binding.apply {
             donateDonorName.text = globalDonorName
@@ -98,6 +109,77 @@ class DonorDonateActivity : AppCompatActivity() {
                 } else {
                     btnAddItem.isEnabled = true
                     donorDonateAmount.error = null
+                }
+            }
+
+            donorDonateSubmitBtn.setOnClickListener {
+
+                val sb = StringBuilder()
+
+                for(myString in donateItemsList) {
+                    sb.append("$myString, \n")
+                }
+
+                globalDonationList = sb.toString()
+
+                if (donateItemsList.size > 0) {
+                    it.isEnabled = true
+                    globalDonorCollectionRef.document(globalDonorMobile).collection("donations").document(Timestamp.now().toString())
+                        .set(
+                        DonorDonationModel(to = receiver.name, allItems = globalDonationList)
+                    ).addOnSuccessListener {
+                        binding.donationCheckAnimation.apply {
+                            visibility = View.VISIBLE
+                            binding.donationFailedAnimation.visibility = View.GONE
+                            playAnimation()
+                            addAnimatorListener(object : Animator.AnimatorListener{
+                                override fun onAnimationStart(animation: Animator?) {
+
+                                }
+
+                                override fun onAnimationEnd(animation: Animator?) {
+                                    MotionToast.createColorToast(this@DonorDonateActivity, "Request Successful!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
+                                    donateItemsList.clear()
+                                    globalDonationList = ""
+                                    val intent = Intent(this@DonorDonateActivity, DonorHomeActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                    finish()
+                                }
+
+                                override fun onAnimationCancel(animation: Animator?) {
+                                }
+
+                                override fun onAnimationRepeat(animation: Animator?) {
+                                }
+
+                            })
+                        }
+                        }
+                        .addOnFailureListener {
+                            binding.donationFailedAnimation.apply {
+                                visibility = View.VISIBLE
+                                binding.donationCheckAnimation.visibility = View.GONE
+                                binding.transparentImageViewBackground.visibility = View.VISIBLE
+                                playAnimation()
+                                addAnimatorListener(object : Animator.AnimatorListener{
+                                    override fun onAnimationStart(animation: Animator?) {
+                                    }
+
+                                    override fun onAnimationEnd(animation: Animator?) {
+                                        MotionToast.createColorToast(this@DonorDonateActivity, "Request Failed!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
+                                    }
+
+                                    override fun onAnimationCancel(animation: Animator?) {
+                                    }
+
+                                    override fun onAnimationRepeat(animation: Animator?) {
+                                    }
+                                })
+                            }
+                        }
+                } else {
+                    it.isEnabled = false
                 }
             }
         }
