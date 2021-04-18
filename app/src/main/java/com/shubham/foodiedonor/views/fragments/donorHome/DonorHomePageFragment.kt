@@ -1,6 +1,7 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,10 +15,18 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorHomePageBinding
 import com.shubham.foodiedonor.models.DonorModel
 import com.shubham.foodiedonor.models.ReceiverModel
+import com.shubham.foodiedonor.utils.Constants.globalDonorAddress
+import com.shubham.foodiedonor.utils.Constants.globalDonorEmail
+import com.shubham.foodiedonor.utils.Constants.globalDonorLatitude
+import com.shubham.foodiedonor.utils.Constants.globalDonorLongitude
+import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
+import com.shubham.foodiedonor.utils.Constants.globalDonorName
+import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
 import www.sanju.motiontoast.MotionToast
 
 class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
@@ -64,6 +73,19 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
                 for(document in it.documents) {
                     val currentPerson = document.toObject<DonorModel>()
                     binding.donorHomePageName.text = "Welcome ${currentPerson?.name.toString()}"
+                    globalDonorName = currentPerson?.name.toString()
+                    globalDonorEmail = currentPerson?.email.toString()
+                    globalDonorAddress = currentPerson?.address.toString()
+                    globalDonorMobile = currentPerson?.mobile.toString()
+                    Base64Image.decode(currentPerson?.photo) { bitmap ->
+                        bitmap?.let { myBitmap ->
+                            val myDrawable = BitmapDrawable(resources, myBitmap)
+                            globalDonorPhoto = myDrawable
+                        }
+                    }
+                    globalDonorLatitude = currentPerson!!.latitude
+                    globalDonorLongitude = currentPerson.longitude
+
                 }
             }
     }
