@@ -111,12 +111,20 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/donateOrgName"
+        app:smsp_alwaysShowFloatingLabel="true"
+        app:smsp_enableDismissSearch="true"
+        app:smsp_enableFloatingLabel="true"
+        app:smsp_enableSearchHeader="true"
         app:smsp_floatingLabelColor="@color/black"
+        app:smsp_floatingLabelSize="16sp"
+        app:smsp_isReSelectable="false"
+        app:smsp_typeface="alegreya_sans_sc_medium.ttf"
         app:smsp_floatingLabelText="Food Items"
         app:smsp_hint="Select one of the options"
         app:smsp_isSearchable="true"
         app:smsp_itemColor="@color/black"
-        app:smsp_itemListColor="@color/black" />
+        app:smsp_itemListColor="@color/black"
+        app:smsp_searchHeaderBackgroundColor="@color/primaryColorDark" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/donorDonateAmount"
