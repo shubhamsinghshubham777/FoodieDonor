@@ -40,6 +40,9 @@ import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
 import com.shubham.foodiedonor.views.DonorHomeActivity
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Singleton
 
 class DonorDonateActivity : AppCompatActivity() {
@@ -49,6 +52,7 @@ class DonorDonateActivity : AppCompatActivity() {
     private var currentFoodItem = ""
     private lateinit var donorDonateAdapter: DonorDonateAdapter
     private val TAG = "DonorDonateActivityTAG"
+    private val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,17 +118,22 @@ class DonorDonateActivity : AppCompatActivity() {
 
             donorDonateSubmitBtn.setOnClickListener {
 
-                val sb = StringBuilder()
+                try {
+                    val sb = StringBuilder()
 
-                for(myString in donateItemsList) {
-                    sb.append("$myString, \n")
+                    for(myString in donateItemsList) {
+                        sb.append("$myString, \n")
+                    }
+
+                    globalDonationList = sb.toString()
+                } catch (e: Exception) {
+                    Log.d(TAG, "setupAllFields: ${e.localizedMessage}")
                 }
 
-                globalDonationList = sb.toString()
-
                 if (donateItemsList.size > 0) {
-                    it.isEnabled = true
-                    globalDonorCollectionRef.document(globalDonorMobile).collection("donations").document(Timestamp.now().toString())
+                    binding.donorDonateSubmitBtn.isEnabled = false
+                    val date = Date()
+                    globalDonorCollectionRef.document(globalDonorMobile).collection("donations").document(sdf.format(date))
                         .set(
                         DonorDonationModel(to = receiver.name, allItems = globalDonationList)
                     ).addOnSuccessListener {
@@ -179,7 +188,7 @@ class DonorDonateActivity : AppCompatActivity() {
                             }
                         }
                 } else {
-                    it.isEnabled = false
+                    MotionToast.createColorToast(this@DonorDonateActivity, "Please select some items before submitting!", MotionToast.TOAST_INFO, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
                 }
             }
         }
