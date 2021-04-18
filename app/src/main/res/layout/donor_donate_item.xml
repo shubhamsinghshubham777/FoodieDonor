@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/accentColor"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/ddiCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_sc_medium"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1." />
+
+        <TextView
+            android:id="@+id/ddiName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/alegreya_sans_sc_medium"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ddiCount"
+            app:layout_constraintEnd_toStartOf="@+id/guideline11"
+            app:layout_constraintStart_toEndOf="@+id/ddiCount"
+            app:layout_constraintTop_toTopOf="@+id/ddiCount"
+            tools:text="Apples" />
+
+        <TextView
+            android:id="@+id/ddiAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_sc_medium"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ddiName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toTopOf="@+id/ddiName"
+            tools:text="3" />
+
+        <ImageView
+            android:id="@+id/ddiPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/ripple_effect"
+            app:layout_constraintBottom_toBottomOf="@+id/ddiMinus"
+            app:layout_constraintStart_toEndOf="@+id/ddiAmount"
+            app:layout_constraintTop_toTopOf="@+id/ddiMinus"
+            app:srcCompat="@drawable/ic_add" />
+
+        <ImageView
+            android:id="@+id/ddiMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/ripple_effect"
+            app:layout_constraintBottom_toBottomOf="@+id/ddiAmount"
+            app:layout_constraintEnd_toStartOf="@+id/ddiAmount"
+            app:layout_constraintTop_toTopOf="@+id/ddiAmount"
+            app:srcCompat="@drawable/ic_minus" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/ddiDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="end"
+        android:layout_margin="4dp"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/quantum_ic_clear_grey600_24" />
+
+</androidx.cardview.widget.CardView>
+

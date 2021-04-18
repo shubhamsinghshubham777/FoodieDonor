@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.size
 import androidx.core.widget.doOnTextChanged
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.Slide
@@ -22,25 +24,36 @@ import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorDonateBinding
+import com.shubham.foodiedonor.models.DonateItemModel
 import com.shubham.foodiedonor.models.ReceiverModel
+import com.shubham.foodiedonor.utils.Constants.donateItemsList
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
 import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
 import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
+import javax.inject.Singleton
 
 class DonorDonateActivity : AppCompatActivity() {
 
     private val binding: ActivityDonorDonateBinding by viewBinding()
     private var spFoodItems: SmartMaterialSpinner<*>? = null
+    private var currentFoodItem = ""
+    private lateinit var donorDonateAdapter: DonorDonateAdapter
+    private val TAG = "DonorDonateActivityTAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         setupAllFields()
+        setupRecyclerView()
 
     }
+
+    private fun setupRecyclerView() = binding.donateRecyclerView.apply {
+            donorDonateAdapter = DonorDonateAdapter()
+            adapter = donorDonateAdapter
+        }
 
     @SuppressLint("SetTextI18n")
     private fun setupAllFields() {
@@ -59,12 +72,22 @@ class DonorDonateActivity : AppCompatActivity() {
 
             btnAddItem.setOnClickListener {
                 hideSoftKeyboard()
+
+                donateItemsList.add(DonateItemModel(currentFoodItem, donorDonateAmount.editText?.text.toString().toInt()))
+
+                Log.d(TAG, "Size of list is: ${donateItemsList.size}")
+
+                donorDonateAdapter.apply {
+                    items = donateItemsList
+                    notifyItemInserted(donateItemsList.size)
+                }
+
                 binding.donorDonateAmount.apply {
                     editText?.text = null
                     error = null
                 }
                 containerConstraintLayout.transitionToStart()
-                MotionToast.createColorToast(this@DonorDonateActivity, "Added!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
+//                MotionToast.createColorToast(this@DonorDonateActivity, "Added!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
 
             }
 
@@ -89,6 +112,8 @@ class DonorDonateActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
+                currentFoodItem = customList[position]
+//                MotionToast.createColorToast(this@DonorDonateActivity, "Clicked on: $currentFoodItem!", MotionToast.TOAST_INFO, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))
                 binding.containerConstraintLayout.transitionToEnd()
             }
 
