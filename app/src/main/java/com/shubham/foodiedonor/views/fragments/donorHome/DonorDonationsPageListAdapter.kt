@@ -34,6 +34,28 @@ class DonorDonationsPageListAdapter(options: FirestoreRecyclerOptions<DonorDonat
             dhdiTimeStamp.text = model.timestamp.toDate().toString()
             dhdiTo.text = model.to
             dhdiItems.text = model.allItems
+
+            when (model.verifiedStatus) {
+                "Accepted!" -> {
+                    dhdiDonationAcceptedTv.apply {
+                        text = "Yes!"
+                        setTextColor(resources.getColor(R.color.green))
+                    }
+                }
+                "Pending" -> {
+                    dhdiDonationAcceptedTv.apply {
+                        text = "Pending..."
+                        setTextColor(resources.getColor(R.color.black))
+                    }
+                }
+                else -> {
+                    dhdiDonationAcceptedTv.apply {
+                        text = "No!"
+                        setTextColor(resources.getColor(R.color.accentColor))
+                    }
+                }
+            }
+
         }
 
 //        holder.binding.root.setOnClickListener {

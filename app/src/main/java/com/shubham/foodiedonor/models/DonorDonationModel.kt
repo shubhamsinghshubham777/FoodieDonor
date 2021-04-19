@@ -9,5 +9,5 @@ data class DonorDonationModel(
     val from: String = Constants.globalDonorEmail,
     val to: String ="",
     val allItems: String ="",
-    val verified: Boolean = false
+    val verifiedStatus: String = "Pending"
 ): Serializable
