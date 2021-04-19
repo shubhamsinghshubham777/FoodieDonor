@@ -1,6 +1,7 @@
 package com.shubham.foodiedonor.views.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.shubham.foodiedonor.BuildConfig
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorSignupBinding
 import com.shubham.foodiedonor.models.DonorModel
+import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.shubham.foodiedonor.views.DonorHomeActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import www.sanju.motiontoast.MotionToast
@@ -332,6 +334,13 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                     )
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
+
+                                //save mobile number to sharedPrefs for future logins
+                                    requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
+                                        putString("globalDonorMobile", binding.donorMobileEt.text.toString()
+                                        )
+                                    }.apply()
+
                                 //save data to firestore
 
                                 val db = Firebase.firestore

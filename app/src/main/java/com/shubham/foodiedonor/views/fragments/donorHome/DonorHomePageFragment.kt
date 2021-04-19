@@ -76,7 +76,7 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
     private fun setupAllViews() {
 
         val myDialog = MaterialDialog.Builder(requireActivity())
-            .setTitle("Confirm Sign-Out!")
+            .setTitle("Confirm Sign-Out")
             .setMessage("Do you want to sign-out of the app?")
             .setPositiveButton("Yes", R.drawable.ic_door, AbstractDialog.OnClickListener { dialogInterface, _ ->
                 Firebase.auth.signOut()
