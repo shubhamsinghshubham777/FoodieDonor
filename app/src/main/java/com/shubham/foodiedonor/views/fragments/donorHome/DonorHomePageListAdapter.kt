@@ -34,6 +34,12 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
             dhiMobile.text = "+91${model.mobile}"
             dhiRating.text = model.rating.toString()
 
+            if(model.mobileVerified) {
+                dhiVerifiedIv.visibility = View.VISIBLE
+            } else {
+                dhiVerifiedIv.visibility = View.INVISIBLE
+            }
+
             Base64Image.decode(model.photo) { bitmap ->
                 bitmap?.let {
                     dhiPhoto.setImageBitmap(it)

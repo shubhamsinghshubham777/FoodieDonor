@@ -107,6 +107,16 @@
                 app:layout_constraintTop_toTopOf="@+id/dhiRating"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
+            <ImageView
+                android:id="@+id/dhiVerifiedIv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:elevation="8dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/dhiPhoto"
+                app:layout_constraintTop_toTopOf="@+id/dhiPhoto"
+                app:srcCompat="@drawable/ic_verified" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
