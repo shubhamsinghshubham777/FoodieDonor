@@ -21,6 +21,7 @@ object Constants {
     lateinit var globalFoodListItemNonBreads: ArrayList<String>
     var donateItemsList : MutableList<DonateItemModel> = mutableListOf<DonateItemModel>()
     var globalDonationList: String = String()
+    const val mySharedPrefName = "mySharedPref"
 
 //    Sample toast
 //    MotionToast.createColorToast(this@DonorDonateActivity, "Please enter some amount!", MotionToast.TOAST_WARNING, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@DonorDonateActivity,R.font.alegreya_sans_sc_medium))

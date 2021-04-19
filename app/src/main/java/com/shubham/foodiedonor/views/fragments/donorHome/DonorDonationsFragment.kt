@@ -1,5 +1,6 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.shubham.foodiedonor.databinding.FragmentDonorDonationsBinding
 import com.shubham.foodiedonor.models.DonorDonationModel
 import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.utils.Constants.globalDonorCollectionRef
+import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
+import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 
 class DonorDonationsFragment : Fragment(R.layout.fragment_donor_donations) {
 
@@ -42,7 +45,9 @@ class DonorDonationsFragment : Fragment(R.layout.fragment_donor_donations) {
     }
 
     private fun setupRecyclerView() {
-        val query = globalDonorCollectionRef.document("8383077629").collection("donations").orderBy("timestamp", Query.Direction.DESCENDING)
+        val sharedPreferences = requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE)
+        val currentDonorMobileNumber = sharedPreferences.getString("globalDonorMobile", null)
+        val query = globalDonorCollectionRef.document(currentDonorMobileNumber!!).collection("donations").orderBy("timestamp", Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<DonorDonationModel>()
             .setQuery(query, DonorDonationModel::class.java)
             .build()

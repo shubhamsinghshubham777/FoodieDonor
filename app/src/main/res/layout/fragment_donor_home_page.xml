@@ -1,75 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.donorHome.DonorHomePageFragment">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/donorHomePageSwipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
+    android:background="@color/white"
+    app:layoutDescription="@xml/fragment_donor_home_page_scene">
 
 
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/alegreya_sans_sc_medium"
-                android:text="These are your nearby receivers..."
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/donorHomePageName"
-                app:layout_constraintTop_toBottomOf="@+id/donorHomePageName" />
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        android:text="These are your nearby receivers..."
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/donorHomePageName"
+        app:layout_constraintTop_toBottomOf="@+id/donorHomePageName" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/donorHomePageRecyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@color/white"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView5" />
+    <TextView
+        android:id="@+id/donorHomePageName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/alegreya_sc_black"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toStartOf="@+id/lottieAnimationView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lottieAnimationView5"
+        tools:text="Welcome Shubham!" />
 
-            <TextView
-                android:id="@+id/donorHomePageName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/alegreya_sc_black"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintEnd_toStartOf="@+id/lottieAnimationView5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lottieAnimationView5"
-                tools:text="Welcome Shubham!" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/donate"
+        app:lottie_speed="0.5" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottieAnimationView5"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/donate"
-                app:lottie_speed="0.5" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/donorHomePageRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView5" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/donorHomePageSignoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Sign Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-</FrameLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

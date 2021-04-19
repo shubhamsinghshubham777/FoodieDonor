@@ -1,6 +1,8 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +29,10 @@ import com.shubham.foodiedonor.utils.Constants.globalDonorLongitude
 import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
 import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
+import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
+import com.shubham.foodiedonor.views.LoginActivity
+import dev.shreyaspatil.MaterialDialog.AbstractDialog
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import www.sanju.motiontoast.MotionToast
 
 class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
@@ -53,15 +59,40 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
 
         setupRecyclerView()
 
-        binding.donorHomePageSwipeRefreshLayout.setOnRefreshListener {
+        setupAllViews()
 
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .detach(this)
-                .attach(this)
-                .commit()
+//        binding.donorHomePageSwipeRefreshLayout.setOnRefreshListener {
+//
+//            requireActivity().supportFragmentManager
+//                .beginTransaction()
+//                .detach(this)
+//                .attach(this)
+//                .commit()
+//
+//            binding.donorHomePageSwipeRefreshLayout.isRefreshing = false
+//        }
+    }
 
-            binding.donorHomePageSwipeRefreshLayout.isRefreshing = false
+    private fun setupAllViews() {
+
+        val myDialog = MaterialDialog.Builder(requireActivity())
+            .setTitle("Confirm Sign-Out!")
+            .setMessage("Do you want to sign-out of the app?")
+            .setPositiveButton("Yes", R.drawable.ic_door, AbstractDialog.OnClickListener { dialogInterface, _ ->
+                Firebase.auth.signOut()
+                requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().clear().commit()
+                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                requireActivity().finish()
+            })
+            .setNegativeButton("No", AbstractDialog.OnClickListener { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            })
+            .build()
+
+        binding.apply {
+            donorHomePageSignoutBtn.setOnClickListener {
+                myDialog.show()
+            }
         }
     }
 

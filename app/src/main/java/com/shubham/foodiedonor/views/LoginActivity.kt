@@ -1,6 +1,8 @@
 package com.shubham.foodiedonor.views
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,8 @@ import com.google.firebase.ktx.Firebase
 import com.raywenderlich.android.validatetor.ValidateTor
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityLoginBinding
+import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
+import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
 
@@ -68,6 +72,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun unlockLoginButton() {
+
+        val sharedPreferences = getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE)
+
         if (isEmailValid && isPasswordValid) {
             binding.loginBtn.apply {
                 isEnabled = true
@@ -120,6 +127,9 @@ class LoginActivity : AppCompatActivity() {
 
                                             for (document in donorTask.result.documents) {
                                                 val type = document.getString("type")
+                                                sharedPreferences.edit().apply {
+                                                    putString("globalDonorMobile", document.getString("mobile").toString())
+                                                }.apply()
                                                 Log.d(TAG, "onCreateType: $type")
                                                 if (type == "donor") {
 
