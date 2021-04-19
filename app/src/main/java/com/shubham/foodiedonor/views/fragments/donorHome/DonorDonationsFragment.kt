@@ -36,12 +36,12 @@ class DonorDonationsFragment : Fragment(R.layout.fragment_donor_donations) {
 
         setupRecyclerView()
 
-        binding.donorNearbyReceiversSwipeRefreshLayout.setOnRefreshListener {
-
-            parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
-
-            binding.donorNearbyReceiversSwipeRefreshLayout.isRefreshing = false
-        }
+//        binding.donorNearbyReceiversSwipeRefreshLayout.setOnRefreshListener {
+//
+//            parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
+//
+//            binding.donorNearbyReceiversSwipeRefreshLayout.isRefreshing = false
+//        }
     }
 
     private fun setupRecyclerView() {
