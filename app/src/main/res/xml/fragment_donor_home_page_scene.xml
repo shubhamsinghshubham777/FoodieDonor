@@ -6,10 +6,11 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
+        motion:duration="500">
        <KeyFrameSet>
        </KeyFrameSet>
         <OnSwipe motion:touchAnchorId="@+id/donorHomePageRecyclerView" />
+        <OnClick motion:targetId="@+id/lottieAnimationView5" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
