@@ -1,29 +1,17 @@
 package com.shubham.foodiedonor.views.fragments.donorHome
 
 import android.animation.Animator
-import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.MotionEvent
 import android.view.View
 import android.viewbinding.library.activity.viewBinding
 import android.widget.AdapterView
-import android.widget.Toast
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.size
 import androidx.core.widget.doOnTextChanged
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.transition.Slide
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-import com.google.firebase.Timestamp
 import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorDonateBinding
@@ -44,8 +32,6 @@ import www.sanju.motiontoast.MotionToast
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Singleton
-import kotlin.collections.HashMap
 
 class DonorDonateActivity : AppCompatActivity() {
 

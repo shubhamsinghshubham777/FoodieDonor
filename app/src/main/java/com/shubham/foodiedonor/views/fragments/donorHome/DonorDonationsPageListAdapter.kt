@@ -31,7 +31,7 @@ class DonorDonationsPageListAdapter(options: FirestoreRecyclerOptions<DonorDonat
     override fun onBindViewHolder(holder: DonorHomePageListVH, position: Int, model: DonorDonationModel) {
 
         holder.binding.apply {
-            dhdiTimeStamp.text = model.timestamp.toDate().toString()
+            dhdiTimeStamp.text = model.timestamp!!.toDate().toString()
             dhdiTo.text = model.to
             dhdiItems.text = model.allItems
 

@@ -26,7 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodieDonor">
-        <activity android:name=".views.fragments.donorHome.DonorDonateActivity"></activity>
+        <activity android:name=".views.fragments.receiverHome.ReceiverHomeClickDetailActivity"></activity>
+        <activity android:name=".views.fragments.donorHome.DonorDonateActivity" />
         <activity android:name=".views.fragments.donorHome.DonorHomeClickDetailActivity" />
         <activity android:name=".views.ReceiverHomeActivity" />
         <activity android:name=".views.VerifyMobileActivity" />
