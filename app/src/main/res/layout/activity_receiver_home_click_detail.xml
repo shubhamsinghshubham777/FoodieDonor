@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_receiver_home_click_detail_scene"
     tools:context=".views.fragments.receiverHome.ReceiverHomeClickDetailActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/receiverClickAnimation"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,4 +22,183 @@
         app:lottie_loop="true"
         app:lottie_speed="0.7" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/clickdetailPhoto"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/clickDetailTv1"
+        app:layout_constraintTop_toBottomOf="@+id/clickDetailTv1"
+        tools:src="@drawable/splash_screen_foreground" />
+
+    <TextView
+        android:id="@+id/clickDetailTv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/alegreya_sc_black"
+        android:text="These items were sent by:"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clickdetailItems" />
+
+    <TextView
+        android:id="@+id/clickdetailName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/alegreya_sc_black"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/clickdetailEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/clickdetailPhoto"
+        app:layout_constraintTop_toTopOf="@+id/clickdetailPhoto"
+        tools:text="Shubham Singh1" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/alegreya_sc_black"
+        android:text="Items Sent:"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/clickdetailItems"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receiverClickAnimation" />
+
+    <TextView
+        android:id="@+id/clickdetailItems"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView34"
+        app:layout_constraintTop_toBottomOf="@+id/receiverClickAnimation"
+        tools:text="Cherry: 2kg, Banana: 3kg" />
+
+    <TextView
+        android:id="@+id/clickdetailEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/clickdetailPhoto"
+        app:layout_constraintEnd_toEndOf="@+id/clickdetailName"
+        app:layout_constraintStart_toStartOf="@+id/clickdetailName"
+        tools:text="shubhamsinghshubham7771@gmail.com" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/alegreya_sc_black"
+        android:text="Do you want to accept these items?"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView2" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationAcceptItem"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/animationRejectItem"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView37"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/donation_check" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationRejectItem"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:padding="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/animationAcceptItem"
+        app:layout_constraintTop_toBottomOf="@+id/textView37"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/cross" />
+
+    <fragment
+        android:id="@+id/mapView2"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/clickdetailItems"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/clickdetailPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/clickDetailCallBtn" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView37" />
+
+    <TextView
+        android:id="@+id/clickDetailMobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        app:layout_constraintBottom_toBottomOf="@+id/clickDetailCallBtn"
+        app:layout_constraintEnd_toStartOf="@+id/clickDetailCallBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/clickdetailEmail"
+        app:layout_constraintTop_toBottomOf="@+id/clickdetailEmail"
+        tools:text="+918383077629" />
+
+    <Button
+        android:id="@+id/clickDetailCallBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_button_background"
+        android:text="Call"
+        app:icon="@drawable/ic_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clickDetailMobile"
+        app:layout_constraintTop_toBottomOf="@+id/clickdetailEmail" />
+
+    <ImageView
+        android:id="@+id/clickDetailsVerifiedBadge"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/clickdetailPhoto"
+        app:layout_constraintTop_toTopOf="@+id/clickdetailPhoto"
+        app:srcCompat="@drawable/ic_verified" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
