@@ -109,6 +109,9 @@ class LoginActivity : AppCompatActivity() {
                                                     } else {
                                                         for (document in task.result.documents) {
                                                             val type = document.getString("type")
+                                                            sharedPreferences.edit().apply {
+                                                                putString("globalReceiverMobile", document.getString("mobile").toString())
+                                                            }.apply()
                                                             Log.d(TAG, "onCreateType: $type")
                                                             if (type == "receiver") {
 
