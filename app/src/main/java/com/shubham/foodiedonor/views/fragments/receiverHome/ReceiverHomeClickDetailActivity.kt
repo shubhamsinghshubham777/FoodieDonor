@@ -22,6 +22,18 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
 
     private fun setupAllViews() {
         val donationReceived = intent.getParcelableExtra("donationReceived") as? DonorDonationModel
-        Log.d(TAG, "Received from: ${donationReceived?.from}")
+        //        Log.d(TAG, "Received from: ${donationReceived?.from}")
+
+        when (donationReceived?.verifiedStatus) {
+            "Accepted!" -> {
+                binding.receiverClickAnimation.setAnimation(R.raw.food_verified)
+            }
+            "Pending" -> {
+                binding.receiverClickAnimation.setAnimation(R.raw.food_pending)
+            }
+            else -> {
+                binding.receiverClickAnimation.setAnimation(R.raw.food_rejected)
+            }
+        }
     }
 }

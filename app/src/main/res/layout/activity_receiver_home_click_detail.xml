@@ -6,4 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.receiverHome.ReceiverHomeClickDetailActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/receiverClickAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="0.7" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
