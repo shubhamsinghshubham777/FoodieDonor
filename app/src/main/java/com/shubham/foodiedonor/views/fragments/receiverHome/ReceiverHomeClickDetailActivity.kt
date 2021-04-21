@@ -1,6 +1,7 @@
 package com.shubham.foodiedonor.views.fragments.receiverHome
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.viewbinding.library.activity.viewBinding
+import androidx.core.content.res.ResourcesCompat
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,7 +24,10 @@ import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityReceiverHomeClickDetailBinding
 import com.shubham.foodiedonor.models.DonorDonationModel
 import com.shubham.foodiedonor.models.DonorModel
+import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.utils.Constants.globalDonorCollectionRef
+import www.sanju.motiontoast.MotionToast
+import java.text.SimpleDateFormat
 
 class ReceiverHomeClickDetailActivity : AppCompatActivity() {
 
@@ -30,6 +35,7 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
     private val TAG = "ReceiverHomeClickDetailTAG"
     private lateinit var mMap: SupportMapFragment
     private lateinit var googleMap: GoogleMap
+    private val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +78,8 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
         //This is donor email only
         val receivedFrom = donationReceived?.from
         val receivedTimestamp = donationReceived?.timestamp?.toDate().toString()
+        val receivedTimestamp1 = donationReceived?.timestamp?.toDate()
+        Log.d(TAG, "receivedTimestamp1: ${sdf.format(receivedTimestamp1!!)}")
         val receivedItems = donationReceived?.allItems
 
         getDonorDetails(receivedFrom)
@@ -81,10 +89,41 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
             clickdetailEmail.text = receivedFrom
             clickDetailTv1.text = "These items were sent on \n $receivedTimestamp \n by:"
             animationAcceptItem.setOnClickListener {
-                animationAcceptItem.playAnimation()
+                arhcdLoadingAnimation.visibility = View.VISIBLE
+
+                val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
+                Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!)
+                    .collection("donationsReceived").document(sdf.format(receivedTimestamp1))
+                    .update("verifiedStatus", "Accepted!")
+                    .addOnSuccessListener {
+                        arhcdLoadingAnimation.visibility = View.GONE
+                        animationAcceptItem.playAnimation()
+                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Accepted!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        arhcdLoadingAnimation.visibility = View.GONE
+                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                    }
+
             }
             animationRejectItem.setOnClickListener {
-                animationRejectItem.playAnimation()
+                arhcdLoadingAnimation.visibility = View.VISIBLE
+
+                val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
+                Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!)
+                    .collection("donationsReceived").document(sdf.format(receivedTimestamp1))
+                    .update("verifiedStatus", "Rejected!")
+                    .addOnSuccessListener {
+                        arhcdLoadingAnimation.visibility = View.GONE
+                        animationRejectItem.playAnimation()
+                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Rejected!", MotionToast.TOAST_INFO, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        arhcdLoadingAnimation.visibility = View.GONE
+                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                    }
             }
         }
 
