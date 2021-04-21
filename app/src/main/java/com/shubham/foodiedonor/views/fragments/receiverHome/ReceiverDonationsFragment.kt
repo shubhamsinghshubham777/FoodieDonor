@@ -25,6 +25,8 @@ import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.views.LoginActivity
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorDonationsPageListAdapter
 import com.shubham.foodiedonor.views.fragments.receiverHome.adapters.ReceiverDonationsPageListAdapter
+import dev.shreyaspatil.MaterialDialog.AbstractDialog
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import www.sanju.motiontoast.MotionToast
 
 class ReceiverDonationsFragment : Fragment(R.layout.fragment_receiver_donations) {
@@ -49,11 +51,24 @@ class ReceiverDonationsFragment : Fragment(R.layout.fragment_receiver_donations)
                 binding.apply {
                     receiverHomePageName.text = "Welcome ${receiver?.name}"
                     receiverHomePageSignoutBtn.setOnClickListener {
-                        Firebase.auth.signOut()
-                        requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).edit().clear().apply()
-                        val intent = Intent(requireActivity(), LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
+
+                        val myDialog = MaterialDialog.Builder(requireActivity())
+                            .setAnimation(R.raw.logout)
+                            .setTitle("Confirm sign-out ${receiver?.name}?")
+                            .setMessage("Do you want to sign-out of this account?")
+                            .setPositiveButton("Yes", AbstractDialog.OnClickListener { dialogInterface, _ ->
+                                Firebase.auth.signOut()
+                                requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).edit().clear().apply()
+                                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                dialogInterface.dismiss()
+                            })
+                            .setNegativeButton("No", AbstractDialog.OnClickListener { dialogInterface, _ ->
+                                dialogInterface.dismiss()
+                            }).build()
+
+                        myDialog.show()
                     }
                 }
             }
