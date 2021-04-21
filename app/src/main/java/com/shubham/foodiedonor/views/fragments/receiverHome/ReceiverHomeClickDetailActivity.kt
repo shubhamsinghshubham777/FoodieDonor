@@ -18,7 +18,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityReceiverHomeClickDetailBinding
@@ -35,7 +37,8 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
     private val TAG = "ReceiverHomeClickDetailTAG"
     private lateinit var mMap: SupportMapFragment
     private lateinit var googleMap: GoogleMap
-    private val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
+    private val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:s")
+    private var donorMobile1 = String()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,40 +93,43 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
             clickDetailTv1.text = "These items were sent on \n $receivedTimestamp \n by:"
             animationAcceptItem.setOnClickListener {
                 arhcdLoadingAnimation.visibility = View.VISIBLE
-
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
-                Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!)
-                    .collection("donationsReceived").document(sdf.format(receivedTimestamp1))
-                    .update("verifiedStatus", "Accepted!")
-                    .addOnSuccessListener {
-                        arhcdLoadingAnimation.visibility = View.GONE
-                        animationAcceptItem.playAnimation()
-                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Accepted!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        arhcdLoadingAnimation.visibility = View.GONE
-                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
-                    }
 
+                Firebase.firestore.runBatch { batch ->
+                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1))
+                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1))
+
+                    batch.update(receiverRef, "verifiedStatus", "Accepted!")
+                    batch.update(donorRef, "verifiedStatus", "Accepted!")
+                }.addOnSuccessListener {
+                    arhcdLoadingAnimation.visibility = View.GONE
+                    animationAcceptItem.playAnimation()
+                    MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Accepted!", MotionToast.TOAST_SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                    finish()
+                }.addOnFailureListener {
+                    arhcdLoadingAnimation.visibility = View.GONE
+                    MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                }
             }
             animationRejectItem.setOnClickListener {
                 arhcdLoadingAnimation.visibility = View.VISIBLE
-
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
-                Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!)
-                    .collection("donationsReceived").document(sdf.format(receivedTimestamp1))
-                    .update("verifiedStatus", "Rejected!")
-                    .addOnSuccessListener {
-                        arhcdLoadingAnimation.visibility = View.GONE
-                        animationRejectItem.playAnimation()
-                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Rejected!", MotionToast.TOAST_INFO, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        arhcdLoadingAnimation.visibility = View.GONE
-                        MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
-                    }
+
+                Firebase.firestore.runBatch { batch ->
+                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1))
+                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1))
+
+                    batch.update(receiverRef, "verifiedStatus", "Rejected!")
+                    batch.update(donorRef, "verifiedStatus", "Rejected!")
+                }.addOnSuccessListener {
+                    arhcdLoadingAnimation.visibility = View.GONE
+                    animationAcceptItem.playAnimation()
+                    MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Rejected!", MotionToast.TOAST_INFO, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                    finish()
+                }.addOnFailureListener {
+                    arhcdLoadingAnimation.visibility = View.GONE
+                    MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
+                }
             }
         }
 
@@ -140,6 +146,7 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                         val donor = document.toObject<DonorModel>()
                         binding.clickdetailName.text = donor!!.name
                         binding.clickDetailMobile.text = "+91${donor.mobile}"
+                        donorMobile1 = donor.mobile
                         binding.clickdetailPhoto.load(donor.photo) {
                             crossfade(400)
                             transformations(CircleCropTransformation())

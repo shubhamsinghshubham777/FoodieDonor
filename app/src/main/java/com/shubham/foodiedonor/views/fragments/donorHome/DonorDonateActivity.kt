@@ -43,7 +43,7 @@ class DonorDonateActivity : AppCompatActivity() {
     private var currentFoodItem = ""
     private lateinit var donorDonateAdapter: DonorDonateAdapter
     private val TAG = "DonorDonateActivityTAG"
-    private val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
+    private val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:s")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
