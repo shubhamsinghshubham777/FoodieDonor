@@ -22,7 +22,7 @@
         app:lottie_loop="true"
         app:lottie_speed="0.7" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/clickdetailPhoto"
         android:layout_width="75dp"
         android:layout_height="75dp"

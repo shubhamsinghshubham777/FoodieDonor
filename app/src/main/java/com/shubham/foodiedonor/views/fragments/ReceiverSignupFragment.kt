@@ -1,8 +1,10 @@
 package com.shubham.foodiedonor.views.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.pixelcarrot.base64image.Base64Image
 import com.raywenderlich.android.validatetor.RegexMatcher
 import com.raywenderlich.android.validatetor.ValidateTor
@@ -26,6 +29,8 @@ import com.shubham.foodiedonor.BuildConfig
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentReceiverSignupBinding
 import com.shubham.foodiedonor.models.ReceiverModel
+import com.shubham.foodiedonor.utils.Constants
+import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import com.shubham.foodiedonor.views.ReceiverHomeActivity
 import www.sanju.motiontoast.MotionToast
@@ -50,7 +55,8 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
     private val validateTor = ValidateTor()
     private val validateTorMobileNumber = RegexMatcher()
     private val indianMobileNumberRegex = Regex("^[6-9]\\d{9}\$")
-    private lateinit var base64Photo: String
+    private var userPhotoFile: Uri = Uri.EMPTY
+    private var userPhotoLink: String? = String()
     private val TAG = "receiverSignupFragmentTAG"
     private var latitude = 0.0
     private var longitude = 0.0
@@ -66,7 +72,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentReceiverSignupBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -128,15 +134,10 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
             val fileUri = data?.data
             binding.receiverProfilePhoto.setImageURI(fileUri)
 
-            val inputStream = fileUri?.let { context?.contentResolver?.openInputStream(it) }
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-            Base64Image.encode(bitmap) {
-                if (it != null) {
-                    base64Photo = it
-                    isProfilePhotoValid = true
-                    unlockSignupButton()
-                    Log.d(TAG, "base64photo is: $base64Photo $isProfilePhotoValid")
-                }
+            if (fileUri != null) {
+                userPhotoFile = fileUri
+                isProfilePhotoValid = true
+                unlockSignupButton()
             }
 
             if (requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
@@ -357,57 +358,86 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                     )
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                //save data to firestore
 
-                                val db = Firebase.firestore
-                                db.collection("receivers")
-                                    .document(binding.receiverMobileEt.text.toString())
-                                    .set(
-                                        ReceiverModel(
-                                            name = binding.receiverNameEt.text.toString(),
-                                            email = binding.receiverEmailEt.text.toString(),
-                                            mobile = binding.receiverMobileEt.text.toString(),
-                                            address = fullAddress,
-                                            photo = base64Photo,
-                                            mobileVerified = isMobileVerified,
-                                            latitude = latitude,
-                                            longitude = longitude,
-                                            cinNumber = binding.receiverCinEt.text.toString(),
-                                            rating = 0.0
-                                        )
-                                    )
-                                    .addOnCompleteListener { firestoreTask ->
-                                        if (firestoreTask.isSuccessful) {
-                                            MotionToast.createColorToast(
-                                                requireActivity(), "Sign Up Completed!",
-                                                MotionToast.TOAST_SUCCESS,
-                                                MotionToast.GRAVITY_BOTTOM,
-                                                MotionToast.LONG_DURATION,
-                                                ResourcesCompat.getFont(
-                                                    requireActivity(),
-                                                    R.font.helvetica_regular
-                                                )
-                                            )
+                                //save photo to firebase storage
+                                val userEmail = binding.receiverEmailEt.text.toString()
+                                Log.d(TAG, "userPhotoFile : $userPhotoFile")
+                                Firebase.storage.reference.child("$userEmail/userPhoto.jpg")
+                                    .putFile(userPhotoFile)
+                                    .addOnSuccessListener {
 
-                                            startActivity(
-                                                Intent(
-                                                    requireActivity(),
-                                                    ReceiverHomeActivity::class.java
-                                                )
-                                            )
-                                        } else {
-                                            MotionToast.createColorToast(
-                                                requireActivity(), "Data was not saved!",
-                                                MotionToast.TOAST_ERROR,
-                                                MotionToast.GRAVITY_BOTTOM,
-                                                MotionToast.LONG_DURATION,
-                                                ResourcesCompat.getFont(
-                                                    requireActivity(),
-                                                    R.font.helvetica_regular
-                                                )
-                                            )
-                                        }
-                                    }
+                                        //save receiverMobile to sharedPrefs
+                                        requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
+                                            putString("globalReceiverMobile", binding.receiverMobileEt.text.toString())
+                                        }.apply()
+
+                                        //Get photo link from firebase storage and save it to sharedPref
+                                        Firebase.storage.reference.child("$userEmail/userPhoto.jpg")
+                                            .downloadUrl.addOnCompleteListener { photo ->
+                                                requireActivity().getSharedPreferences(
+                                                    mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
+                                                    putString("receiverPhotoUrl", photo.result.toString())
+                                                }.apply()
+                                                userPhotoLink = requireActivity().getSharedPreferences(
+                                                    mySharedPrefName, Context.MODE_PRIVATE).getString("receiverPhotoUrl", null)
+                                                Log.d(TAG, "user firestorage photo: ${photo.result} & $userPhotoLink")
+
+                                                //save data to firestore
+                                                val db = Firebase.firestore
+                                                db.collection("receivers")
+                                                    .document(binding.receiverMobileEt.text.toString())
+                                                    .set(
+                                                        ReceiverModel(
+                                                            name = binding.receiverNameEt.text.toString(),
+                                                            email = binding.receiverEmailEt.text.toString(),
+                                                            mobile = binding.receiverMobileEt.text.toString(),
+                                                            address = fullAddress,
+                                                            photo = userPhotoLink,
+                                                            mobileVerified = isMobileVerified,
+                                                            latitude = latitude,
+                                                            longitude = longitude,
+                                                            cinNumber = binding.receiverCinEt.text.toString(),
+                                                            rating = 0.0
+                                                        )
+                                                    )
+                                                    .addOnCompleteListener { firestoreTask ->
+                                                        if (firestoreTask.isSuccessful) {
+                                                            MotionToast.createColorToast(
+                                                                requireActivity(), "Sign Up Completed!",
+                                                                MotionToast.TOAST_SUCCESS,
+                                                                MotionToast.GRAVITY_BOTTOM,
+                                                                MotionToast.LONG_DURATION,
+                                                                ResourcesCompat.getFont(
+                                                                    requireActivity(),
+                                                                    R.font.helvetica_regular
+                                                                )
+                                                            )
+
+                                                            startActivity(
+                                                                Intent(
+                                                                    requireActivity(),
+                                                                    ReceiverHomeActivity::class.java
+                                                                )
+                                                            )
+                                                        } else {
+                                                            MotionToast.createColorToast(
+                                                                requireActivity(), "Data was not saved!",
+                                                                MotionToast.TOAST_ERROR,
+                                                                MotionToast.GRAVITY_BOTTOM,
+                                                                MotionToast.LONG_DURATION,
+                                                                ResourcesCompat.getFont(
+                                                                    requireActivity(),
+                                                                    R.font.helvetica_regular
+                                                                )
+                                                            )
+                                                        }
+                                                    }
+                                            }
+                                            .addOnFailureListener {
+
+                                            }
+
+                                            }
 
                             } else {
                                 if (it.exception is FirebaseAuthUserCollisionException) {

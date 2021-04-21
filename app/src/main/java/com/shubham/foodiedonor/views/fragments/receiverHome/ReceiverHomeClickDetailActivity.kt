@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.viewbinding.library.activity.viewBinding
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -99,6 +101,11 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                         val donor = document.toObject<DonorModel>()
                         binding.clickdetailName.text = donor!!.name
                         binding.clickDetailMobile.text = "+91${donor.mobile}"
+                        binding.clickdetailPhoto.load(donor.photo) {
+                            crossfade(400)
+                            transformations(CircleCropTransformation())
+                            placeholder(R.drawable.placeholder_image2)
+                        }
                         binding.clickDetailCallBtn.setOnClickListener {
                             val intent = Intent(Intent.ACTION_DIAL)
                             intent.data = Uri.parse("tel:+91${donor.mobile}")
@@ -110,12 +117,12 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                             binding.clickDetailsVerifiedBadge.visibility = View.INVISIBLE
                         }
                         setupGoogleMap(donor.latitude, donor.longitude)
-                        val donorPhoto = donor.photo
-                        Base64Image.decode(donorPhoto) { bitmap ->
-                            bitmap?.let {
-                                binding.clickdetailPhoto.setImageBitmap(it)
-                            }
-                        }
+//                        val donorPhoto = donor.photo
+//                        Base64Image.decode(donorPhoto) { bitmap ->
+//                            bitmap?.let {
+//                                binding.clickdetailPhoto.setImageBitmap(it)
+//                            }
+//                        }
                     }
                 }
             }

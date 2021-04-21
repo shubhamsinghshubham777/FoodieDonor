@@ -28,7 +28,6 @@ import com.shubham.foodiedonor.utils.Constants.globalDonorLatitude
 import com.shubham.foodiedonor.utils.Constants.globalDonorLongitude
 import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
-import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.shubham.foodiedonor.views.LoginActivity
 import dev.shreyaspatil.MaterialDialog.AbstractDialog
@@ -109,12 +108,12 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
                     globalDonorEmail = currentPerson?.email.toString()
                     globalDonorAddress = currentPerson?.address.toString()
                     globalDonorMobile = currentPerson?.mobile.toString()
-                    Base64Image.decode(currentPerson?.photo) { bitmap ->
-                        bitmap?.let { myBitmap ->
-                            val myDrawable = BitmapDrawable(resources, myBitmap)
-                            globalDonorPhoto = myDrawable
-                        }
-                    }
+//                    Base64Image.decode(currentPerson?.photo) { bitmap ->
+//                        bitmap?.let { myBitmap ->
+//                            val myDrawable = BitmapDrawable(resources, myBitmap)
+//                            globalDonorPhoto = myDrawable
+//                        }
+//                    }
                     globalDonorLatitude = currentPerson!!.latitude
                     globalDonorLongitude = currentPerson.longitude
 

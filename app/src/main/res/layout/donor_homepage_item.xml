@@ -26,16 +26,13 @@
             android:layout_height="match_parent"
             android:background="@color/primaryColor">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/dhiPhoto"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="16dp"
                 android:elevation="@dimen/default_elevation"
                 android:scaleType="centerCrop"
-                app:civ_border_color="@color/white"
-                app:civ_border_overlay="true"
-                app:civ_border_width="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

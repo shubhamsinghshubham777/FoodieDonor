@@ -17,7 +17,6 @@ object Constants {
     var globalDonorAddress = ""
     var globalDonorLongitude = 0.0
     var globalDonorLatitude = 0.0
-    lateinit var globalDonorPhoto: Drawable
     lateinit var globalFoodListItemNonBreads: ArrayList<String>
     var donateItemsList : MutableList<DonateItemModel> = mutableListOf<DonateItemModel>()
     var globalDonationList: String = String()

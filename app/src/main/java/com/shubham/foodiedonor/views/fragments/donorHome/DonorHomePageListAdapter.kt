@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.pixelcarrot.base64image.Base64Image
@@ -33,17 +35,16 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
             dhiAddress.text = model.address
             dhiMobile.text = "+91${model.mobile}"
             dhiRating.text = model.rating.toString()
+            dhiPhoto.load(model.photo) {
+                crossfade(400)
+                transformations(CircleCropTransformation())
+                placeholder(R.drawable.placeholder_image2)
+            }
 
             if(model.mobileVerified) {
                 dhiVerifiedIv.visibility = View.VISIBLE
             } else {
                 dhiVerifiedIv.visibility = View.INVISIBLE
-            }
-
-            Base64Image.decode(model.photo) { bitmap ->
-                bitmap?.let {
-                    dhiPhoto.setImageBitmap(it)
-                }
             }
         }
 

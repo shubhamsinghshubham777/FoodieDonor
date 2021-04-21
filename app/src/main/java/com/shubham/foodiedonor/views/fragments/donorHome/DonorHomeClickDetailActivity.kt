@@ -2,6 +2,7 @@ package com.shubham.foodiedonor.views.fragments.donorHome
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -12,7 +13,10 @@ import android.util.Log
 import android.view.MenuItem
 import android.viewbinding.library.activity.viewBinding
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.core.widget.NestedScrollView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,6 +27,7 @@ import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorHomeClickDetailBinding
 import com.shubham.foodiedonor.models.ReceiverModel
+import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import www.sanju.motiontoast.MotionToast
 
 class DonorHomeClickDetailActivity : AppCompatActivity() {
@@ -66,13 +71,18 @@ class DonorHomeClickDetailActivity : AppCompatActivity() {
 
         })
 
-        Base64Image.decode(receiver?.photo) { bitmap ->
-            bitmap?.let {
-                val myDrawable = BitmapDrawable(resources, it)
-                binding.detailPhoto.setImageBitmap(it)
-//                supportActionBar?.setIcon(myDrawable)
-            }
+        binding.detailPhoto.load(receiver?.photo) {
+            crossfade(400)
+            placeholder(R.drawable.ic_image_placeholder)
         }
+
+//        Base64Image.decode(receiver?.photo) { bitmap ->
+//            bitmap?.let {
+//                val myDrawable = BitmapDrawable(resources, it)
+//                binding.detailPhoto.setImageBitmap(it)
+////                supportActionBar?.setIcon(myDrawable)
+//            }
+//        }
 
         binding.apply {
             dhcdEmail.text = receiver?.email

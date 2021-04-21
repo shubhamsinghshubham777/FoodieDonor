@@ -2,6 +2,7 @@ package com.shubham.foodiedonor.views.fragments.donorHome
 
 import android.animation.Animator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,8 @@ import android.viewbinding.library.activity.viewBinding
 import android.widget.AdapterView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
@@ -18,12 +21,12 @@ import com.shubham.foodiedonor.databinding.ActivityDonorDonateBinding
 import com.shubham.foodiedonor.models.DonateItemModel
 import com.shubham.foodiedonor.models.DonorDonationModel
 import com.shubham.foodiedonor.models.ReceiverModel
+import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.utils.Constants.donateItemsList
 import com.shubham.foodiedonor.utils.Constants.globalDonationList
 import com.shubham.foodiedonor.utils.Constants.globalDonorCollectionRef
 import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
-import com.shubham.foodiedonor.utils.Constants.globalDonorPhoto
 import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
 import com.shubham.foodiedonor.utils.Constants.globalReceiverCollectionRef
 import com.shubham.foodiedonor.views.DonorHomeActivity
@@ -68,13 +71,29 @@ class DonorDonateActivity : AppCompatActivity() {
         binding.apply {
             donateDonorName.text = globalDonorName
             donateOrgName.text = receiver!!.name
-            donateDonorPhoto.setImageDrawable(globalDonorPhoto)
 
-            Base64Image.decode(receiver.photo) {
-                it?.let { myBitmap ->
-                    donateOrgPhoto.setImageBitmap(myBitmap)
+            val donorPhoto = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("donorPhotoUrl", null)
+            Log.d(TAG, "DonorPhotoInClickDetail: $donorPhoto")
+            if (donorPhoto != null) {
+                donateDonorPhoto.load(donorPhoto) {
+                    crossfade(1000)
+                    placeholder(R.drawable.placeholder_image2)
                 }
             }
+
+//            donateDonorPhoto.setImageDrawable(globalDonorPhoto)
+
+            donateOrgPhoto.load(receiver.photo) {
+                crossfade(400)
+                transformations(CircleCropTransformation())
+                placeholder(R.drawable.placeholder_image2)
+            }
+
+//            Base64Image.decode(receiver.photo) {
+//                it?.let { myBitmap ->
+//                    donateOrgPhoto.setImageBitmap(myBitmap)
+//                }
+//            }
 
             btnAddItem.setOnClickListener {
                 hideSoftKeyboard()
@@ -123,7 +142,8 @@ class DonorDonateActivity : AppCompatActivity() {
                 if (donateItemsList.size > 0) {
                     binding.donorDonateSubmitBtn.isEnabled = false
                     val date = Date()
-                    globalDonorCollectionRef.document(globalDonorMobile).collection("donations").document(sdf.format(date))
+                    val donorMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorMobile", null)
+                    globalDonorCollectionRef.document(donorMobile!!).collection("donations").document(sdf.format(date))
                         .set(
                         DonorDonationModel(to = receiver.name, allItems = globalDonationList)
                     ).addOnSuccessListener {
