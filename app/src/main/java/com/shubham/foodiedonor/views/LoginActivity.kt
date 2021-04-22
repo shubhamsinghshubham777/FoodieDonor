@@ -131,8 +131,9 @@ class LoginActivity : AppCompatActivity() {
                                             for (document in donorTask.result.documents) {
                                                 val type = document.getString("type")
                                                 sharedPreferences.edit().apply {
-                                                    putString("globalDonorMobile", document.getString("mobile").toString())
-                                                }.apply()
+                                                    putString("globalDonorMobile", document.getString("mobile"))
+                                                    putString("globalDonorPhotoUrl", document.getString("photo"))
+                                                }.commit()
                                                 Log.d(TAG, "onCreateType: $type")
                                                 if (type == "donor") {
 

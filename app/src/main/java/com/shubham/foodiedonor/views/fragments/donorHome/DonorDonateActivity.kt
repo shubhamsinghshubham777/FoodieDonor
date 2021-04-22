@@ -72,11 +72,12 @@ class DonorDonateActivity : AppCompatActivity() {
             donateDonorName.text = globalDonorName
             donateOrgName.text = receiver!!.name
 
-            val donorPhoto = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("donorPhotoUrl", null)
+            val donorPhoto = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorPhotoUrl", null)
             Log.d(TAG, "DonorPhotoInClickDetail: $donorPhoto")
             if (donorPhoto != null) {
                 donateDonorPhoto.load(donorPhoto) {
-                    crossfade(1000)
+                    crossfade(400)
+                    transformations(CircleCropTransformation())
                     placeholder(R.drawable.placeholder_image2)
                 }
             }

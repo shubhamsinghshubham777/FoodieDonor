@@ -376,10 +376,10 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                             .downloadUrl.addOnCompleteListener { photo ->
                                                 requireActivity().getSharedPreferences(
                                                     mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
-                                                    putString("receiverPhotoUrl", photo.result.toString())
+                                                    putString("globalReceiverPhotoUrl", photo.result.toString())
                                                 }.apply()
                                                 userPhotoLink = requireActivity().getSharedPreferences(
-                                                    mySharedPrefName, Context.MODE_PRIVATE).getString("receiverPhotoUrl", null)
+                                                    mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverPhotoUrl", null)
                                                 Log.d(TAG, "user firestorage photo: ${photo.result} & $userPhotoLink")
 
                                                 //save data to firestore

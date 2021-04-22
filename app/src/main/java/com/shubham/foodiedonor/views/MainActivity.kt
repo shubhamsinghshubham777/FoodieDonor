@@ -1,5 +1,6 @@
 package com.shubham.foodiedonor.views
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityMainBinding
+import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.utils.Constants.globalFoodDocumentRef
 import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         saveFoodItemsToGlobalConstant()
 
-
+        val sharedPreferences = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE)
 
 //        Log.d(TAG, "onCreate: ${Firebase.auth.currentUser?.email}")
 //        Log.d(TAG, "onCreate: ${Firebase.auth.currentUser?.uid}")
@@ -61,6 +63,11 @@ class MainActivity : AppCompatActivity() {
                                         val type = document.getString("type")
                                         Log.d(TAG, "onCreateType: $type")
                                         if (type == "receiver") {
+                                            sharedPreferences.edit().apply {
+                                                putString("globalDonorMobile", document.getString("mobile"))
+                                                putString("globalDonorPhotoUrl", document.getString("photo"))
+                                                putString("globalDonorEmail", document.getString("email"))
+                                            }.commit()
                                             val intent =
                                                 Intent(this, ReceiverHomeActivity::class.java)
                                             intent.flags =
@@ -77,6 +84,11 @@ class MainActivity : AppCompatActivity() {
                             val type = document.getString("type")
                             Log.d(TAG, "onCreateType: $type")
                             if (type == "donor") {
+                                sharedPreferences.edit().apply {
+                                    putString("globalReceiverMobile", document.getString("mobile"))
+                                    putString("globalReceiverPhotoUrl", document.getString("photo"))
+                                    putString("globalReceiverEmail", document.getString("email"))
+                                }.commit()
                                 val intent = Intent(this, DonorHomeActivity::class.java)
                                 intent.flags =
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

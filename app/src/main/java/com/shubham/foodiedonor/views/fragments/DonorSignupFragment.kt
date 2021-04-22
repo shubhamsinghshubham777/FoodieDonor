@@ -363,9 +363,9 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                         Firebase.storage.reference.child("$userEmail/userPhoto.jpg")
                                             .downloadUrl.addOnCompleteListener { photo ->
                                                 requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
-                                                    putString("donorPhotoUrl", photo.result.toString())
+                                                    putString("globalDonorPhotoUrl", photo.result.toString())
                                                 }.apply()
-                                                userPhotoLink = requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).getString("donorPhotoUrl", null)
+                                                userPhotoLink = requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorPhotoUrl", null)
                                                 Log.d(TAG, "user firestorage photo: ${photo.result} & $userPhotoLink")
 
                                                 //save data to firestore
