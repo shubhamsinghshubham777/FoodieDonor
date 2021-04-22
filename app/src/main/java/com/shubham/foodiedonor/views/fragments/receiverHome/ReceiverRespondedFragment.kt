@@ -78,8 +78,11 @@ class ReceiverRespondedFragment : Fragment(R.layout.fragment_receiver_responded)
     private fun setupRecyclerView() {
 
         val sharedPreferences = requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE)
+        val filterList = mutableListOf<String>("Accepted!", "Rejected!")
         val currentReceiverMobileNumber = sharedPreferences.getString("globalReceiverMobile", null)
-        val query = Constants.globalReceiverCollectionRef.document(currentReceiverMobileNumber!!).collection("donationsReceived").orderBy("timestamp", Query.Direction.DESCENDING)
+        val query = Constants.globalReceiverCollectionRef.document(currentReceiverMobileNumber!!).collection("donationsReceived")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereIn("verifiedStatus", filterList)
         val options = FirestoreRecyclerOptions.Builder<DonorDonationModel>()
             .setQuery(query, DonorDonationModel::class.java)
             .build()
