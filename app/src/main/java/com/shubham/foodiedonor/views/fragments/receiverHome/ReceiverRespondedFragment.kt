@@ -22,6 +22,7 @@ import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.views.LoginActivity
 import com.shubham.foodiedonor.views.fragments.receiverHome.adapters.ReceiverDonationsPageListAdapter
+import com.shubham.foodiedonor.views.fragments.receiverHome.adapters.ReceiverRespondedPageListAdapter
 import dev.shreyaspatil.MaterialDialog.AbstractDialog
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import www.sanju.motiontoast.MotionToast
@@ -29,7 +30,7 @@ import www.sanju.motiontoast.MotionToast
 class ReceiverRespondedFragment : Fragment(R.layout.fragment_receiver_responded) {
 
     private val binding: FragmentReceiverRespondedBinding by viewBinding()
-    private lateinit var receiverDonationsPageListAdapter: ReceiverDonationsPageListAdapter
+    private lateinit var receiverDonationsPageListAdapter: ReceiverRespondedPageListAdapter
     private val TAG = "ReceiverRespondedFragmentTAG"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,7 +87,7 @@ class ReceiverRespondedFragment : Fragment(R.layout.fragment_receiver_responded)
         val options = FirestoreRecyclerOptions.Builder<DonorDonationModel>()
             .setQuery(query, DonorDonationModel::class.java)
             .build()
-        receiverDonationsPageListAdapter = ReceiverDonationsPageListAdapter(options)
+        receiverDonationsPageListAdapter = ReceiverRespondedPageListAdapter(options)
 
         binding.receiverRespondedRecyclerView.apply {
             setHasFixedSize(true)
