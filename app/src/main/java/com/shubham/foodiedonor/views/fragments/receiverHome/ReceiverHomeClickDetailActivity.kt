@@ -123,7 +123,7 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                     batch.update(donorRef, "verifiedStatus", "Rejected!")
                 }.addOnSuccessListener {
                     arhcdLoadingAnimation.visibility = View.GONE
-                    animationAcceptItem.playAnimation()
+                    animationRejectItem.playAnimation()
                     MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Rejected!", MotionToast.TOAST_INFO, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
                     finish()
                 }.addOnFailureListener {
