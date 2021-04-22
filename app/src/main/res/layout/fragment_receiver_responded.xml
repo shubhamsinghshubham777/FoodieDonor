@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toStartOf="@+id/receiverRespondedPageAnimation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Welcome ShubhFoundation" />
+        tools:text="Donations History!" />
 
     <TextView
         android:id="@+id/tvSubheadingRecResponded"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_sc_medium"
         android:paddingStart="12dp"
-        android:text="Here are your donation requests"
+        android:text="Thank you for feeding the needy!"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/receiverRespondedPageAnimation"
         app:layout_constraintEnd_toEndOf="@+id/receiverRespondedPageName"

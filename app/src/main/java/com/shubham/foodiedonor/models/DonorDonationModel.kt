@@ -7,36 +7,13 @@ import com.shubham.foodiedonor.utils.Constants
 import kotlinx.android.parcel.Parcelize
 import kotlinx.parcelize.Parceler
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.*
 
-@Parcelize
 data class DonorDonationModel(
-    val timestamp: Timestamp? = Timestamp.now(),
+    val timestamp: String = SimpleDateFormat("yyyy.MM.dd HH:mm:s").format(Date()).substring(0, SimpleDateFormat("yyyy.MM.dd HH:mm:s").format(Date()).length-1),
     val from: String? = Constants.globalDonorEmail,
     val to: String? ="",
     val allItems: String? ="",
     val verifiedStatus: String? = "Pending"
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readParcelable(Timestamp::class.java.classLoader),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
-
-    companion object : Parceler<DonorDonationModel> {
-
-        override fun DonorDonationModel.write(parcel: Parcel, flags: Int) {
-            parcel.writeParcelable(timestamp, flags)
-            parcel.writeString(from)
-            parcel.writeString(to)
-            parcel.writeString(allItems)
-            parcel.writeString(verifiedStatus)
-        }
-
-        override fun create(parcel: Parcel): DonorDonationModel {
-            return DonorDonationModel(parcel)
-        }
-    }
-}
+) : Serializable

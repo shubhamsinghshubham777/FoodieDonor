@@ -49,7 +49,7 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupAllViews() {
-        val donationReceived = intent.getParcelableExtra("donationReceived") as? DonorDonationModel
+        val donationReceived = intent.getSerializableExtra("donationReceived") as? DonorDonationModel
         //        Log.d(TAG, "Received from: ${donationReceived?.from}")
 
         when (donationReceived?.verifiedStatus) {
@@ -80,9 +80,9 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
 
         //This is donor email only
         val receivedFrom = donationReceived?.from
-        val receivedTimestamp = donationReceived?.timestamp?.toDate().toString()
-        val receivedTimestamp1 = donationReceived?.timestamp?.toDate()
-        Log.d(TAG, "receivedTimestamp1: ${sdf.format(receivedTimestamp1!!)}")
+        val receivedTimestamp = donationReceived?.timestamp
+//        val receivedTimestamp1 = donationReceived?.timestamp?.toDate()
+//        Log.d(TAG, "receivedTimestamp1: ${receivedTimestamp!!}")
         val receivedItems = donationReceived?.allItems
 
         getDonorDetails(receivedFrom)
@@ -96,8 +96,10 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
 
                 Firebase.firestore.runBatch { batch ->
-                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
-                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
+                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(receivedTimestamp!!)
+                    Log.d(TAG, "donorMobile1: $donorMobile1")
+                    Log.d(TAG, "receivedTimestamp: $receivedTimestamp")
+                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(receivedTimestamp)
 
                     batch.update(receiverRef, "verifiedStatus", "Accepted!")
                     batch.update(donorRef, "verifiedStatus", "Accepted!")
@@ -116,8 +118,8 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
 
                 Firebase.firestore.runBatch { batch ->
-                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
-                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
+                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(receivedTimestamp!!)
+                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(receivedTimestamp)
 
                     batch.update(receiverRef, "verifiedStatus", "Rejected!")
                     batch.update(donorRef, "verifiedStatus", "Rejected!")

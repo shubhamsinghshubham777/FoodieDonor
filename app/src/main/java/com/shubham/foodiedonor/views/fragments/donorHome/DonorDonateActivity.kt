@@ -15,7 +15,6 @@ import androidx.core.widget.doOnTextChanged
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-import com.pixelcarrot.base64image.Base64Image
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorDonateBinding
 import com.shubham.foodiedonor.models.DonateItemModel
@@ -25,7 +24,6 @@ import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.utils.Constants.donateItemsList
 import com.shubham.foodiedonor.utils.Constants.globalDonationList
 import com.shubham.foodiedonor.utils.Constants.globalDonorCollectionRef
-import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.globalDonorName
 import com.shubham.foodiedonor.utils.Constants.globalFoodListItemNonBreads
 import com.shubham.foodiedonor.utils.Constants.globalReceiverCollectionRef

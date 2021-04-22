@@ -47,7 +47,7 @@ class ReceiverRespondedFragment : Fragment(R.layout.fragment_receiver_responded)
             .addOnSuccessListener {
                 val receiver = it.toObject<ReceiverModel>()
                 binding.apply {
-                    receiverRespondedPageName.text = "Welcome ${receiver?.name}"
+                    receiverRespondedPageName.text = "Donations History!"
                     receiverRespondedPageSignoutBtn.setOnClickListener {
 
                         val myDialog = MaterialDialog.Builder(requireActivity())
