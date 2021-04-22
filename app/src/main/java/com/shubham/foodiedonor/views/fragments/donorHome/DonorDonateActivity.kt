@@ -143,7 +143,7 @@ class DonorDonateActivity : AppCompatActivity() {
                 if (donateItemsList.size > 0) {
                     binding.donorDonateSubmitBtn.isEnabled = false
                     val date = Date()
-                    val currentTime = sdf.format(date)
+                    val currentTime = sdf.format(date).substring(0, sdf.format(date).length-1)
                     val donorMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorMobile", null)
                     globalDonorCollectionRef.document(donorMobile!!).collection("donations").document(currentTime)
                         .set(

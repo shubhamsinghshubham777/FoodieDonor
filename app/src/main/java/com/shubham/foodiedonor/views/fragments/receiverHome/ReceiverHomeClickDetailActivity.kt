@@ -96,8 +96,8 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
 
                 Firebase.firestore.runBatch { batch ->
-                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1))
-                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1))
+                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
+                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
 
                     batch.update(receiverRef, "verifiedStatus", "Accepted!")
                     batch.update(donorRef, "verifiedStatus", "Accepted!")
@@ -116,8 +116,8 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
 
                 Firebase.firestore.runBatch { batch ->
-                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1))
-                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1))
+                    val receiverRef = Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).collection("donationsReceived").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
+                    val donorRef = Constants.globalDonorCollectionRef.document(donorMobile1).collection("donations").document(sdf.format(receivedTimestamp1).substring(0, sdf.format(receivedTimestamp1).length-1))
 
                     batch.update(receiverRef, "verifiedStatus", "Rejected!")
                     batch.update(donorRef, "verifiedStatus", "Rejected!")
