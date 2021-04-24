@@ -15,6 +15,7 @@
             app:destination="@id/donorSignupFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
+            app:launchSingleTop="true"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
         <action

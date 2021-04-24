@@ -224,7 +224,18 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
         if (!binding.receiverPasswordEt.text.isNullOrEmpty()) {isPasswordValid = true}
         if (!binding.receiverRepeatPasswordEt.text.isNullOrEmpty()) {isRepeatPasswordValid = true}
         if (!binding.receiverMobileEt.text.isNullOrEmpty()) {isMobileValid = true}
-        if (args.mobileVerified) {isMobileVerified = true}
+        if (args.mobileVerified) {isMobileVerified = true
+        binding.lottieMobileVerification.apply {
+            setAnimation(R.raw.verified)
+            playAnimation()
+        }
+        }
+        if (!args.mobileVerified) {isMobileVerified = true
+            binding.lottieMobileVerification.apply {
+                setAnimation(R.raw.notverified)
+                playAnimation()
+            }
+        }
         if (!binding.receiverAddressEt.text.isNullOrEmpty()) {isAddressValid = true}
         if (!binding.receiverCinEt.text.isNullOrEmpty()) {isCinValid = true}
 

@@ -142,21 +142,36 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         Log.d(TAG, "Address is: $address")
                         binding.selectBtn.setOnClickListener {
                             Log.d(TAG, "address on button: $address")
-                            val action = MapsFragmentDirections.actionMapsFragmentToReceiverSignupFragment(
-                                args.name,
-                                args.email,
-                                args.mobile,
-                                args.mobileVerified,
-                                args.password,
-                                args.repeatPassword,
-                                address,
-                                args.cinNumber,
-                                latitude.toFloat(),
-                                longitude.toFloat()
-                            )
-                            findNavController().navigate(action)
-                        }
+                            if (args.stackId == 2131362368) {
+                                val action = MapsFragmentDirections.actionMapsFragmentToReceiverSignupFragment(
+                                    args.name,
+                                    args.email,
+                                    args.mobile,
+                                    args.mobileVerified,
+                                    args.password,
+                                    args.repeatPassword,
+                                    address,
+                                    args.cinNumber,
+                                    latitude.toFloat(),
+                                    longitude.toFloat()
+                                )
+                                findNavController().navigate(action)
+                            } else if(args.stackId == 2131362066) {
+                                val action = MapsFragmentDirections.actionMapsFragmentToDonorSignupFragment(
+                                    args.name,
+                                    args.email,
+                                    args.mobile,
+                                    args.mobileVerified,
+                                    args.password,
+                                    args.repeatPassword,
+                                    address,
+                                    latitude.toFloat(),
+                                    longitude.toFloat()
+                                )
+                                findNavController().navigate(action)
+                            }
 
+                        }
                     } catch (e: Exception) {
                         Log.d(TAG, "on address error: ${e.localizedMessage}")
                     }

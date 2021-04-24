@@ -221,6 +221,26 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
     }
 
     private fun observeAllFields() {
+
+        if (!binding.donorNameEt.text.isNullOrEmpty()) {isNameValid = true}
+        if (!binding.donorEmailEt.text.isNullOrEmpty()) {isEmailValid = true}
+        if (!binding.donorPasswordEt.text.isNullOrEmpty()) {isPasswordValid = true}
+        if (!binding.donorRepeatPasswordEt.text.isNullOrEmpty()) {isRepeatPasswordValid = true}
+        if (!binding.donorMobileEt.text.isNullOrEmpty()) {isMobileValid = true}
+        if (args.mobileVerified) {isMobileVerified = true
+            binding.lottieMobileVerification.apply {
+                setAnimation(R.raw.verified)
+                playAnimation()
+            }
+        }
+        if (!args.mobileVerified) {
+            binding.lottieMobileVerification.apply {
+                setAnimation(R.raw.notverified)
+                playAnimation()
+            }
+        }
+        if (!binding.donorAddressEt.text.isNullOrEmpty()) {isAddressValid = true}
+
         binding.donorNameEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
                 binding.donorNameLayout.error = getString(R.string.required_field)
