@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -39,6 +41,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 
     private var _binding: FragmentDonorSignupBinding? = null
     private val binding get() = _binding!!
+    private val args: DonorSignupFragmentArgs by navArgs()
 
     private var isNameValid = false
     private var isEmailValid = false
@@ -86,7 +89,9 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
             this.playAnimation()
         }
 
+        setupAllFields()
         observeAllFields()
+        unlockSignupButton()
 
         binding.donorProfilePhoto.setOnClickListener {
             ImagePicker.with(this)
@@ -97,31 +102,38 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
         }
 
         binding.donorAddressIv.setOnClickListener {
-            val locationPickerIntent = LocationPickerActivity.Builder()
-                .withLocation(28.665050640866188, 77.14356996310623)
-                .withGeolocApiKey(BuildConfig.apiKey)
-                .withSearchZone("en_ES")
-                .withSearchZone(
-                    SearchZoneRect(
-                        LatLng(28.663692694207246, 77.14074199258673),
-                        LatLng(28.66842783939638, 77.13294212906699)
-                    )
-                )
-                .withDefaultLocaleSearchZone()
-                .shouldReturnOkOnBackPressed()
-                .withGooglePlacesApiKey(BuildConfig.apiKey)
-                .withSatelliteViewHidden()
-                .withGoogleTimeZoneEnabled()
-//                .withVoiceSearchHidden()
-//                .withStreetHidden()
-//                .withCityHidden()
-//                .withZipCodeHidden()
-//                .withUnnamedRoadHidden()
-                .build(requireContext())
 
-            startActivityForResult(locationPickerIntent, MAP_BUTTON_REQUEST_CODE)
+            val action = DonorSignupFragmentDirections.actionDonorSignupFragmentToMapsFragment(
+                binding.donorNameEt.text.toString(),
+                binding.donorEmailEt.text.toString(),
+                binding.donorMobileEt.text.toString(),
+                isMobileVerified,
+                binding.donorPasswordEt.text.toString(),
+                binding.donorRepeatPasswordEt.text.toString(),
+                null,
+                null,
+                latitude.toFloat(),
+                longitude.toFloat(),
+                findNavController().currentDestination!!.id
+            )
+            findNavController().navigate(action)
         }
 
+    }
+
+    private fun setupAllFields() {
+        binding.apply {
+            donorNameEt.setText(args.name)
+            donorEmailEt.setText(args.email)
+            donorPasswordEt.setText(args.password)
+            donorRepeatPasswordEt.setText(args.repeatPassword)
+            donorMobileEt.setText(args.mobile)
+            isMobileVerified = args.mobileVerified
+            donorAddressEt.setText(args.address)
+            fullAddress = args.address.toString()
+            latitude = args.latitude.toDouble()
+            longitude = args.longitude.toDouble()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

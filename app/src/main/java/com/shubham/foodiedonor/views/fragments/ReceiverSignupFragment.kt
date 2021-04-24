@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -30,6 +32,8 @@ import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentReceiverSignupBinding
 import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.utils.Constants
+import com.shubham.foodiedonor.utils.Constants.MAP_BUTTON_REQUEST_CODE
+import com.shubham.foodiedonor.utils.Constants.VERIFY_OTP_REQUEST_CODE
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import com.shubham.foodiedonor.views.ReceiverHomeActivity
@@ -42,6 +46,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
 
     private var _binding: FragmentReceiverSignupBinding? = null
     private val binding get() = _binding!!
+    private val args: ReceiverSignupFragmentArgs by navArgs()
 
     private var isNameValid = false
     private var isEmailValid = false
@@ -89,7 +94,9 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
             this.playAnimation()
         }
 
+        setupAllFields()
         observeAllFields()
+        unlockSignupButton()
 
         binding.receiverProfilePhoto.setOnClickListener {
             ImagePicker.with(this)
@@ -100,31 +107,40 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
         }
 
         binding.receiverAddressIv.setOnClickListener {
-            val locationPickerIntent = LocationPickerActivity.Builder()
-                .withLocation(28.665050640866188, 77.14356996310623)
-                .withGeolocApiKey(BuildConfig.apiKey)
-                .withSearchZone("en_ES")
-                .withSearchZone(
-                    SearchZoneRect(
-                        LatLng(28.663692694207246, 77.14074199258673),
-                        LatLng(28.66842783939638, 77.13294212906699)
-                    )
-                )
-                .withDefaultLocaleSearchZone()
-                .shouldReturnOkOnBackPressed()
-                .withGooglePlacesApiKey(BuildConfig.apiKey)
-                .withSatelliteViewHidden()
-                .withGoogleTimeZoneEnabled()
-//                .withVoiceSearchHidden()
-//                .withStreetHidden()
-//                .withCityHidden()
-//                .withZipCodeHidden()
-//                .withUnnamedRoadHidden()
-                .build(requireContext())
 
-            startActivityForResult(locationPickerIntent, MAP_BUTTON_REQUEST_CODE)
+            val action = ReceiverSignupFragmentDirections.actionReceiverSignupFragmentToMapsFragment(
+                binding.receiverNameEt.text.toString(),
+                binding.receiverEmailEt.text.toString(),
+                binding.receiverMobileEt.text.toString(),
+                isMobileVerified,
+                binding.receiverPasswordEt.text.toString(),
+                binding.receiverRepeatPasswordEt.text.toString(),
+                null,
+                binding.receiverCinEt.text.toString(),
+                latitude.toFloat(),
+                longitude.toFloat(),
+                findNavController().currentDestination!!.id
+            )
+            findNavController().navigate(action)
+
         }
 
+    }
+
+    private fun setupAllFields() {
+        binding.apply {
+            receiverNameEt.setText(args.name)
+            receiverEmailEt.setText(args.email)
+            receiverPasswordEt.setText(args.password)
+            receiverRepeatPasswordEt.setText(args.repeatPassword)
+            receiverMobileEt.setText(args.mobile)
+            isMobileVerified = args.mobileVerified
+            receiverAddressEt.setText(args.address)
+            receiverCinEt.setText(args.cinNumber)
+            fullAddress = args.address.toString()
+            latitude = args.latitude.toDouble()
+            longitude = args.longitude.toDouble()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -137,6 +153,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
             if (fileUri != null) {
                 userPhotoFile = fileUri
                 isProfilePhotoValid = true
+                observeAllFields()
                 unlockSignupButton()
             }
 
@@ -201,6 +218,16 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
     }
 
     private fun observeAllFields() {
+
+        if (!binding.receiverNameEt.text.isNullOrEmpty()) {isNameValid = true}
+        if (!binding.receiverEmailEt.text.isNullOrEmpty()) {isEmailValid = true}
+        if (!binding.receiverPasswordEt.text.isNullOrEmpty()) {isPasswordValid = true}
+        if (!binding.receiverRepeatPasswordEt.text.isNullOrEmpty()) {isRepeatPasswordValid = true}
+        if (!binding.receiverMobileEt.text.isNullOrEmpty()) {isMobileValid = true}
+        if (args.mobileVerified) {isMobileVerified = true}
+        if (!binding.receiverAddressEt.text.isNullOrEmpty()) {isAddressValid = true}
+        if (!binding.receiverCinEt.text.isNullOrEmpty()) {isCinValid = true}
+
         binding.receiverNameEt.doOnTextChanged { text, start, before, count ->
             if (validateTor.isEmpty(text.toString())) {
                 binding.receiverNameLayout.error = getString(R.string.required_field)
@@ -489,11 +516,6 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                 isEnabled = false
             }
         }
-    }
-
-    companion object {
-        const val MAP_BUTTON_REQUEST_CODE = 111
-        const val VERIFY_OTP_REQUEST_CODE = 112
     }
 
 }

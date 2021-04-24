@@ -18,12 +18,12 @@ class SignupChooserFragment : Fragment(R.layout.fragment_signup_chooser) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.donorIv.setOnClickListener {
-            val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToDonorSignupFragment()
+            val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToDonorSignupFragment(null,null,null,false,null,null,null,0.0f,0.0f)
             findNavController().navigate(action)
         }
 
         binding.receiverIv.setOnClickListener {
-            val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToReceiverSignupFragment()
+            val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToReceiverSignupFragment(null, null, null, false, null, null, null, null, 0.0f, 0.0f)
             findNavController().navigate(action)
         }
     }

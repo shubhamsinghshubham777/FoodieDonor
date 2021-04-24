@@ -91,8 +91,9 @@ dependencies {
     //Base64 library
     implementation 'com.pixelcarrot.base64image:base64image:1.0.0'
 
-    //Google Places API
+    //Google Maps APIs
     implementation 'com.google.android.libraries.places:places:2.4.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
