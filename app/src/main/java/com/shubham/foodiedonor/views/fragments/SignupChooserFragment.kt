@@ -26,6 +26,10 @@ class SignupChooserFragment : Fragment(R.layout.fragment_signup_chooser) {
             val action = SignupChooserFragmentDirections.actionSignupChooserFragmentToReceiverSignupFragment(null, null, null, false, null, null, null, null, 0.0f, 0.0f)
             findNavController().navigate(action)
         }
+
+        binding.signupChooserLoginBtn.setOnClickListener {
+            requireActivity().finish()
+        }
     }
 
 }

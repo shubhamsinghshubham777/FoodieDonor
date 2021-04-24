@@ -171,4 +171,27 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.55" />
 
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="Already have an account?"
+        app:layout_constraintBottom_toBottomOf="@+id/signupChooserLoginBtn"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/signupChooserLoginBtn" />
+
+    <TextView
+        android:id="@+id/signupChooserLoginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="8dp"
+        android:text="Login"
+        android:textColor="@color/primaryColorDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView36" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
