@@ -3,6 +3,7 @@ package com.shubham.foodiedonor.views.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Geocoder
+import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -29,6 +30,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentMapsBinding
 import com.shubham.foodiedonor.models.ReceiverModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import www.sanju.motiontoast.MotionToast
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -59,91 +64,59 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
 
         Log.d(TAG, "latitude is: $latitude \n & longitude is: $longitude")
         Log.d(TAG, "Previous fragment was: ${args.stackId}")
     }
 
+    override fun onStart() {
+        super.onStart()
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
+    }
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap?) {
 
-        permissionsBuilder(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION).build().send() {
-            if (it.allGranted()) {
-                mMap = googleMap!!
-
-                mMap.isMyLocationEnabled = true
+        CoroutineScope(Dispatchers.Main).launch {
 
 
+            mMap = googleMap!!
 
-                val locationTask = fusedLocationProviderClient.lastLocation
-                locationTask.addOnSuccessListener { currentLocation ->
-                    latitude = currentLocation.latitude
-                    longitude = currentLocation.longitude
+            mMap.isMyLocationEnabled = true
 
-                    val myCurrentLocation = LatLng(latitude, longitude)
+            val locationTask: Location? = fusedLocationProviderClient.lastLocation.await()
 
-                    mMap.setOnMapClickListener {
-                        mMap.apply {
-                            clear()
-                            addMarker(MarkerOptions()
-                                .position(it)
-                            )
-                            try {
-                                val listOfAddress = geocoder.getFromLocation(it.latitude, it.longitude, 1)
-                                val currentAddress = listOfAddress[0]
-                                address = currentAddress.getAddressLine(0)
-                                Log.d(TAG, "Address is: $address")
-                            } catch (e: Exception) {
-                                Log.d(TAG, "newmarker addressError: ${e.localizedMessage}")
-                            }
+            locationTask?.let {
+                latitude = it.latitude
+                longitude = it.longitude
+            }
 
-                            binding.selectBtn.setOnClickListener {
-                                Log.d(TAG, "address on button: $address")
-                                if (args.stackId == 2131362368) {
-                                    val action = MapsFragmentDirections.actionMapsFragmentToReceiverSignupFragment(
-                                        args.name,
-                                        args.email,
-                                        args.mobile,
-                                        args.mobileVerified,
-                                        args.password,
-                                        args.repeatPassword,
-                                        address,
-                                        args.cinNumber,
-                                        latitude.toFloat(),
-                                        longitude.toFloat()
-                                    )
-                                    findNavController().navigate(action)
-                                } else if(args.stackId == 2131362066) {
-                                    val action = MapsFragmentDirections.actionMapsFragmentToDonorSignupFragment(
-                                        args.name,
-                                        args.email,
-                                        args.mobile,
-                                        args.mobileVerified,
-                                        args.password,
-                                        args.repeatPassword,
-                                        address,
-                                        latitude.toFloat(),
-                                        longitude.toFloat()
-                                    )
-                                    findNavController().navigate(action)
-                                }
+            val myCurrentLocation = LatLng(latitude, longitude)
 
-                            }
-                        }
-                    }
-
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myCurrentLocation, 16f))
-
+            mMap.setOnMapClickListener {
+                mMap.apply {
+                    clear()
+                    addMarker(
+                        MarkerOptions()
+                            .position(it)
+                    )
                     try {
-                        val listOfAddress = geocoder.getFromLocation(latitude, longitude, 1)
+                        val listOfAddress = geocoder.getFromLocation(it.latitude, it.longitude, 1)
                         val currentAddress = listOfAddress[0]
                         address = currentAddress.getAddressLine(0)
                         Log.d(TAG, "Address is: $address")
-                        binding.selectBtn.setOnClickListener {
-                            Log.d(TAG, "address on button: $address")
-                            if (args.stackId == 2131362368) {
-                                val action = MapsFragmentDirections.actionMapsFragmentToReceiverSignupFragment(
+                    } catch (e: Exception) {
+                        Log.d(TAG, "newmarker addressError: ${e.localizedMessage}")
+                    }
+
+                    binding.selectBtn.setOnClickListener {
+                        Log.d(TAG, "address on button: $address")
+                        if (args.stackId == 2131362368) {
+                            val action =
+                                MapsFragmentDirections.actionMapsFragmentToReceiverSignupFragment(
                                     args.name,
                                     args.email,
                                     args.mobile,
@@ -155,9 +128,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                                     latitude.toFloat(),
                                     longitude.toFloat()
                                 )
-                                findNavController().navigate(action)
-                            } else if(args.stackId == 2131362066) {
-                                val action = MapsFragmentDirections.actionMapsFragmentToDonorSignupFragment(
+                            findNavController().navigate(action)
+                        } else if (args.stackId == 2131362066) {
+                            val action =
+                                MapsFragmentDirections.actionMapsFragmentToDonorSignupFragment(
                                     args.name,
                                     args.email,
                                     args.mobile,
@@ -168,22 +142,60 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                                     latitude.toFloat(),
                                     longitude.toFloat()
                                 )
-                                findNavController().navigate(action)
-                            }
-
+                            findNavController().navigate(action)
                         }
-                    } catch (e: Exception) {
-                        Log.d(TAG, "on address error: ${e.localizedMessage}")
+
+                    }
+                }
+            }
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myCurrentLocation, 16f))
+
+            try {
+                val listOfAddress = geocoder.getFromLocation(latitude, longitude, 1)
+                val currentAddress = listOfAddress[0]
+                address = currentAddress.getAddressLine(0)
+                Log.d(TAG, "Address is: $address")
+                binding.selectBtn.setOnClickListener {
+                    Log.d(TAG, "address on button: $address")
+                    if (args.stackId == 2131362368) {
+                        val action =
+                            MapsFragmentDirections.actionMapsFragmentToReceiverSignupFragment(
+                                args.name,
+                                args.email,
+                                args.mobile,
+                                args.mobileVerified,
+                                args.password,
+                                args.repeatPassword,
+                                address,
+                                args.cinNumber,
+                                latitude.toFloat(),
+                                longitude.toFloat()
+                            )
+                        findNavController().navigate(action)
+                    } else if (args.stackId == 2131362066) {
+                        val action = MapsFragmentDirections.actionMapsFragmentToDonorSignupFragment(
+                            args.name,
+                            args.email,
+                            args.mobile,
+                            args.mobileVerified,
+                            args.password,
+                            args.repeatPassword,
+                            address,
+                            latitude.toFloat(),
+                            longitude.toFloat()
+                        )
+                        findNavController().navigate(action)
                     }
 
                 }
-                locationTask.addOnFailureListener { exception ->
-                    Log.d(TAG, "onStart location retrieval failed! Cause: ${exception.localizedMessage}")
-                }
-
-            } else {
-                MotionToast.createColorToast(requireActivity(), "Please accept the location permission!", MotionToast.TOAST_WARNING, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(requireActivity(),R.font.alegreya_sans_sc_medium))
+            } catch (e: Exception) {
+                Log.d(TAG, "on address error: ${e.localizedMessage}")
             }
+
+
+
+
         }
 
     }

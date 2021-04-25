@@ -1,9 +1,11 @@
 package com.shubham.foodiedonor.views.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.fondesa.kpermissions.allGranted
+import com.fondesa.kpermissions.extension.permissionsBuilder
+import com.fondesa.kpermissions.extension.send
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -37,6 +42,8 @@ import com.shubham.foodiedonor.utils.Constants.VERIFY_OTP_REQUEST_CODE
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import com.shubham.foodiedonor.views.ReceiverHomeActivity
+import dev.shreyaspatil.MaterialDialog.AbstractDialog
+import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import www.sanju.motiontoast.MotionToast
 
 
@@ -108,23 +115,52 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
 
         binding.receiverAddressIv.setOnClickListener {
 
-            val action = ReceiverSignupFragmentDirections.actionReceiverSignupFragmentToMapsFragment(
-                binding.receiverNameEt.text.toString(),
-                binding.receiverEmailEt.text.toString(),
-                binding.receiverMobileEt.text.toString(),
-                isMobileVerified,
-                binding.receiverPasswordEt.text.toString(),
-                binding.receiverRepeatPasswordEt.text.toString(),
-                null,
-                binding.receiverCinEt.text.toString(),
-                latitude.toFloat(),
-                longitude.toFloat(),
-                findNavController().currentDestination!!.id
-            )
-            findNavController().navigate(action)
+            permissionsBuilder(Manifest.permission.ACCESS_FINE_LOCATION).build().send() {
+                if (it.allGranted()) {
+
+                    val manager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                    if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        buildAlertMessageNoGps()
+                    } else {
+                        val action = ReceiverSignupFragmentDirections.actionReceiverSignupFragmentToMapsFragment(
+                            binding.receiverNameEt.text.toString(),
+                            binding.receiverEmailEt.text.toString(),
+                            binding.receiverMobileEt.text.toString(),
+                            isMobileVerified,
+                            binding.receiverPasswordEt.text.toString(),
+                            binding.receiverRepeatPasswordEt.text.toString(),
+                            null,
+                            binding.receiverCinEt.text.toString(),
+                            latitude.toFloat(),
+                            longitude.toFloat(),
+                            2131362368
+                        )
+                        findNavController().navigate(action)
+                    }
+                } else {
+                    MotionToast.createColorToast(requireActivity(), "Please accept the location permission!", MotionToast.TOAST_WARNING, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(requireActivity(),R.font.alegreya_sans_sc_medium))
+                }
+            }
 
         }
 
+    }
+
+    private fun buildAlertMessageNoGps() {
+        val myDialog = MaterialDialog.Builder(requireActivity())
+            .setTitle("GPS Location Needed")
+            .setMessage("Please enable location services to proceed")
+            .setPositiveButton("Enable", AbstractDialog.OnClickListener { dialogInterface, which ->
+                dialogInterface.dismiss()
+                startActivity( Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            })
+            .setNegativeButton("No Thanks", AbstractDialog.OnClickListener { dialogInterface, which ->
+                dialogInterface.dismiss()
+                MotionToast.createColorToast(requireActivity(), "Location permissions needed for this feature!", MotionToast.TOAST_WARNING, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(requireActivity(),R.font.alegreya_sans_sc_medium))
+            })
+            .build()
+
+        myDialog.show()
     }
 
     private fun setupAllFields() {
@@ -230,7 +266,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
             playAnimation()
         }
         }
-        if (!args.mobileVerified) {isMobileVerified = true
+        if (!args.mobileVerified) {isMobileVerified = false
             binding.lottieMobileVerification.apply {
                 setAnimation(R.raw.notverified)
                 playAnimation()
