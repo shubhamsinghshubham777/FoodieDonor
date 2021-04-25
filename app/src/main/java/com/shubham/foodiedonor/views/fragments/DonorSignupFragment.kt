@@ -38,6 +38,7 @@ import com.shubham.foodiedonor.databinding.FragmentDonorSignupBinding
 import com.shubham.foodiedonor.models.DonorModel
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.shubham.foodiedonor.views.DonorHomeActivity
+import com.shubham.foodiedonor.views.LoginActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import dev.shreyaspatil.MaterialDialog.AbstractDialog
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
@@ -458,7 +459,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                                     .addOnCompleteListener { firestoreTask ->
                                                         if (firestoreTask.isSuccessful) {
                                                             MotionToast.createColorToast(
-                                                                requireActivity(), "Sign Up Completed!",
+                                                                requireActivity(), "Please login with your new credentials now!",
                                                                 MotionToast.TOAST_SUCCESS,
                                                                 MotionToast.GRAVITY_BOTTOM,
                                                                 MotionToast.LONG_DURATION,
@@ -482,15 +483,12 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                                     }
                                             }
 
-                                        startActivity(
-                                            Intent(
-                                                requireActivity(),
-                                                DonorHomeActivity::class.java
-                                            )
-                                        )
+                                        startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                                        Firebase.auth.signOut()
                                     }
-                                    .addOnFailureListener {
-
+                                    .addOnFailureListener { exception ->
+                                        MotionToast.createColorToast(requireActivity(), "Unexpected error occurred!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.SHORT_DURATION, ResourcesCompat.getFont(requireActivity(),R.font.alegreya_sans_sc_medium))
+                                        Log.d(TAG, "Signup failure cause: ${exception.localizedMessage}")
                                     }
 
                             } else {

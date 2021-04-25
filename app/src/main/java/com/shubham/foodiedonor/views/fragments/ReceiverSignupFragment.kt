@@ -40,6 +40,7 @@ import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.utils.Constants.MAP_BUTTON_REQUEST_CODE
 import com.shubham.foodiedonor.utils.Constants.VERIFY_OTP_REQUEST_CODE
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
+import com.shubham.foodiedonor.views.LoginActivity
 import com.shubham.foodiedonor.views.VerifyMobileActivity
 import com.shubham.foodiedonor.views.ReceiverHomeActivity
 import dev.shreyaspatil.MaterialDialog.AbstractDialog
@@ -478,7 +479,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                                     .addOnCompleteListener { firestoreTask ->
                                                         if (firestoreTask.isSuccessful) {
                                                             MotionToast.createColorToast(
-                                                                requireActivity(), "Sign Up Completed!",
+                                                                requireActivity(), "Please login with your new credentials now!",
                                                                 MotionToast.TOAST_SUCCESS,
                                                                 MotionToast.GRAVITY_BOTTOM,
                                                                 MotionToast.LONG_DURATION,
@@ -488,12 +489,8 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                                                 )
                                                             )
 
-                                                            startActivity(
-                                                                Intent(
-                                                                    requireActivity(),
-                                                                    ReceiverHomeActivity::class.java
-                                                                )
-                                                            )
+                                                            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                                                            Firebase.auth.signOut()
                                                         } else {
                                                             MotionToast.createColorToast(
                                                                 requireActivity(), "Data was not saved!",
