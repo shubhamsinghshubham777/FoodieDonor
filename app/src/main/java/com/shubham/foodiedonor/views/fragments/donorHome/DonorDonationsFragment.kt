@@ -11,9 +11,7 @@ import com.google.firebase.firestore.Query
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorDonationsBinding
 import com.shubham.foodiedonor.models.DonorDonationModel
-import com.shubham.foodiedonor.models.ReceiverModel
 import com.shubham.foodiedonor.utils.Constants.globalDonorCollectionRef
-import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 
 class DonorDonationsFragment : Fragment(R.layout.fragment_donor_donations) {
@@ -51,7 +49,7 @@ class DonorDonationsFragment : Fragment(R.layout.fragment_donor_donations) {
         val options = FirestoreRecyclerOptions.Builder<DonorDonationModel>()
             .setQuery(query, DonorDonationModel::class.java)
             .build()
-        donorDonationsPageListAdapter = DonorDonationsPageListAdapter(options)
+        donorDonationsPageListAdapter = DonorDonationsPageListAdapter(options, requireActivity().supportFragmentManager)
 
         binding.donorDonationsPageRv.apply {
             setHasFixedSize(true)

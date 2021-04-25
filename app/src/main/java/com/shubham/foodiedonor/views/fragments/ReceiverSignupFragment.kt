@@ -423,6 +423,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                 isEnabled = true
                 setOnClickListener {
 
+                    binding.receiverSignupBtn.isEnabled = false
                     binding.receiverSignupLoaderAnimationLottie.visibility = View.VISIBLE
                     //make call to firebase
 
@@ -514,6 +515,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                             }
 
                             } else {
+                                binding.receiverSignupBtn.isEnabled = true
                                 if (it.exception is FirebaseAuthUserCollisionException) {
                                     binding.receiverSignupLoaderAnimationLottie.visibility = View.GONE
                                     MotionToast.createColorToast(

@@ -405,6 +405,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                 isEnabled = true
                 setOnClickListener {
 
+                    binding.donorSignupBtn.isEnabled = false
                     binding.donorSignupLoaderAnimationLottie.visibility = View.VISIBLE
                     //make call to firebase
 
@@ -493,6 +494,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                     }
 
                             } else {
+                                binding.donorSignupBtn.isEnabled = true
                                 if (it.exception is FirebaseAuthUserCollisionException) {
                                     MotionToast.createColorToast(
                                         requireActivity(), "Email already exists!",

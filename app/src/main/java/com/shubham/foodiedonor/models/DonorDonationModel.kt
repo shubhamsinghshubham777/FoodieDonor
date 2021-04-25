@@ -14,6 +14,8 @@ data class DonorDonationModel(
     val timestamp: String = SimpleDateFormat("yyyy.MM.dd HH:mm:s").format(Date()).substring(0, SimpleDateFormat("yyyy.MM.dd HH:mm:s").format(Date()).length-1),
     val from: String? = Constants.globalDonorEmail,
     val to: String? ="",
+    val toEmail: String? = "",
+    val toMobile: String? = "",
     val allItems: String? ="",
     val verifiedStatus: String? = "Pending"
 ) : Serializable

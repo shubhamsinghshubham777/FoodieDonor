@@ -145,12 +145,12 @@ class DonorDonateActivity : AppCompatActivity() {
                     val donorMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorMobile", null)
                     globalDonorCollectionRef.document(donorMobile!!).collection("donations").document(currentTime)
                         .set(
-                        DonorDonationModel(to = receiver.name, allItems = globalDonationList)
+                        DonorDonationModel(to = receiver.name, allItems = globalDonationList, toEmail = receiver.email, toMobile = receiver.mobile)
                     ).addOnSuccessListener {
 
                             globalReceiverCollectionRef.document(receiver.mobile).collection("donationsReceived").document(currentTime)
                                 .set(
-                                    DonorDonationModel(to = receiver.name, allItems = globalDonationList)
+                                    DonorDonationModel(to = receiver.name, allItems = globalDonationList, toEmail = receiver.email, toMobile = receiver.mobile)
                                 ).addOnSuccessListener {
 
                                     binding.donationCheckAnimation.apply {
