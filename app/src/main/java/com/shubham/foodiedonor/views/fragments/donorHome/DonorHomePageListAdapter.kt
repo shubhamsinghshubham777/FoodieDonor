@@ -7,6 +7,7 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,8 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
             } else {
                 dhiVerifiedIv.visibility = View.INVISIBLE
             }
+            //RecyclerView item animation
+            holder.binding.root.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recyclerview_anim1)
         }
 
         holder.binding.root.setOnClickListener {

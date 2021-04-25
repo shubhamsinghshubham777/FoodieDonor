@@ -3,6 +3,7 @@ package com.shubham.foodiedonor.views.fragments.donorHome
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -58,7 +59,8 @@ class DonorDonationsPageListAdapter(
                 val dialog = CustomDialogFragment(model.toEmail!!, model.to!!, model.toMobile!!, model.from!!)
                 dialog.show(supportFragmentManager, "customDialog")
             }
-
+            //RecyclerView item animation
+            holder.binding.root.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recyclerview_anim1)
         }
 
 //        holder.binding.root.setOnClickListener {
