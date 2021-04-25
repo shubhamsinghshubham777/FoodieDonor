@@ -52,6 +52,7 @@ class CustomDialogFragment(
             fcdSubmitBtn.setOnClickListener {
 
                 fcdLoadingAnimtaion.visibility = View.VISIBLE
+                it.isEnabled = false
 
                 val dataMap = mapOf(Pair("rating", fcdRatingCount.text.toString().toFloat()))
 

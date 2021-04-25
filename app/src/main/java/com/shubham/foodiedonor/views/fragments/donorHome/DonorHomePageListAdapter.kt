@@ -34,7 +34,7 @@ class DonorHomePageListAdapter(options: FirestoreRecyclerOptions<ReceiverModel>)
             dhiOrgName.text = model.name
             dhiAddress.text = model.address
             dhiMobile.text = "+91${model.mobile}"
-            dhiRating.text = model.rating.toString()
+            dhiRating.text = String.format("%.1f", model.rating)
             dhiPhoto.load(model.photo) {
                 crossfade(400)
                 transformations(CircleCropTransformation())
