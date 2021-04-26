@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.viewbinding.library.activity.viewBinding
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.appbar.AppBarLayout
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityDonorHomeBinding
 import com.shubham.foodiedonor.views.fragments.donorHome.DonorHomePageFragment
@@ -36,6 +37,7 @@ class DonorHomeActivity : AppCompatActivity() {
                     positionOffsetPixels: Int
                 ) {
                     hideSoftKeyboard()
+                    binding.topBarConstraintLayout.progress = (position + positionOffset)/(offscreenPageLimit - 1)
                 }
 
                 override fun onPageSelected(position: Int) {

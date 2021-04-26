@@ -11,6 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import coil.load
+import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
@@ -22,6 +25,7 @@ import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.FragmentDonorHomePageBinding
 import com.shubham.foodiedonor.models.DonorModel
 import com.shubham.foodiedonor.models.ReceiverModel
+import com.shubham.foodiedonor.utils.Constants
 import com.shubham.foodiedonor.utils.Constants.globalDonorAddress
 import com.shubham.foodiedonor.utils.Constants.globalDonorEmail
 import com.shubham.foodiedonor.utils.Constants.globalDonorLatitude
@@ -59,17 +63,6 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
         setupRecyclerView()
 
         setupAllViews()
-
-//        binding.donorHomePageSwipeRefreshLayout.setOnRefreshListener {
-//
-//            requireActivity().supportFragmentManager
-//                .beginTransaction()
-//                .detach(this)
-//                .attach(this)
-//                .commit()
-//
-//            binding.donorHomePageSwipeRefreshLayout.isRefreshing = false
-//        }
     }
 
     private fun setupAllViews() {
@@ -93,6 +86,12 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
             donorHomePageSignoutBtn.setOnClickListener {
                 myDialog.show()
             }
+            val donorPhoto = requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorPhotoUrl", null)
+            donorHomePageDonorIv.load(donorPhoto) {
+                crossfade(500)
+                placeholder(R.drawable.placeholder_image2)
+                transformations(CircleCropTransformation())
+            }
         }
     }
 
@@ -108,12 +107,6 @@ class DonorHomePageFragment : Fragment(R.layout.fragment_donor_home_page) {
                     globalDonorEmail = currentPerson?.email.toString()
                     globalDonorAddress = currentPerson?.address.toString()
                     globalDonorMobile = currentPerson?.mobile.toString()
-//                    Base64Image.decode(currentPerson?.photo) { bitmap ->
-//                        bitmap?.let { myBitmap ->
-//                            val myDrawable = BitmapDrawable(resources, myBitmap)
-//                            globalDonorPhoto = myDrawable
-//                        }
-//                    }
                     globalDonorLatitude = currentPerson!!.latitude
                     globalDonorLongitude = currentPerson.longitude
 
