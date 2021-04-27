@@ -42,6 +42,7 @@ class ReceiverHomeActivity : AppCompatActivity() {
                     positionOffsetPixels: Int
                 ) {
                     hideSoftKeyboard()
+                    binding.receiverHomeMotionLayout.progress = (position + positionOffset)/(offscreenPageLimit - 1)
                 }
 
                 override fun onPageSelected(position: Int) {
