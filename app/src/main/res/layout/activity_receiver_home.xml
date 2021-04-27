@@ -44,10 +44,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/receiverHomeMotionLayout"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        app:layoutDescription="@xml/activity_receiver_home_xml_receiverhomemotionlayout_scene"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +63,8 @@
             android:text="Your Donation Requests"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -75,6 +78,8 @@
             android:text="Donations History"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +94,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:lottie_rawRes="@raw/food_think" />
 
         <view
@@ -101,7 +108,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:lottie_rawRes="@raw/thankyou_heart" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
