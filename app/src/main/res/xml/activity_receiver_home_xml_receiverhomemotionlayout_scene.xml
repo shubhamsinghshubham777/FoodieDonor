@@ -47,7 +47,7 @@
            <KeyAttribute
                motion:motionTarget="@+id/receiverHomeRequestsAnimation"
                motion:framePosition="100"
-               android:translationY="-60dp" />
+               android:translationY="60dp" />
            <KeyAttribute
                motion:motionTarget="@+id/receiverHomeDonationAnimation"
                motion:framePosition="0"
@@ -56,6 +56,30 @@
                motion:motionTarget="@+id/receiverHomeDonationAnimation"
                motion:framePosition="100"
                android:translationY="0dp" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverHomeThankyouTv"
+               motion:framePosition="0"
+               android:rotation="60" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverHomeThankyouTv"
+               motion:framePosition="100"
+               android:rotation="0" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverHomeHistoryTv"
+               motion:framePosition="0"
+               android:translationY="0dp" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverHomeHistoryTv"
+               motion:framePosition="100"
+               android:translationY="-6dp" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverHomeThankyouTv"
+               motion:framePosition="0"
+               android:translationY="0dp" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverHomeThankyouTv"
+               motion:framePosition="100"
+               android:translationY="-6dp" />
        </KeyFrameSet>
     </Transition>
 
@@ -90,5 +114,13 @@
             android:layout_marginEnd="24dp"
             motion:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible" />
+        <Constraint
+            android:id="@+id/receiverHomeThankyouTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 </MotionScene>

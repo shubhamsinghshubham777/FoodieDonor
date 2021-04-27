@@ -48,6 +48,8 @@
         android:id="@+id/receiverHomeMotionLayout"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:background="@color/primaryColor"
+        android:transformPivotX="0dp"
         app:layoutDescription="@xml/activity_receiver_home_xml_receiverhomemotionlayout_scene"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -111,6 +113,18 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/thankyou_heart" />
+
+        <TextView
+            android:id="@+id/receiverHomeThankyouTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Thank you for feeding the needy!"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
