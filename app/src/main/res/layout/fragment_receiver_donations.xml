@@ -11,53 +11,25 @@
 
     <TextView
         android:id="@+id/receiverHomePageName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/alegreya_sc_black"
         android:gravity="center"
         android:padding="8dp"
         android:textColor="@color/black"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/textView29"
-        app:layout_constraintEnd_toStartOf="@+id/receiverHomePageAnimation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Welcome ShubhFoundation" />
-
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alegreya_sans_sc_medium"
-        android:paddingStart="12dp"
-        android:text="Here are your donation requests"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/receiverHomePageAnimation"
-        app:layout_constraintEnd_toEndOf="@+id/receiverHomePageName"
-        app:layout_constraintStart_toStartOf="@+id/receiverHomePageName" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/receiverHomePageAnimation"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/food_think"
-        app:lottie_speed="0.75" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receiverHomePagePhoto"
+        tools:text="Welcome ShubhFoundation" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/receiverHomeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -65,17 +37,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receiverHomePageAnimation" />
+        app:layout_constraintTop_toBottomOf="@+id/receiverHomePageName" />
 
     <Button
         android:id="@+id/receiverHomePageSignoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/alegreya_sans_sc_medium"
         android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/receiverHomePagePhoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

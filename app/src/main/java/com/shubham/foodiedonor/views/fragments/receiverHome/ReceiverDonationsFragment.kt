@@ -11,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.viewbinding.library.fragment.viewBinding
 import androidx.core.content.res.ResourcesCompat
+import coil.load
+import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
@@ -50,6 +53,12 @@ class ReceiverDonationsFragment : Fragment(R.layout.fragment_receiver_donations)
                 val receiver = it.toObject<ReceiverModel>()
                 binding.apply {
                     receiverHomePageName.text = "Welcome ${receiver?.name}"
+                    receiverHomePagePhoto.load(receiver?.photo) {
+                        crossfade(400)
+                        transformations(CircleCropTransformation())
+                        placeholder(R.drawable.placeholder_image2)
+                        memoryCachePolicy(CachePolicy.ENABLED)
+                    }
                     receiverHomePageSignoutBtn.setOnClickListener {
 
                         val myDialog = MaterialDialog.Builder(requireActivity())
