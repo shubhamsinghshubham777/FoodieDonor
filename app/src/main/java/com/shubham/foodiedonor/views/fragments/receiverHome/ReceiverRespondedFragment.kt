@@ -37,43 +37,6 @@ class ReceiverRespondedFragment : Fragment(R.layout.fragment_receiver_responded)
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        setupAllViews()
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun setupAllViews() {
-        val currentReceiverMobile = requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
-        Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).get()
-            .addOnSuccessListener {
-                val receiver = it.toObject<ReceiverModel>()
-                binding.apply {
-                    receiverRespondedPageName.text = "Donations History!"
-                    receiverRespondedPageSignoutBtn.setOnClickListener {
-
-                        val myDialog = MaterialDialog.Builder(requireActivity())
-                            .setAnimation(R.raw.logout)
-                            .setTitle("Confirm sign-out ${receiver?.name}?")
-                            .setMessage("Do you want to sign-out of this account?")
-                            .setPositiveButton("Yes", AbstractDialog.OnClickListener { dialogInterface, _ ->
-                                Firebase.auth.signOut()
-                                requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).edit().clear().apply()
-                                val intent = Intent(requireActivity(), LoginActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                                dialogInterface.dismiss()
-                            })
-                            .setNegativeButton("No", AbstractDialog.OnClickListener { dialogInterface, _ ->
-                                dialogInterface.dismiss()
-                            }).build()
-
-                        myDialog.show()
-                    }
-                }
-            }
-            .addOnFailureListener {
-                MotionToast.createColorToast(requireActivity(), "Unexpected error occurred. Please try again later.", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(requireActivity(), R.font.alegreya_sans_sc_medium))
-                Log.d(TAG, "Error cause: ${it.localizedMessage}")
-            }
     }
 
     private fun setupRecyclerView() {
