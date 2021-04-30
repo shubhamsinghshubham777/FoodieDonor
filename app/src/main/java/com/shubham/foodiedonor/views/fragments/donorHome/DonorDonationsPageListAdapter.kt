@@ -27,7 +27,7 @@ class DonorDonationsPageListAdapter(
     override fun onBindViewHolder(holder: DonorHomePageListVH, position: Int, model: DonorDonationModel) {
 
         holder.binding.apply {
-            dhdiTimeStamp.text = model.timestamp
+            dhdiTimeStamp.text = "${model.timestamp.substring(0,10)} @${model.timestamp.substring(10,16)}"
             dhdiTo.text = model.to
             dhdiItems.apply {
                 isSelected = true
