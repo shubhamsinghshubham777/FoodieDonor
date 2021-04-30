@@ -7,6 +7,18 @@
     app:layoutDescription="@xml/activity_receiver_home_click_detail_scene"
     tools:context=".views.fragments.receiverHome.ReceiverHomeClickDetailActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/receiverClickAnimation"
         android:layout_width="match_parent"
@@ -17,10 +29,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_speed="0.7" />
+        app:lottie_loop="true" />
 
     <ImageView
         android:id="@+id/clickdetailPhoto"

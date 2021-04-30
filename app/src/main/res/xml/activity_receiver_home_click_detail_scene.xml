@@ -14,20 +14,27 @@
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:layout_marginEnd="16dp"
+            android:layout_height="250dp"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            motion:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:id="@+id/receiverClickAnimation"
+            android:layout_marginTop="8dp" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/receiverClickAnimation"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintHorizontal_bias="0.5"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </ConstraintSet>
 </MotionScene>

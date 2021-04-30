@@ -88,7 +88,7 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
         getDonorDetails(receivedFrom)
 
         binding.apply {
-            clickdetailItems.text = receivedItems
+            clickdetailItems.text = receivedItems?.substring(0, receivedItems.length-2)
             clickdetailEmail.text = receivedFrom
             clickDetailTv1.text = "These items were sent on \n ${receivedTimestamp?.substring(0, 10)} @${receivedTimestamp?.substring(10,16)}\t by:"
             animationAcceptItem.setOnClickListener {
