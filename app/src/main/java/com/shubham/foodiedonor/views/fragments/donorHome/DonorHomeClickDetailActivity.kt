@@ -115,6 +115,9 @@ class DonorHomeClickDetailActivity : AppCompatActivity() {
                 rating = receiver?.rating!!.toFloat()
                 isIndicator = true
             }
+            dhcdRatingTv.apply {
+                text = String.format("%.1f", receiver?.rating)
+            }
             donorMasterClickBtn.setOnClickListener {
                 val intent = Intent(this@DonorHomeClickDetailActivity, DonorDonateActivity::class.java)
                 intent.putExtra("receiverInfo", receiver)

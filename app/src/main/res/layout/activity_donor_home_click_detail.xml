@@ -214,6 +214,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/dhcdRatingTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/alegreya_sc_black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/dhcdRating"
+                app:layout_constraintStart_toEndOf="@+id/dhcdRating"
+                app:layout_constraintTop_toTopOf="@+id/dhcdRating"
+                tools:text="3.3" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
