@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
             binding.loginBtn.apply {
                 isEnabled = true
                 setOnClickListener {
-
+                    this.isEnabled = false
                     hideSoftKeyboard()
 
                     binding.loadingAnimation.visibility = View.VISIBLE
@@ -156,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
 
                             } else {
                                 binding.loadingAnimation.visibility = View.GONE
-
+                                this.isEnabled = true
                                 MotionToast.createColorToast(
                                     this@LoginActivity, "Login failed! Check your credentials.",
                                     MotionToast.TOAST_WARNING,
