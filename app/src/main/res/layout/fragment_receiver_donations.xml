@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/alegreya_sans_sc_medium"
+        android:fontFamily="@font/alegreya_sc_black"
         android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
