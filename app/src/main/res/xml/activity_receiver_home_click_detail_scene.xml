@@ -32,9 +32,11 @@
             android:id="@+id/receiverClickAnimation"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="56dp"
             android:layout_marginEnd="16dp"
             motion:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible" />
+            android:visibility="visible"
+            motion:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+            android:layout_marginBottom="0dp" />
     </ConstraintSet>
 </MotionScene>

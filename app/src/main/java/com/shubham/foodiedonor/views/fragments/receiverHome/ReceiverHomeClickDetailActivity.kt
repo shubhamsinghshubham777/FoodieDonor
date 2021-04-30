@@ -133,6 +133,9 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                     MotionToast.createColorToast(this@ReceiverHomeClickDetailActivity, "Unexpected error occurred. Please try again later!", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this@ReceiverHomeClickDetailActivity,R.font.alegreya_sans_sc_medium))
                 }
             }
+            rhcdBackIv.setOnClickListener {
+                finish()
+            }
         }
 
     }
