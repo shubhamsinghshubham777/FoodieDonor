@@ -13,6 +13,7 @@
         android:id="@+id/donorHomePageDonorIv"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/donorHomePageName"

@@ -8,6 +8,14 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000">
        <KeyFrameSet>
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverClickAnimation"
+               motion:framePosition="0"
+               android:elevation="16dp" />
+           <KeyAttribute
+               motion:motionTarget="@+id/receiverClickAnimation"
+               motion:framePosition="100"
+               android:elevation="16dp" />
        </KeyFrameSet>
         <OnClick motion:targetId="@+id/receiverClickAnimation" />
         <OnSwipe motion:touchAnchorId="@+id/tvMessage" />

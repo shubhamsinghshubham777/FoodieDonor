@@ -14,6 +14,16 @@
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/donorDonationsPageRv"
+            android:layout_marginTop="8dp" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -25,6 +35,7 @@
             motion:layout_constraintHorizontal_bias="0.5"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
-            android:id="@+id/donorDonationsPageRv" />
+            android:id="@+id/donorDonationsPageRv"
+            android:layout_marginTop="8dp" />
     </ConstraintSet>
 </MotionScene>
