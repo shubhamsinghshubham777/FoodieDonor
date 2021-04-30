@@ -48,36 +48,40 @@ class ReceiverDonationsFragment : Fragment(R.layout.fragment_receiver_donations)
     @SuppressLint("SetTextI18n")
     private fun setupAllViews() {
         val currentReceiverMobile = requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
-        Constants.globalReceiverCollectionRef.document(currentReceiverMobile!!).get()
+        Constants.globalReceiverCollectionRef.whereEqualTo("email", Firebase.auth.currentUser?.email)
+            .get()
             .addOnSuccessListener {
-                val receiver = it.toObject<ReceiverModel>()
-                binding.apply {
-                    receiverHomePageName.text = "Welcome ${receiver?.name}"
-                    receiverHomePagePhoto.load(receiver?.photo) {
-                        crossfade(400)
-                        transformations(CircleCropTransformation())
-                        placeholder(R.drawable.placeholder_image2)
-                        memoryCachePolicy(CachePolicy.ENABLED)
-                    }
-                    receiverHomePageSignoutBtn.setOnClickListener {
+                for (document in it.documents) {
 
-                        val myDialog = MaterialDialog.Builder(requireActivity())
-                            .setAnimation(R.raw.logout)
-                            .setTitle("Confirm sign-out ${receiver?.name}?")
-                            .setMessage("Do you want to sign-out of this account?")
-                            .setPositiveButton("Yes", AbstractDialog.OnClickListener { dialogInterface, _ ->
-                                Firebase.auth.signOut()
-                                requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).edit().clear().apply()
-                                val intent = Intent(requireActivity(), LoginActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                                dialogInterface.dismiss()
-                            })
-                            .setNegativeButton("No", AbstractDialog.OnClickListener { dialogInterface, _ ->
-                                dialogInterface.dismiss()
-                            }).build()
+                    val receiver = document.toObject<ReceiverModel>()
+                    binding.apply {
+                        receiverHomePageName.text = "Welcome ${receiver?.name}"
+                        receiverHomePagePhoto.load(receiver?.photo) {
+                            crossfade(400)
+                            transformations(CircleCropTransformation())
+                            placeholder(R.drawable.placeholder_image2)
+                            memoryCachePolicy(CachePolicy.ENABLED)
+                        }
+                        receiverHomePageSignoutBtn.setOnClickListener {
 
-                        myDialog.show()
+                            val myDialog = MaterialDialog.Builder(requireActivity())
+                                .setAnimation(R.raw.logout)
+                                .setTitle("Confirm sign-out ${receiver?.name}?")
+                                .setMessage("Do you want to sign-out of this account?")
+                                .setPositiveButton("Yes", AbstractDialog.OnClickListener { dialogInterface, _ ->
+                                    Firebase.auth.signOut()
+                                    requireActivity().getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).edit().clear().apply()
+                                    val intent = Intent(requireActivity(), LoginActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                    dialogInterface.dismiss()
+                                })
+                                .setNegativeButton("No", AbstractDialog.OnClickListener { dialogInterface, _ ->
+                                    dialogInterface.dismiss()
+                                }).build()
+
+                            myDialog.show()
+                        }
                     }
                 }
             }
