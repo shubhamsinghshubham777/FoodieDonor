@@ -197,35 +197,35 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
 //                }
 //            }
 
-            if (requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
+//            if (requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
+//
+//                latitude = data.getDoubleExtra(LATITUDE, 0.0)
+//                longitude = data.getDoubleExtra(LONGITUDE, 0.0)
+//                address = data.getStringExtra(LOCATION_ADDRESS).toString()
+//                postalcode = data.getStringExtra(ZIPCODE).toString()
+//                bundle = data.getBundleExtra(TRANSITION_BUNDLE)
+////                fullAddress = data.getParcelableExtra<Address>(ADDRESS).toString()
+//                fullAddress = data.getStringExtra(LOCATION_ADDRESS).toString()
+//                Log.d(TAG, "Address: $fullAddress")
+//                timeZoneId = data.getStringExtra(TIME_ZONE_ID).toString()
+//                timeZoneDisplayName = data.getStringExtra(TIME_ZONE_DISPLAY_NAME).toString()
+//
+//                binding.donorAddressEt.setText(fullAddress)
+//                if (!validateTor.isEmpty(binding.donorAddressEt.text.toString())) {
+//                    binding.donorAddressLayout.error = null
+//                    isAddressValid = true
+//                }
+//
+//            }
 
-                latitude = data.getDoubleExtra(LATITUDE, 0.0)
-                longitude = data.getDoubleExtra(LONGITUDE, 0.0)
-                address = data.getStringExtra(LOCATION_ADDRESS).toString()
-                postalcode = data.getStringExtra(ZIPCODE).toString()
-                bundle = data.getBundleExtra(TRANSITION_BUNDLE)
-//                fullAddress = data.getParcelableExtra<Address>(ADDRESS).toString()
-                fullAddress = data.getStringExtra(LOCATION_ADDRESS).toString()
-                Log.d(TAG, "Address: $fullAddress")
-                timeZoneId = data.getStringExtra(TIME_ZONE_ID).toString()
-                timeZoneDisplayName = data.getStringExtra(TIME_ZONE_DISPLAY_NAME).toString()
-
-                binding.donorAddressEt.setText(fullAddress)
-                if (!validateTor.isEmpty(binding.donorAddressEt.text.toString())) {
-                    binding.donorAddressLayout.error = null
-                    isAddressValid = true
-                }
-
-            }
-
-            if (requestCode == VERIFY_OTP_REQUEST_CODE) {
-
-            } else if (requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
-                latitude = data.getDoubleExtra(LATITUDE, 0.0)
-                longitude = data.getDoubleExtra(LONGITUDE, 0.0)
-                address = data.getStringExtra(LOCATION_ADDRESS).toString()
-//                lekuPoi = data.getParcelableExtra<LekuPoi>(LEKU_POI)
-            }
+//            if (requestCode == VERIFY_OTP_REQUEST_CODE) {
+//
+//            } else if (requestCode == MAP_BUTTON_REQUEST_CODE && data != null) {
+//                latitude = data.getDoubleExtra(LATITUDE, 0.0)
+//                longitude = data.getDoubleExtra(LONGITUDE, 0.0)
+//                address = data.getStringExtra(LOCATION_ADDRESS).toString()
+////                lekuPoi = data.getParcelableExtra<LekuPoi>(LEKU_POI)
+//            }
 
 
         }

@@ -99,10 +99,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             mMap.setOnMapClickListener {
                 mMap.apply {
                     clear()
-                    addMarker(
-                        MarkerOptions()
-                            .position(it)
-                    )
+                    addMarker(MarkerOptions().position(it))
+                    latitude = it.latitude
+                    longitude = it.longitude
                     try {
                         val listOfAddress = geocoder.getFromLocation(it.latitude, it.longitude, 1)
                         val currentAddress = listOfAddress[0]
