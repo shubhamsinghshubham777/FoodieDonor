@@ -51,12 +51,12 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="@font/alegreya_sc_black"
+        android:gravity="center_vertical"
         android:textAlignment="center"
         android:textColor="@color/black"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/clickdetailEmail"
+        app:layout_constraintBottom_toBottomOf="@+id/clickdetailPhoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/clickdetailPhoto"
         app:layout_constraintTop_toTopOf="@+id/clickdetailPhoto"
@@ -96,9 +96,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_sc_medium"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/clickdetailPhoto"
         app:layout_constraintEnd_toEndOf="@+id/clickdetailName"
         app:layout_constraintStart_toStartOf="@+id/clickdetailName"
+        app:layout_constraintTop_toBottomOf="@+id/clickdetailName"
         tools:text="shubhamsinghshubham7771@gmail.com" />
 
     <TextView
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/alegreya_sc_black"
-        android:text="Do you want to accept these items?"
+        android:text="Do you want to accept these item(s)?"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -169,11 +169,11 @@
 
     <TextView
         android:id="@+id/clickDetailMobile"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_sc_medium"
-        app:layout_constraintBottom_toBottomOf="@+id/clickDetailCallBtn"
-        app:layout_constraintEnd_toStartOf="@+id/clickDetailCallBtn"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/clickdetailEmail"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/clickdetailEmail"
         app:layout_constraintTop_toBottomOf="@+id/clickdetailEmail"
@@ -187,10 +187,8 @@
         android:background="@drawable/rounded_button_background"
         android:text="Call"
         app:icon="@drawable/ic_phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/clickDetailMobile"
-        app:layout_constraintTop_toBottomOf="@+id/clickdetailEmail" />
+        app:layout_constraintStart_toStartOf="@+id/clickDetailMobile"
+        app:layout_constraintTop_toBottomOf="@+id/clickDetailMobile" />
 
     <ImageView
         android:id="@+id/clickDetailsVerifiedBadge"
@@ -214,5 +212,16 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading" />
+
+    <Button
+        android:id="@+id/clickDetailMailBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_button_background"
+        android:text="Mail"
+        app:icon="@drawable/ic_email"
+        app:layout_constraintEnd_toEndOf="@+id/clickDetailMobile"
+        app:layout_constraintTop_toBottomOf="@+id/clickDetailMobile" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

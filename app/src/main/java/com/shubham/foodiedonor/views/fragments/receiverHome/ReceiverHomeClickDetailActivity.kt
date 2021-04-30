@@ -159,6 +159,11 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
                             intent.data = Uri.parse("tel:+91${donor.mobile}")
                             startActivity(intent)
                         }
+                        binding.clickDetailMailBtn.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:"+ donor.email))
+                            intent.putExtra(Intent.EXTRA_SUBJECT, "Response for your donation")
+                            startActivity(intent)
+                        }
                         if(donor.mobileVerified) {
                             binding.clickDetailsVerifiedBadge.visibility = View.VISIBLE
                         } else {
