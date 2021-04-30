@@ -35,7 +35,7 @@ class ReceiverDonationsPageListAdapter(options: FirestoreRecyclerOptions<DonorDo
 
         holder.binding.apply {
             rdiTimestamp.apply {
-                text = model.timestamp
+                text = "${model.timestamp.substring(0, 10)} @${model.timestamp.substring(10, 16)}"
                 isSelected = true
             }
             rdiFrom.apply {

@@ -90,7 +90,7 @@ class ReceiverHomeClickDetailActivity : AppCompatActivity() {
         binding.apply {
             clickdetailItems.text = receivedItems
             clickdetailEmail.text = receivedFrom
-            clickDetailTv1.text = "These items were sent on \n $receivedTimestamp \n by:"
+            clickDetailTv1.text = "These items were sent on \n ${receivedTimestamp?.substring(0, 10)} @${receivedTimestamp?.substring(10,16)}\t by:"
             animationAcceptItem.setOnClickListener {
                 arhcdLoadingAnimation.visibility = View.VISIBLE
                 val currentReceiverMobile = getSharedPreferences(Constants.mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverMobile", null)
