@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "saveFoodItemsToGlobalConstant: $globalFoodListItemNonBreads")
         }
             .addOnFailureListener {
-                    MotionToast.createColorToast(this, "Some internal issue! Please contact your administrator", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this,R.font.alegreya_sans_sc_medium))
+//                    MotionToast.createColorToast(this, "Some internal issue! Please contact your administrator", MotionToast.TOAST_ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(this,R.font.alegreya_sans_sc_medium))
                 Log.d(TAG, "onErrorResponse: ${it.message}")
             }
 
