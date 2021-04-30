@@ -10,6 +10,7 @@ import android.view.View
 import android.viewbinding.library.activity.viewBinding
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -105,10 +106,20 @@ class LoginActivity : AppCompatActivity() {
                                                 Firebase.firestore.collection("receivers")
                                             receiverCollectionRef.get()
                                                 .addOnCompleteListener { task ->
-                                                    if (task.result.isEmpty) {
-                                                        Log.d(
-                                                            TAG,
-                                                            "onCreate: Receiver does not exist!"
+                                                    if (task.result.isEmpty) { Log.d(TAG, "onCreate: Receiver does not exist!")
+                                                        binding.apply {
+                                                            loadingAnimation.visibility = View.GONE
+                                                            loginBtn.isEnabled = true
+                                                        }
+                                                        MotionToast.createColorToast(
+                                                            this@LoginActivity, "Login failed! Please try again later.",
+                                                            MotionToast.TOAST_WARNING,
+                                                            MotionToast.GRAVITY_BOTTOM,
+                                                            MotionToast.LONG_DURATION,
+                                                            ResourcesCompat.getFont(
+                                                                this@LoginActivity,
+                                                                R.font.helvetica_regular
+                                                            )
                                                         )
                                                     } else {
                                                         for (document in task.result.documents) {
@@ -157,16 +168,61 @@ class LoginActivity : AppCompatActivity() {
                             } else {
                                 binding.loadingAnimation.visibility = View.GONE
                                 this.isEnabled = true
-                                MotionToast.createColorToast(
-                                    this@LoginActivity, "Login failed! Check your credentials.",
-                                    MotionToast.TOAST_WARNING,
-                                    MotionToast.GRAVITY_BOTTOM,
-                                    MotionToast.LONG_DURATION,
-                                    ResourcesCompat.getFont(
-                                        this@LoginActivity,
-                                        R.font.helvetica_regular
-                                    )
-                                )
+                                when (it.exception) {
+                                    is FirebaseAuthInvalidCredentialsException -> {
+                                        Log.d(TAG, "unlockLoginButton: ${it.exception}")
+                                        MotionToast.createColorToast(
+                                            this@LoginActivity,
+                                            (it.exception as FirebaseAuthInvalidCredentialsException).localizedMessage!!,
+                                            MotionToast.TOAST_WARNING,
+                                            MotionToast.GRAVITY_BOTTOM,
+                                            MotionToast.LONG_DURATION,
+                                            ResourcesCompat.getFont(
+                                                this@LoginActivity,
+                                                R.font.helvetica_regular
+                                            )
+                                        )
+                                    }
+                                    is FirebaseAuthInvalidUserException -> {
+                                        Log.d(TAG, "unlockLoginButton: ${it.exception}")
+                                        MotionToast.createColorToast(
+                                            this@LoginActivity, (it.exception as FirebaseAuthInvalidUserException).localizedMessage!!,
+                                            MotionToast.TOAST_WARNING,
+                                            MotionToast.GRAVITY_BOTTOM,
+                                            MotionToast.LONG_DURATION,
+                                            ResourcesCompat.getFont(
+                                                this@LoginActivity,
+                                                R.font.helvetica_regular
+                                            )
+                                        )
+                                    }
+                                    is FirebaseAuthException -> {
+                                        Log.d(TAG, "unlockLoginButton: ${it.exception}")
+                                        MotionToast.createColorToast(
+                                            this@LoginActivity, (it.exception as FirebaseAuthException).localizedMessage!!,
+                                            MotionToast.TOAST_WARNING,
+                                            MotionToast.GRAVITY_BOTTOM,
+                                            MotionToast.LONG_DURATION,
+                                            ResourcesCompat.getFont(
+                                                this@LoginActivity,
+                                                R.font.helvetica_regular
+                                            )
+                                        )
+                                    }
+                                    else -> {
+                                        Log.d(TAG, "unlockLoginButton: ${it.exception}")
+                                        MotionToast.createColorToast(
+                                            this@LoginActivity, (it.exception as Exception).localizedMessage!!,
+                                            MotionToast.TOAST_WARNING,
+                                            MotionToast.GRAVITY_BOTTOM,
+                                            MotionToast.LONG_DURATION,
+                                            ResourcesCompat.getFont(
+                                                this@LoginActivity,
+                                                R.font.helvetica_regular
+                                            )
+                                        )
+                                    }
+                                }
                             }
                         }
                 }
