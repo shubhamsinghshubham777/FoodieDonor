@@ -2,7 +2,6 @@ package com.shubham.foodiedonor.views
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import com.google.firebase.ktx.Firebase
 import com.raywenderlich.android.validatetor.ValidateTor
 import com.shubham.foodiedonor.R
 import com.shubham.foodiedonor.databinding.ActivityLoginBinding
-import com.shubham.foodiedonor.utils.Constants.globalDonorMobile
 import com.shubham.foodiedonor.utils.Constants.mySharedPrefName
 import com.tuonbondol.keyboardutil.hideSoftKeyboard
 import www.sanju.motiontoast.MotionToast
@@ -103,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                                         if (donorTask.result.isEmpty) {
                                             Log.d(TAG, "onCreate: Donor does not exist!")
                                             val receiverCollectionRef =
-                                                Firebase.firestore.collection("receivers")
+                                                Firebase.firestore.collection("receivers").whereEqualTo("email", Firebase.auth.currentUser!!.email)
                                             receiverCollectionRef.get()
                                                 .addOnCompleteListener { task ->
                                                     if (task.result.isEmpty) { Log.d(TAG, "onCreate: Receiver does not exist!")
@@ -126,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
                                                             val type = document.getString("type")
                                                             sharedPreferences.edit().apply {
                                                                 putString("globalReceiverMobile", document.getString("mobile"))
-                                                                putString("globalReceiverPhoto", document.getString("photo"))
+                                                                putString("globalReceiverPhotoUrl", document.getString("photo"))
                                                             }.commit()
                                                             Log.d(TAG, "onCreateType: $type")
                                                             if (type == "receiver") {

@@ -445,7 +445,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                         //save receiverMobile to sharedPrefs
                                         requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
                                             putString("globalReceiverMobile", binding.receiverMobileEt.text.toString())
-                                        }.apply()
+                                        }.commit()
 
                                         //Get photo link from firebase storage and save it to sharedPref
                                         Firebase.storage.reference.child("$userEmail/userPhoto.jpg")
@@ -453,7 +453,7 @@ class ReceiverSignupFragment : Fragment(R.layout.fragment_receiver_signup) {
                                                 requireActivity().getSharedPreferences(
                                                     mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
                                                     putString("globalReceiverPhotoUrl", photo.result.toString())
-                                                }.apply()
+                                                }.commit()
                                                 userPhotoLink = requireActivity().getSharedPreferences(
                                                     mySharedPrefName, Context.MODE_PRIVATE).getString("globalReceiverPhotoUrl", null)
                                                 Log.d(TAG, "user firestorage photo: ${photo.result} & $userPhotoLink")

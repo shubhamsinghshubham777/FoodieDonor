@@ -421,7 +421,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                     requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
                                         putString("globalDonorMobile", binding.donorMobileEt.text.toString()
                                         )
-                                    }.apply()
+                                    }.commit()
 
                                 //save photo to firebase storage
 
@@ -435,7 +435,7 @@ class DonorSignupFragment : Fragment(R.layout.fragment_donor_signup) {
                                             .downloadUrl.addOnCompleteListener { photo ->
                                                 requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).edit().apply {
                                                     putString("globalDonorPhotoUrl", photo.result.toString())
-                                                }.apply()
+                                                }.commit()
                                                 userPhotoLink = requireActivity().getSharedPreferences(mySharedPrefName, Context.MODE_PRIVATE).getString("globalDonorPhotoUrl", null)
                                                 Log.d(TAG, "user firestorage photo: ${photo.result} & $userPhotoLink")
 
