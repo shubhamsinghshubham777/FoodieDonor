@@ -31,7 +31,7 @@ class DonorDonationsPageListAdapter(
             dhdiTo.text = model.to
             dhdiItems.apply {
                 isSelected = true
-                text = model.allItems
+                text = model.allItems?.substring(0, model.allItems.length-2)
             }
 
             when (model.verifiedStatus) {

@@ -43,7 +43,7 @@ class ReceiverRespondedPageListAdapter(options: FirestoreRecyclerOptions<DonorDo
                 isSelected = true
             }
             rdiItems.apply {
-                text = model.allItems
+                text = model.allItems?.substring(0, model.allItems.length-2)
                 isSelected = true
             }
 
