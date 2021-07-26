@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "60582375613-1b8l80tcuv259qs5k7fed6ojej4v4s4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shubham.foodiedonor",
+            "certificate_hash": "8d4979f32bb9326a37d621049f070b430463e182"
+          }
+        },
+        {
           "client_id": "60582375613-vpptt69bp8cd73f0bo8d8gqu7gskmcvc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
